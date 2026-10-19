@@ -1,0 +1,13 @@
+{
+  "skills": [
+    {
+      "id": "001-初始化失败后未中止操作",
+      "file": "001-初始化失败后未中止操作.md",
+      "rule": "cpp/exception-safety-guarantees",
+      "utility": 0,
+      "stale": false,
+      "created": "2026-08-13",
+      "last_used": null
+    }
+  ]
+}

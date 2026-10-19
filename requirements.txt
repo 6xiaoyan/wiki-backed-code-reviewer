@@ -1,0 +1,5 @@
+# 运行依赖：固定为本地验证过的版本（Linux runner / Python 3.12）
+langgraph==1.2.16
+langchain-openai==1.7.2
+langchain-core==1.6.12
+PyYAML==6.0.3

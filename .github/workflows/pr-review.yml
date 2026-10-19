@@ -1,0 +1,191 @@
+# 第一阶段 PR 审查工作流。
+#
+# 安全边界（PRD §5）：
+#   * 使用 pull_request_target：工作流文件、审查程序、依赖清单、Wiki、skill
+#     与预算配置都来自可信的基分支提交；PR 分支只作为只读数据读取。
+#   * 不检出 PR head 工作树，只抓取 Git 对象并用固定 SHA 读取（git cat-file / ls-tree / diff）。
+#   * analyze 只有 contents: read / pull-requests: read，并持有模型 Secret；
+#     publish 只有 pull-requests: write，不持有模型 Secret，只校验并发布产物。
+#   * 权限默认只读，写权限只在 publish job 授予。
+name: PR Review
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "要重新审查的 PR 编号"
+        required: true
+        type: string
+
+# 默认只读；写权限只在 publish job 内授予
+permissions:
+  contents: read
+
+# 同一个 PR 的旧任务取消，不同 PR 互不影响；自动与手动运行使用同一分组键
+concurrency:
+  group: pr-review-${{ github.event.pull_request.number || inputs.pr_number }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Analyze PR diff
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      has_result: ${{ steps.collect.outputs.has_result }}
+      status: ${{ steps.collect.outputs.status }}
+      head_sha: ${{ steps.collect.outputs.head_sha }}
+      pr_number: ${{ steps.collect.outputs.pr_number }}
+      head8: ${{ steps.collect.outputs.head8 }}
+    steps:
+      - name: Checkout trusted base revision
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          submodules: false
+
+      - name: Resolve PR number
+        id: meta
+        env:
+          EVENT_PR: ${{ github.event.pull_request.number }}
+          INPUT_PR: ${{ inputs.pr_number }}
+        run: |
+          if [ -n "${EVENT_PR}" ]; then
+            echo "number=${EVENT_PR}" >> "$GITHUB_OUTPUT"
+          elif [ -n "${INPUT_PR}" ]; then
+            echo "number=${INPUT_PR}" >> "$GITHUB_OUTPUT"
+          else
+            echo "无法确定 PR 编号" >&2
+            exit 1
+          fi
+
+      # 只抓取 PR head 的 Git 对象，绝不 checkout / 执行 PR 代码
+      - name: Fetch PR head as read-only Git objects
+        env:
+          PR_NUMBER: ${{ steps.meta.outputs.number }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          auth_header="AUTHORIZATION: basic $(printf 'x-access-token:%s' "${GITHUB_TOKEN}" | base64 -w0)"
+          git -c http.extraheader="${auth_header}" fetch --no-tags \
+            origin "+refs/pull/${PR_NUMBER}/head:refs/remotes/pr/head"
+          if [ -n "${BASE_SHA}" ] && ! git cat-file -e "${BASE_SHA}^{commit}" 2>/dev/null; then
+            git -c http.extraheader="${auth_header}" fetch --no-tags origin "${BASE_SHA}"
+          fi
+          git rev-parse refs/remotes/pr/head
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install review dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      # 退出码：completed/skipped=0，incomplete=2，failed=1（PRD §9.1）
+      - name: Run PR review
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.meta.outputs.number }}
+          REVIEW_OUTPUT_DIR: review-artifacts
+        run: |
+          python -m code_checker.pr_review analyze \
+            --repo "${GITHUB_REPOSITORY}" \
+            --pr "${PR_NUMBER}" \
+            --repo-path "${GITHUB_WORKSPACE}" \
+            --output-dir review-artifacts
+
+      # 无论分析成功、失败还是超预算，都尽量收集结果供 publish 使用
+      - name: Collect review result
+        id: collect
+        if: always()
+        run: |
+          set -euo pipefail
+          status_file="review-artifacts/review-status.json"
+          if [ ! -f "${status_file}" ]; then
+            echo "has_result=false" >> "$GITHUB_OUTPUT"
+            echo "分析没有产出合法结果（进程崩溃或未写入产物）" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          python - "${status_file}" <<'PY' >> "$GITHUB_OUTPUT"
+          import json, sys
+          data = json.load(open(sys.argv[1], encoding="utf-8"))
+          head = str(data.get("head_sha") or "")
+          print("has_result=true")
+          print(f"status={data.get('status', '')}")
+          print(f"head_sha={head}")
+          print(f"pr_number={data.get('pr_number', '')}")
+          print(f"head8={head[:8]}")
+          print(f"artifact_name=pr-review-{data.get('pr_number', '')}-{head[:8]}")
+          PY
+          python - "${status_file}" >> "$GITHUB_STEP_SUMMARY" <<'PY'
+          import json, sys
+          data = json.load(open(sys.argv[1], encoding="utf-8"))
+          print("## PR review result")
+          print(f"- status: `{data.get('status')}`")
+          print(f"- head: `{data.get('head_sha')}`")
+          print(f"- reason: {data.get('status_reason')}")
+          PY
+
+      - name: Upload review artifacts
+        if: always() && steps.collect.outputs.has_result == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.collect.outputs.artifact_name }}
+          path: review-artifacts/
+          retention-days: 14
+          if-no-files-found: warn
+
+  publish:
+    name: Publish PR summary comment
+    needs: analyze
+    # 分析失败（failed/incomplete）时也发布结果，但不能在没有合法产物时发布
+    if: always() && needs.analyze.outputs.has_result == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout trusted code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Download review artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.analyze.outputs.artifact_name }}
+          path: review-artifacts
+
+      # publish 只使用标准库：不安装依赖、不持有模型凭据
+      - name: Validate and publish summary comment
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REVIEW_OUTPUT_DIR: review-artifacts
+        run: |
+          python -m code_checker.pr_review publish \
+            --repo "${GITHUB_REPOSITORY}" \
+            --pr "${{ needs.analyze.outputs.pr_number }}" \
+            --result review-artifacts/review-result.json \
+            --expected-head-sha "${{ needs.analyze.outputs.head_sha }}" \
+            --expected-run-id "${GITHUB_RUN_ID}" \
+            --artifact-name "${{ needs.analyze.outputs.artifact_name }}" \
+            --output-dir review-artifacts

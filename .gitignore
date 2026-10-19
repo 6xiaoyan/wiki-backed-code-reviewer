@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# 本地配置与凭据（绝不提交）
+.env
+.env.*
+!.env.example
+
+# 运行产物
+review-artifacts/
+.cache/
+traces/
+wiki_access.log
+*.log
+compliance_report.md
+fix_guide.md
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
