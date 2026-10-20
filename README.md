@@ -1,4 +1,4 @@
-# wiki-backed-code-reviewer
+﻿# wiki-backed-code-reviewer
 
 基于 LangGraph 的 PR 代码审查器：以 PR diff 为入口，用确定性检查 + Wiki 规则辅助的
 领域 Agent 审查 C++ / Qt / SQLite / Git 改动，并把一条汇总报告写回 Pull Request。
@@ -18,9 +18,9 @@ GitHub Actions（pull_request_target，可信基分支代码）
     ├─ 固定 base/head/merge-base 三个 SHA
     ├─ 只读取 merge_base → head 的 diff（不检出、不执行 PR 代码）
     ├─ 确定性正则检查（零 token）→ 过滤历史问题
-    ├─ C++ / Qt / SQLite 领域 Agent（结构化 JSON，统一预算）
+    ├─ C++ / Qt / SQLite 领域 Agent（本领域 Wiki 规则正文 + 结构化 JSON + 统一预算）
     ├─ Git 提交规范（只看 PR 范围内的提交）
-    ├─ 证据核验（文件/行号/代码/规则依据/改动关联性）
+    ├─ 证据核验（文件/行号/代码/规则正文引用/改动关联性）
     └─ 导出 review-result.json / review-report.md / pr-comment.md
         │
   publish job（无模型凭据，仅 pull-requests: write）
@@ -41,6 +41,26 @@ GitHub Actions（pull_request_target，可信基分支代码）
   shell / 全仓 `git log` / 修复 / 规则写入 / GitHub 发布接口在 PR 模式被拒绝。
 - 模型输出一律作为数据解析；评论中的 `@提醒`、HTML 注释、反引号会被中和，
   评论长度受限且始终写明被审查的 head SHA。
+
+## 规则正文与证据
+
+- 每个领域 Agent 只收到**本领域**的可信 Wiki 规则正文：C++ 含腾讯安全副规则，
+  Qt / SQLite 各自独立，不会混入其他领域。
+- 规则正文来自可信提交中的 `code_checker/rules-wiki/`，不是 PR 分支内容。
+  注入受可信预算限制（默认单领域 64 KiB、单页 4 KiB）；超限规则不会被静默丢弃，
+  而是记录到运行记录的 `rule_coverage`，并把结果标为 `incomplete`。
+- 模型每条问题必须用 `rule_quote` 逐字引用注入的规则正文；引用缺失或与页面不匹配时，
+  该候选进入 `uncertain_findings`，不计入已确认问题。
+- 每条模型发现由服务端标记所属 Agent 领域。证据核验只接受**该领域本轮实际注入**的
+  `rule_id` 和正文：其他领域的规则、被预算排除的规则、以及页面中未注入的段落
+  都会被拒绝，不会进入已确认问题。
+- 确定性检查发现会直接附带对应 Wiki 条款原文；报告同时展示规则 ID、标题、
+  引用正文和来源（`source_file` / `source_section`）。
+- 只修改 `.cpp` 时，同目录同名 `.h/.hpp/.hxx` 会从固定 `head_sha` 的仓库树中查找，
+  在上下文预算内读取前 120 行并记录路径/范围/SHA；项目头文件缺失或读取失败会标为
+  `incomplete`，角括号外部头文件缺失只记录在运行记录中。
+- 非法模型响应（空响应、畸形 JSON、顶层类型错误、数组元素不是对象）不等同于
+  “没有发现问题”：会按重试策略重试，耗尽后结果标为 `incomplete`。
 
 ## 本地快速开始
 
@@ -127,8 +147,10 @@ python -m code_checker.main pr local --repo-path /path/to/repo --base main --hea
 |---|---|
 | 单 PR 适用变更文件 | 50 个 |
 | 适用文件新增+删除行合计 | 3,000 行 |
-| 单个可读取文本文件 | 256 KiB |
+| 单个可读取文本文件 | 256 KiB（超限记为未覆盖并标 `incomplete`） |
 | 额外上下文累计读取量 | 2 MiB（按路径/版本/范围去重计量） |
+| 单领域规则正文注入量 | 64 KiB |
+| 单页规则正文注入量 | 4 KiB |
 | 单轮模型请求总数 | 40 次（所有 Agent 与重试共同计数） |
 | 审查阶段时限 | 15 分钟 |
 | Actions 工作流总时限 | 20 分钟 |
@@ -158,10 +180,13 @@ scripts/demo_local.py             # 离线演示脚本
 ## 测试
 
 ```bash
-python -m pytest            # 新增 PR 接入测试（默认）
+python -m pytest            # 新增 PR 接入测试（默认，当前 162 个）
 python -m pytest tests -q
 python -m pytest code_checker/tests -q   # 原有测试；存在 8 个历史失败
 ```
+
+新增测试覆盖规则正文注入与领域隔离、规则超限报告、无效模型响应与重试、
+超大文件未覆盖语义、关联头文件从固定快照读取等行为。
 
 `code_checker/tests` 中存在 8 个在本次改动之前就已失败的测试
 （`test_hardcoded_idx_guard.py` 6 个、`test_l3_persistence.py` 2 个），

@@ -1,4 +1,4 @@
-"""审查上下文构建：变更片段 + 所在函数/类 + 必要时读取关联文件。
+﻿"""审查上下文构建：变更片段 + 所在函数/类 + 必要时读取关联文件。
 
 遵循 PRD §6.1：模型优先看到 diff 片段与所在符号，不预先递归读取全仓源码。
 所有额外读取都经过预算计量并记录 (路径, 版本, 范围, 用途)。
@@ -184,11 +184,3 @@ def build_file_context(
     if len(context) > max_context_chars:
         context = context[:max_context_chars] + "\n...（上下文已截断）"
     return context
-
-
-def related_header_candidates(path: str, available: set[str]) -> list[str]:
-    """直接相关的头文件（同名 .h/.hpp），只在审查范围内查找。"""
-    if not path.endswith((".cpp", ".cc")):
-        return []
-    base = path.rsplit(".", 1)[0]
-    return [p for p in (base + ".h", base + ".hpp", base + ".hxx") if p in available]

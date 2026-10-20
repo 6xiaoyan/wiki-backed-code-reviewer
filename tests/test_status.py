@@ -89,6 +89,8 @@ def test_completed_with_findings_still_succeeds(clean_repo, request_for, fake_ll
     llm = fake_llm(['[{"file": "src/main.cpp", "line": 3, "rule_id": '
                     '"cpp/naming-functions", "severity": "warning", '
                     '"message": "函数命名", "code": "int helper() {", '
+                    '"rule_quote": "函数和方法必须使用camelCase（首字母小写，'
+                    '后续每个单词的首字母大写）", '
                     '"suggestion": "改名"}]'])
     result = run_analysis(
         LocalGitSnapshot(clean_repo.path), request_for(clean_repo),

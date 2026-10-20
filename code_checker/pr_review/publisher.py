@@ -114,6 +114,10 @@ def validate_result_payload(payload: dict, *, expected_repo: str, expected_pr: i
             raise PublishError(f"非法行号: {f.line}")
         if not f.file or len(f.file) > 400:
             raise PublishError(f"非法文件路径: {f.file!r}")
+        if len(f.rule_quote) > 2000 or len(f.rule_basis) > 2000:
+            raise PublishError("规则正文引用异常（过长），拒绝发布")
+        if len(f.rule_source) > 400:
+            raise PublishError("规则来源异常（过长），拒绝发布")
     return result
 
 

@@ -178,25 +178,32 @@ def build_scope(
 
         size = int((info or {}).get("size") or 0)
         if size > budget_config.max_file_bytes:
-            decision.excluded.append({
+            # 超过单文件上限属于“未覆盖”，不是普通的排除项：
+            # 有适用代码改动但没有读取，不能静默跳过，也不能宣称审查完成。
+            reason = (
+                f"文件 {size} 字节超过单文件上限 "
+                f"{budget_config.max_file_bytes} 字节，未读取"
+            )
+            decision.not_covered.append({
                 "path": cf.path,
                 "old_path": cf.old_path,
                 "status": cf.status,
                 "category": EXCLUDE_TOO_LARGE,
-                "reason": (
-                    f"文件 {size} 字节超过单文件上限 "
-                    f"{budget_config.max_file_bytes} 字节"
-                ),
+                "reason": reason,
             })
+            decision.status_override = "incomplete"
+            decision.reasons.append(f"{cf.path}: {reason}")
             continue
 
         try:
             blob = snapshot.read_text(cf.path, sha, max_bytes=budget_config.max_file_bytes)
         except FileTooLarge as exc:
-            decision.excluded.append({
+            decision.not_covered.append({
                 "path": cf.path, "old_path": cf.old_path, "status": cf.status,
                 "category": EXCLUDE_TOO_LARGE, "reason": str(exc),
             })
+            decision.status_override = "incomplete"
+            decision.reasons.append(f"{cf.path}: {exc}")
             continue
         except SnapshotError as exc:
             decision.not_covered.append({
@@ -232,6 +239,7 @@ def build_scope(
     # ── 变更行预算 ──
     selected: list[ChangedFile] = []
     used_lines = 0
+    line_budget_exceeded = False
     for cf, text in approved:
         cost = cf.additions + cf.deletions
         if used_lines + cost > budget_config.max_changed_lines:
@@ -243,10 +251,11 @@ def build_scope(
                 ),
             })
             decision.status_override = "incomplete"
+            line_budget_exceeded = True
             continue
         used_lines += cost
         selected.append(cf)
-    if decision.status_override == "incomplete":
+    if line_budget_exceeded:
         decision.reasons.append(
             f"变更行预算 {budget_config.max_changed_lines} 行；"
             f"实际纳入 {used_lines} 行，未覆盖文件已列出"
@@ -260,7 +269,15 @@ def build_scope(
     decision.applicable_changed_lines = used_lines
 
     if not decision.included:
-        if all_config_only and changed_files:
+        if decision.not_covered:
+            # 存在适用代码改动，但都因预算/读取失败未审查：
+            # 这必须是 incomplete，不能降级成普通 skipped。
+            decision.status_override = "incomplete"
+            decision.reasons.append(
+                f"存在 {len(decision.not_covered)} 个适用代码文件未被实际审查"
+                f"（超预算或读取失败），审查未完成"
+            )
+        elif all_config_only and changed_files:
             decision.status_override = "skipped"
             decision.reasons.append(
                 "本 PR 只修改了审查程序/规则/skill/工作流；"

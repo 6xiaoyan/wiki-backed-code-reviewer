@@ -94,16 +94,46 @@ def test_review_config_only_pr_is_skipped(fake_snapshot):
     assert not decision.included
 
 
-def test_file_too_large_excluded(fake_snapshot):
-
-    big = "x" * (300 * 1024)
+def test_file_too_large_alone_is_incomplete(fake_snapshot):
+    big = "x" * 2000
     files = [_changed("src/big.cpp")]
     decision, contents = build_scope(
         files, fake_snapshot({"src/big.cpp": big}, {}),
-        _request(), BudgetConfig(max_file_bytes=256 * 1024),
+        _request(), BudgetConfig(max_file_bytes=1000),
     )
-    assert decision.excluded[0]["category"] == EXCLUDE_TOO_LARGE
+    assert not decision.excluded  # 不是普通排除项，而是未覆盖项
+    assert decision.not_covered[0]["path"] == "src/big.cpp"
+    assert decision.not_covered[0]["category"] == EXCLUDE_TOO_LARGE
+    assert decision.status_override == "incomplete"
+    assert "未被实际审查" in " ".join(decision.reasons)
+    assert not decision.included
     assert contents == {}
+
+
+def test_file_too_large_with_normal_file_is_incomplete(fake_snapshot):
+    files = [_changed("src/big.cpp"), _changed("src/small.cpp")]
+    decision, contents = build_scope(
+        files, fake_snapshot({"src/big.cpp": "x" * 2000,
+                              "src/small.cpp": "int value = 0;\n"}, {}),
+        _request(), BudgetConfig(max_file_bytes=1000),
+    )
+    assert [f.path for f in decision.included] == ["src/small.cpp"]
+    assert [item["path"] for item in decision.not_covered] == ["src/big.cpp"]
+    assert decision.status_override == "incomplete"
+    assert set(contents) == {"src/small.cpp"}
+
+
+def test_file_exactly_at_limit_is_included(fake_snapshot):
+    text = "y" * 1000
+    files = [_changed("src/edge.cpp")]
+    decision, contents = build_scope(
+        files, fake_snapshot({"src/edge.cpp": text}, {}),
+        _request(), BudgetConfig(max_file_bytes=1000),
+    )
+    assert [f.path for f in decision.included] == ["src/edge.cpp"]
+    assert not decision.not_covered
+    assert decision.status_override is None
+    assert contents["src/edge.cpp"] == text
 
 
 def test_file_count_budget_marks_incomplete_without_silent_drop(fake_snapshot):
@@ -158,3 +188,28 @@ def test_nothing_applicable_is_skipped(fake_snapshot):
     )
     assert decision.status_override == "skipped"
     assert "没有适用的代码改动" in " ".join(decision.reasons)
+
+
+def test_pipeline_single_oversized_file_is_incomplete_not_skipped(
+    make_repo, request_for, fake_llm,
+):
+    from code_checker.pr_review.config import PRConfig
+    from code_checker.pr_review.pipeline import run_analysis
+    from code_checker.pr_review.snapshot import LocalGitSnapshot
+
+    repo = make_repo(
+        {"src/big.cpp": "x" * 2000},
+        {"src/big.cpp": "y" * 2000},
+        head_msg="feat: rewrite big file",
+    )
+    llm = fake_llm(["[]"])
+    result = run_analysis(
+        LocalGitSnapshot(repo.path), request_for(repo),
+        config=PRConfig(budget=BudgetConfig(max_file_bytes=1000)),
+        llm=llm, offline=False,
+    )
+    assert result.status == "incomplete"
+    assert result.status != "skipped"
+    assert llm.calls == 0  # 没有实际审查任何代码文件
+    assert result.not_covered
+    assert "超过单文件上限" in result.status_reason

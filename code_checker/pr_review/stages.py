@@ -13,10 +13,11 @@ from __future__ import annotations
 import datetime as _dt
 import json
 import os
+import re
 from dataclasses import dataclass, field
 from typing import Any
 
-from code_checker.pr_review import agents, evidence, report
+from code_checker.pr_review import agents, evidence, report, rules
 from code_checker.pr_review.budget import BudgetExceeded, ReviewBudget
 from code_checker.pr_review.config import (
     PRConfig,
@@ -47,6 +48,9 @@ from code_checker.pr_review.scope import build_scope, domain_of
 from code_checker.pr_review.snapshot import Snapshot, SnapshotError
 
 SCHEMA_VERSION = 1
+
+#: 匹配 C/C++ include 指令，用于从固定版本树定位关联头文件。
+_INCLUDE_RE = re.compile(r'#\s*include\s*([<"])([^>"]+)[>"]')
 
 
 def utcnow() -> str:
@@ -105,6 +109,13 @@ class AnalysisContext:
         self.result.status = STATUS_SKIPPED
         self.result.status_reason = reason
         self.degrade(stage, "skipped", reason, "未执行模型审查")
+        return "skipped"
+
+    def stop_incomplete(self, reason: str, stage: str = "prepare") -> str:
+        """停止流水线但保留 incomplete 语义（不能降级成普通 skipped）。"""
+        self.result.status = STATUS_INCOMPLETE
+        self.result.status_reason = reason
+        self.degrade(stage, "degraded", reason, "审查未完成，已有结论不完整")
         return "skipped"
 
     def stop_failed(self, reason: str, stage: str) -> str:
@@ -176,9 +187,11 @@ def stage_prepare(ctx: AnalysisContext) -> str:
         ctx.force_incomplete = True
         ctx.reasons.extend(decision.reasons)
     if not decision.included:
-        return ctx.stop_skipped(
-            "；".join(decision.reasons) or "没有适用的代码改动", "scope",
-        )
+        reason = "；".join(decision.reasons) or "没有适用的代码改动"
+        if decision.status_override == "incomplete":
+            # 有适用代码改动但全部未读取（例如唯一文件超过大小上限）
+            return ctx.stop_incomplete(reason, "scope")
+        return ctx.stop_skipped(reason, "scope")
     return "ok"
 
 
@@ -261,6 +274,8 @@ def stage_agents(ctx: AnalysisContext) -> str:
 
     ctx.result.degradation.extend(ctx.review["degradation"])
     ctx.result.artifacts["context_reads"] = ctx.review["context_reads"]
+    ctx.result.artifacts["rule_coverage"] = ctx.review.get("rule_coverage", [])
+    ctx.result.artifacts["header_context_missing"] = ctx.review.get("header_missing", [])
     if ctx.review["agent_failed"]:
         ctx.force_incomplete = True
         ctx.reasons.extend(ctx.review["reasons"])
@@ -277,6 +292,7 @@ def _append_git_findings(ctx: AnalysisContext) -> None:
 def _git_finding(item: dict, registry: dict[str, dict]) -> Finding:
     rule_id = str(item.get("rule_id") or "git/commit-format")
     meta = registry.get(rule_id) or {}
+    basis = rules.rule_clause(rule_id)
     return Finding(
         id=stable_finding_id(item.get("file", ""), 1, rule_id, 0),
         severity=str(item.get("severity") or "suggestion"),
@@ -284,6 +300,9 @@ def _git_finding(item: dict, registry: dict[str, dict]) -> Finding:
         line=0,
         rule_id=rule_id,
         rule_title=str(meta.get("title") or rule_id),
+        rule_quote="",
+        rule_basis=basis,
+        rule_source=rules.rule_source(rule_id),
         message=str(item.get("message") or ""),
         code_evidence=str(item.get("code") or ""),
         change_relation="added",
@@ -293,16 +312,59 @@ def _git_finding(item: dict, registry: dict[str, dict]) -> Finding:
 
 
 def _run_agent_reviews(ctx: AnalysisContext) -> dict:
-    reviewer = agents.DomainReviewer(ctx.llm, ctx.budget, ctx.registry or {})
-    ctx_builder = ContextBuilder(ctx.snapshot, ctx.budget)
     by_domain: dict[str, list] = {}
     for cf in ctx.decision.included:
         dom = domain_of(cf.path, ctx.head_contents.get(cf.path, ""))
         by_domain.setdefault(dom, []).append(cf)
 
     out = {"raw": [], "agent_failed": False, "reasons": [],
-           "degradation": [], "context_reads": []}
+           "degradation": [], "context_reads": [], "rule_coverage": [],
+           "header_missing": [], "rule_texts": {}}
+
+    # ── 每个领域注入本领域的可信规则正文（受可信预算限制）──
+    corpora = {}
+    for domain in sorted(by_domain):
+        corpus = rules.build_domain_rules(
+            domain,
+            limit_bytes=ctx.config.budget.max_rule_context_bytes,
+            max_page_bytes=ctx.config.budget.max_rule_page_bytes,
+        )
+        corpora[domain] = corpus
+        out["rule_coverage"].append(corpus.to_dict())
+        out["rule_texts"][domain] = dict(corpus.injected_text)
+        if corpus.empty:
+            out["agent_failed"] = True
+            out["reasons"].append(
+                f"{domain} 领域没有可注入的可信规则正文，未执行模型审查"
+            )
+            out["degradation"].append({
+                "stage": f"rules/{domain}", "status": "failed",
+                "reason": "没有可用的规则正文",
+                "impact": f"{domain} 领域文件未经模型审查",
+            })
+        elif corpus.excluded:
+            # 超限规则绝不静默丢弃：记录未注入原因，结果标为 incomplete
+            out["agent_failed"] = True
+            out["reasons"].append(
+                f"{domain} 领域有 {len(corpus.excluded)} 条规则正文"
+                f"因输入上限未注入，审查依据不完整"
+            )
+            out["degradation"].append({
+                "stage": f"rules/{domain}", "status": "degraded",
+                "reason": (
+                    f"{len(corpus.included)} 条规则已注入，"
+                    f"{len(corpus.excluded)} 条未注入（详见运行记录 rule_coverage）"
+                ),
+                "impact": "模型只能依据已注入规则审查，结果不完整",
+            })
+
+    reviewer = agents.DomainReviewer(
+        ctx.llm, ctx.budget, ctx.registry or {}, corpora,
+    )
+    ctx_builder = ContextBuilder(ctx.snapshot, ctx.budget)
     for domain, domain_files in sorted(by_domain.items()):
+        if corpora[domain].empty:
+            continue  # 没有规则正文时不调用模型，已标记 incomplete
         for cf in domain_files:
             try:
                 ctx.budget.check_deadline()
@@ -318,7 +380,37 @@ def _run_agent_reviews(ctx: AnalysisContext) -> dict:
 
             hints = [v for v in ctx.raw_det if v.get("file") == cf.path]
             context = build_file_context(cf, ctx.head_contents.get(cf.path, ""))
-            for header in _referenced_headers(cf, ctx.head_contents):
+
+            # 关联头文件从固定 head_sha 的仓库树中查找（不仅是本次变更文件）
+            headers, missing, header_error = _related_header_paths(cf, ctx)
+            if header_error:
+                out["agent_failed"] = True
+                out["reasons"].append(header_error)
+                out["degradation"].append({
+                    "stage": "context", "status": "failed",
+                    "reason": header_error,
+                    "impact": f"{cf.path} 无法确定关联头文件",
+                })
+            for item in missing:
+                path = item["path"]
+                out["header_missing"].append({"path": path, "quoted": item["quoted"],
+                                              "file": cf.path})
+                if item["quoted"]:
+                    message = f"{path}: 引用的项目头文件不在固定版本树中"
+                    out["agent_failed"] = True
+                    out["reasons"].append(message)
+                    out["degradation"].append({
+                        "stage": "context", "status": "failed",
+                        "reason": message,
+                        "impact": f"{cf.path} 缺少必要头文件上下文，审查依据不完整",
+                    })
+                else:
+                    out["degradation"].append({
+                        "stage": "context", "status": "degraded",
+                        "reason": f"{path}: 引用的头文件不在固定版本树中",
+                        "impact": f"{cf.path} 未读取该头文件上下文",
+                    })
+            for header in headers:
                 try:
                     snippet = ctx_builder.read_range(
                         header, ctx.request.head_sha, 1, 120,
@@ -352,21 +444,59 @@ def _run_agent_reviews(ctx: AnalysisContext) -> dict:
                 out["reasons"].append(
                     f"{domain} Agent 未完成: {deg.get('reason')}"
                 )
-            out["raw"].extend(raws)
+            # 服务端标记发现所属领域，覆盖模型可能伪造的同名字段；
+            # 证据核验只接受该领域本轮实际注入的规则与正文。
+            for item in raws:
+                if not isinstance(item, dict):
+                    continue
+                tagged = dict(item)
+                tagged.pop("_agent_domain", None)
+                tagged["_agent_domain"] = domain
+                out["raw"].append(tagged)
     out["context_reads"] = ctx_builder.reads_dict()
     return out
 
 
-def _referenced_headers(cf, head_contents: dict[str, str]) -> list[str]:
-    from code_checker.pr_review.context import related_header_candidates
+def _related_header_paths(cf, ctx: AnalysisContext) -> tuple[list[str], list[dict], str]:
+    """从固定 head_sha 的仓库树查找被 include 的同名头文件。
 
+    Returns:
+        (可读取的头文件, 缺失的候选头文件, 错误信息)。
+        候选基于 ``#include`` 指令，不依赖本次变更文件集合。
+    """
     if not cf.path.endswith((".cpp", ".cc")):
-        return []
-    candidates = related_header_candidates(cf.path, set(head_contents))
-    if not candidates:
-        return []
-    text = head_contents.get(cf.path, "")
-    return [h for h in candidates if h.rsplit("/", 1)[-1] in text]
+        return [], [], ""
+    import posixpath
+
+    base_dir = posixpath.dirname(cf.path)
+    name = posixpath.basename(cf.path).rsplit(".", 1)[0]
+    expected = {
+        posixpath.join(base_dir, name + ext)
+        for ext in (".h", ".hpp", ".hxx")
+    }
+    text = ctx.head_contents.get(cf.path, "")
+    includes: list[tuple[str, bool]] = []
+    for match in _INCLUDE_RE.finditer(text or ""):
+        raw_target = match.group(2).strip().replace("\\", "/")
+        quoted = match.group(1) == '"'
+        target = posixpath.normpath(posixpath.join(base_dir, raw_target))
+        if target in expected:
+            includes.append((target, quoted))
+
+    try:
+        tree = ctx.snapshot.list_tree(ctx.request.head_sha)
+    except SnapshotError as exc:
+        return [], [], f"读取 head={ctx.request.head_sha[:8]} 文件树失败: {exc}"
+
+    headers: list[str] = []
+    missing: list[dict] = []
+    for target, quoted in includes:
+        if target in tree:
+            if target not in headers:
+                headers.append(target)
+        else:
+            missing.append({"path": target, "quoted": quoted})
+    return headers, missing, ""
 
 
 # ---------------------------------------------------------------------------
@@ -384,6 +514,8 @@ def stage_verify(ctx: AnalysisContext) -> str:
         base_contents=ctx.base_contents,
         registry=ctx.registry,
         default_source="model",
+        # 只允许该领域本轮实际注入的规则与正文；缺失时按空表失败关闭
+        domain_rule_texts=ctx.review.get("rule_texts") or {},
     )
     ctx.confirmed.extend(verified["confirmed"])
     ctx.uncertain.extend(verified["uncertain"])
@@ -411,6 +543,7 @@ def stage_merge(ctx: AnalysisContext) -> str:
         }
         for cf in ctx.decision.included
     ]
+    rule_coverage = ctx.result.artifacts.get("rule_coverage") or []
     ctx.result.summary.update({
         "files_changed": len(ctx.changed_files),
         "files_reviewed": len(ctx.decision.included),
@@ -421,6 +554,10 @@ def stage_merge(ctx: AnalysisContext) -> str:
         "confirmed_findings": len(merged),
         "uncertain_findings": len(ctx.uncertain),
         "by_severity": counts,
+        "rules_injected": sum(int(r.get("rules_injected", 0)) for r in rule_coverage),
+        "rules_not_injected": sum(
+            int(r.get("rules_not_injected", 0)) for r in rule_coverage
+        ),
     })
     if ctx.force_incomplete:
         ctx.result.status = STATUS_INCOMPLETE

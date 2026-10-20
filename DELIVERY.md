@@ -14,7 +14,19 @@
   证据核验、确定性合并、JSON/Markdown/评论渲染、发布门禁、CLI 与 LangGraph 图；
 - 可信 Actions 工作流（`pull_request_target`、权限分离、同 PR 并发取消、artifact）；
 - C++/Qt 示例与可复现的离线演示；
-- 111 个新增测试全部通过（见 §3）。
+- 162 个新增测试全部通过（见 §3）。
+
+本轮按审查意见修复了 4 类问题：
+
+1. 领域 Agent 现在收到本领域可信 Wiki 的**规则正文**（受可信预算限制），
+   模型必须逐字引用正文；证据核验先确认发现所属 Agent 领域，再只允许该领域
+   本轮实际注入的 `rule_id` 与正文，最后核验引用确实出现在注入正文中；
+2. 无效模型响应（空、畸形 JSON、类型错误）不再被当作“没有发现问题”，
+   按重试策略处理，耗尽后标为 `incomplete`；
+3. 超过单文件大小上限的适用代码文件改为**未覆盖 + `incomplete`**，
+   不再当作普通排除项或降级为 `skipped`；
+4. 关联头文件改为从固定 `head_sha` 的仓库树查找，未修改的同名
+   `.h/.hpp/.hxx` 也会在上下文预算内读取。
 
 未完成（需要用户侧权限/凭据，不能由本地代码替代）：
 
@@ -36,8 +48,9 @@
 
 ```text
 .github/workflows/pr-review.yml     可信运行、权限分离、并发取消、artifact
-code_checker/pr_review/             PR 模式实现（约 20 个模块）
+code_checker/pr_review/             PR 模式实现（约 21 个模块）
 code_checker/nodes/                 复用/适配的确定性检查与领域规则
+code_checker/pr_review/rules.py     领域规则正文注入、来源与引用核验
 code_checker/config.py              凭据改为环境变量；规则目录可配置
 code_checker/tools.py               PR 模式工具权限硬约束
 code_checker/state.py               PR 模式状态字段
@@ -47,7 +60,7 @@ code_checker/rules-wiki/            可信规则 Wiki（只读）
 code_checker/agent-skills/live/     可信审查经验（只读）
 examples/review-target/             C++/Qt/SQLite 示例（含一条故意的历史违规）
 rules/                              审查所需规范文本（见 rules/SOURCES.md）
-tests/                              新增 PR 接入测试（111 个）
+tests/                              新增 PR 接入测试（162 个）
 scripts/demo_local.py               无需凭据的离线演示
 docs/PR_REVIEW_PHASE1_PRD.md        需求原文
 README.md / .env.example / .gitignore / requirements*.txt / pyproject.toml
@@ -59,10 +72,11 @@ README.md / .env.example / .gitignore / requirements*.txt / pyproject.toml
 |---|---|
 | `pr_review/diff_parser.py` | 统一 diff 解析，新增/修改/删除/改名/二进制与行号映射 |
 | `pr_review/snapshot.py` | Git 对象 / GitHub API 只读快照，截断与超大文件显式报错 |
-| `pr_review/scope.py` | 适用性判断、排除项、文件数与变更行预算 |
-| `pr_review/deterministic_pr.py` | 复用现有正则规则，按改动关联性过滤历史问题 |
-| `pr_review/agents.py` | C++/Qt/SQLite 领域审查 + Git 提交范围确定性检查 |
-| `pr_review/evidence.py` | 文件/行号/代码/规则/改动关联五重核验 |
+| `pr_review/scope.py` | 适用性判断、排除项、文件数/变更行/单文件大小预算与未覆盖记录 |
+| `pr_review/rules.py` | 按领域加载可信 Wiki 规则正文，执行单页/领域上限，保存本轮实际注入的 rule_id→正文 |
+| `pr_review/deterministic_pr.py` | 复用现有正则规则，按改动关联性过滤历史问题，附带 Wiki 条款原文 |
+| `pr_review/agents.py` | C++/Qt/SQLite 领域审查（注入本领域规则正文）、严格响应解析 + Git 确定性检查 |
+| `pr_review/evidence.py` | 文件/行号/代码/领域与注入范围/规则正文引用/改动关联核验 |
 | `pr_review/pipeline.py`、`stages.py`、`graph_pr.py` | 六阶段流水线与 LangGraph 图 |
 | `pr_review/report.py`、`publisher.py` | 完整报告、汇总评论、发布门禁与消毒 |
 | `pr_review/cli.py` | `analyze` / `publish` / `local`，状态与退出码 |
@@ -77,13 +91,15 @@ README.md / .env.example / .gitignore / requirements*.txt / pyproject.toml
 
 ```text
 $ python -m pytest
-111 passed in 177.23s
+162 passed in 292.72s
 ```
 
 覆盖：diff 解析（增/删/改名/二进制/多 hunk）、范围与预算、历史问题过滤、
 模型证据核验、状态机、发布门禁（含伪造标记、head 变化、关闭 PR、评论消毒、
 长度上限）、review_key、Git 客户端分页/429/鉴权、只读快照、工具权限、
-工作流安全边界、端到端离线与多次提交、结构化请求文件、LangGraph 与顺序路径一致性。
+工作流安全边界、端到端离线与多次提交、结构化请求文件、LangGraph 与顺序路径一致性，
+以及本轮新增的规则正文注入/领域隔离/规则超限、无效模型响应与重试、
+超大文件未覆盖语义、固定 SHA 关联头文件读取。
 
 ### 3.2 离线演示
 
@@ -133,6 +149,33 @@ $ python -m pytest code_checker/tests -q
 - `test_hardcoded_idx_guard.py`：6 个（`_check_idx_allowed` 相关夹具/全局状态）
 - `test_l3_persistence.py`：2 个（大输出落盘路径）
 
+### 3.5 本轮修复的专项验证
+
+```text
+$ python -m pytest tests/test_rules.py tests/test_evidence.py \
+    tests/test_rules_injection.py tests/test_invalid_responses.py tests/test_status.py
+66 passed in 187.81s
+
+$ python -m pytest
+162 passed in 292.72s
+```
+
+专项覆盖：
+
+- `test_rules.py`：C++/Qt/SQLite 规则正文分离、单页/领域上限、未注入规则记录、
+  本轮注入正文集合、引用只允许落在注入正文内；
+- `test_evidence.py`：模型发现缺少 Agent 领域标记、引用其他领域规则、引用被预算
+  排除的规则、引用页面中未注入段落均被拒绝；合法注入规则+正文可确认；
+- `test_rules_injection.py`：模型提示词包含本领域规则正文、不含其他领域正文、
+  超限后标 `incomplete` 且报告列出未注入规则、无规则正文时不调用模型；
+  服务端覆盖模型伪造的 `_agent_domain`，其他领域/预算外规则不能进入正式报告；
+- `test_invalid_responses.py`：空响应、畸形 JSON、顶层类型错误、合法 `[]`、
+  合法发现数组、重试成功与重试耗尽后的整体状态；
+- `test_scope.py`：大文件单独出现、与普通文件同时出现、恰好等于上限，
+  以及唯一改动文件超限时整体状态必须是 `incomplete` 而非 `skipped`；
+- `test_headers.py`：只改 `.cpp` 时读取未修改的同名头文件，路径/SHA 来自固定快照，
+  预算失败/项目头文件缺失标 `incomplete`，角括号外部头文件缺失仅记录。
+
 ## 4. PRD §13 验收对照
 
 | 场景 | 状态 | 证据 / 缺口 |
@@ -148,7 +191,11 @@ $ python -m pytest code_checker/tests -q
 | 重跑同一 PR 更新评论 | ✅ 本地 | `test_publish.py`：更新同一条机器人评论，忽略用户伪造标记 |
 | 无适用文件/草稿跳过 | ✅ 本地 | `test_status.py`、`test_scope.py`：不调用模型，不宣称通过 |
 | API 超时/429/缺凭据 | ✅ 本地 | Git 客户端重试测试；缺凭据 → `failed`；模型失败 → `incomplete` |
-| 超预算/差异不完整 | ✅ 本地 | 文件数、变更行、文件大小、compare/tree 截断均有测试 |
+| 模型返回空/畸形/类型错误 | ✅ 本地 | `test_invalid_responses.py`：重试耗尽后 `incomplete`，合法 `[]` 才可 `completed` |
+| 规则正文注入与领域隔离 | ✅ 本地 | 每条发现带服务端领域标记；只接受该领域本轮实际注入的 `rule_id` 与正文，其他领域/预算外规则不进入正式报告（`test_rules.py`、`test_evidence.py`、`test_rules_injection.py`） |
+| 规则正文超出注入预算 | ✅ 本地 | 记录未注入规则、报告列出、结果标 `incomplete`，未注入规则不可被引用确认 |
+| 超预算/差异不完整 | ✅ 本地 | 文件数、变更行、单文件大小（含恰好等于上限）、compare/tree 截断均有测试 |
+| 只改 `.cpp` 时读取关联头文件 | ✅ 本地 | `test_headers.py`：从固定 `head_sha` 树查找并记录路径/范围/SHA |
 | fork PR 改脚本/依赖/工作流 | ⚠️ 部分 | 信任边界与工作流测试；无真实 fork 运行 |
 | fork PR 诱导执行命令 | ✅ 本地 | `test_tool_guard.py`：PR 模式无 shell/发布工具，调用被拒绝 |
 | PR 关闭/发布前新 head | ✅ 本地 | `test_publish.py`：`superseded`，不写评论 |
@@ -178,7 +225,9 @@ $ python -m pytest code_checker/tests -q
    无 `GITHUB_TOKEN`。因此没有仓库 URL、实现提交链接、Actions 运行链接、artifact 链接，
    也没有保持打开的演示 PR。不得用本地结果冒充线上验收。
 2. **真实模型调用**：无 `DEEPSEEK_API_KEY`。所有模型路径使用测试替身验证了
-   计数、重试、失败状态与证据核验；真实模型的语义质量未在线上验证。
+   规则正文注入、严格响应解析、计数、重试、失败状态与证据核验；真实模型
+   是否稳定逐字引用 `rule_quote`、规则正文体积对时延/token 的实际影响，
+   仍需线上试跑确认。
 3. **Action 版本固定**：PRD 要求第三方 Actions 固定到已核实提交 SHA。当前工作流只使用
    第一方 action（`actions/checkout@v4`、`actions/setup-python@v5`、
    `actions/upload-artifact@v4`、`actions/download-artifact@v4`），没有引入第三方
@@ -228,6 +277,14 @@ gh pr view --web
 
 - 只审查 PR diff 覆盖的改动，不做完整跨文件数据流分析。
 - 文档、二进制、生成文件、第三方目录与不支持类型会被排除并列出原因。
+- 超过单文件大小上限的适用代码文件属于“未覆盖”：结果标 `incomplete`，
+  不会退化成 `skipped`，也不会在有其他已审文件时假装完成。
+- 领域 Agent 只注入本领域规则正文；默认上限为单领域 64 KiB、单页 4 KiB。
+  超限规则会列在运行记录与完整报告中，结果标 `incomplete`。
+- 模型发现必须给出可核验的 `rule_quote`，且引用必须落在该领域本轮实际注入的
+  规则正文中；缺失、跨领域、预算外或页面其他章节的文字都会进入
+  `uncertain_findings`，因此真实模型可能比旧实现产生更多“不确定候选”。
+- 规则正文注入会增加单次提示词体积；模型请求总数仍受 40 次统一预算限制。
 - 修复建议均为建议，未执行验证；不会自动修改、提交或合并代码。
 - 模型语义结果可能波动；稳定性由确定性规则、证据核验与状态区分保障。
 - `code_checker/tests` 的 8 个历史失败未修复（不属于本阶段范围）。

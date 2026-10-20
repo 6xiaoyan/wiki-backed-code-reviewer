@@ -142,14 +142,16 @@ class FakeSnapshot(Snapshot):
 
 
 class FakeLLM:
-    """可控的模型替身：返回固定 JSON，并记录调用次数。"""
+    """可控的模型替身：返回固定 JSON，并记录调用次数与提示词。"""
 
     def __init__(self, responses):
         self.responses = list(responses)
         self.calls = 0
+        self.prompts: list[str] = []
 
     def invoke(self, prompt):
         self.calls += 1
+        self.prompts.append(prompt)
         text = self.responses.pop(0) if len(self.responses) > 1 else self.responses[0]
 
         class _Resp:

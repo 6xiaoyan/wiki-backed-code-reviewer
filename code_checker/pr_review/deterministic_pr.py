@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import os
 
+from code_checker.pr_review import rules as rules_module
 from code_checker.pr_review.models import (
     ChangedFile,
     Finding,
@@ -33,9 +34,9 @@ CHECK_TO_WIKI: dict[str, str] = {
     "check_c_variadic": "cpp/no-varargs",
     "check_header_guard": "cpp/header-guards",
     "check_using_namespace_in_header": "cpp/no-using-namespace-in-header",
-    "check_qt_include_dot_h": "qt/include-without-h",
-    "check_qt_signal_name": "qt/signal-name",
-    "check_qt_slot_name": "qt/slot-name",
+    "check_qt_include_dot_h": "qt/include-no-dot-h",
+    "check_qt_signal_name": "qt/signal-no-signal-word",
+    "check_qt_slot_name": "qt/slot-no-slot-word",
     "check_sqlite_pragma_key": "sqlite/must-use-sqlcipher",
     "check_sqlite_kdf": "sqlite/kdf-iterations",
 }
@@ -173,6 +174,9 @@ def filter_deterministic_violations(
 
         if relation:
             index += 1
+            page = CHECK_TO_WIKI.get(check_id, "") if rule_page_resolver(
+                CHECK_TO_WIKI.get(check_id, "")) else ""
+            basis = rules_module.rule_clause(page) if page else ""
             confirmed.append(Finding(
                 id=stable_finding_id(path, line, check_id or rule, index),
                 severity=severity if severity in SEVERITY_ORDER else "warning",
@@ -180,8 +184,10 @@ def filter_deterministic_violations(
                 line=line,
                 rule_id=f"deterministic/{check_id}" if check_id else "deterministic",
                 rule_title=rule,
-                rule_page=CHECK_TO_WIKI.get(check_id, "") if rule_page_resolver(
-                    CHECK_TO_WIKI.get(check_id, "")) else "",
+                rule_page=page,
+                rule_quote=basis[:800],
+                rule_basis=basis,
+                rule_source=rules_module.rule_source(page) if page else "",
                 message=str(v.get("reason") or rule),
                 code_evidence=evidence[:500],
                 change_relation=relation,

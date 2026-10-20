@@ -100,6 +100,18 @@ def _finding_block(f: Finding, index: int, *, detailed: bool) -> str:
     if f.rule_title and f.rule_title != f.rule_id:
         rule += f" — {sanitize_inline(f.rule_title, limit=160)}"
     lines.append(f"- **依据**：{rule}")
+    basis = f.rule_quote or f.rule_basis
+    if basis:
+        source = ""
+        if f.rule_source:
+            source = f"（可信 Wiki 原文，来源：{sanitize_inline(f.rule_source, limit=200)}）"
+        else:
+            source = "（可信 Wiki 原文）"
+        lines.append(f"- **规则正文**：{sanitize_inline(basis, limit=600)}{source}")
+    elif f.rule_page:
+        lines.append("- **规则正文**：未能从可信 Wiki 提取对应条款（见运行记录）")
+    else:
+        lines.append("- **规则正文**：该检查由确定性代码执行，未映射到 Wiki 页面")
     if f.suggestion:
         lines.append(f"- **建议**：{sanitize_inline(f.suggestion, limit=500)}")
     if detailed and f.source:
@@ -117,6 +129,13 @@ def _coverage_block(result: ReviewResult, *, compact: bool) -> str:
     parts = [f"已审查 {reviewed}/{changed} 个变更文件，{lines_budget} 行改动"]
     if excluded:
         parts.append(f"排除 {excluded} 个文件")
+    rules_injected = int(summary.get("rules_injected") or 0)
+    rules_not_injected = int(summary.get("rules_not_injected") or 0)
+    if rules_injected or rules_not_injected:
+        text_rules = f"规则正文注入 {rules_injected} 条"
+        if rules_not_injected:
+            text_rules += f"，{rules_not_injected} 条未注入"
+        parts.append(text_rules)
     text = "；".join(parts)
     if result.not_covered:
         text += f"；{len(result.not_covered)} 个文件因预算未覆盖"
@@ -351,6 +370,42 @@ def render_report(result: ReviewResult) -> str:
         )
     lines.append("")
 
+    rule_coverage = result.artifacts.get("rule_coverage") or []
+    if rule_coverage:
+        lines += ["## 规则正文注入范围", ""]
+        lines += [
+            "| 领域 | 已注入 | 未注入 | 已用字节 | 上限字节 |",
+            "|---|---|---|---|---|",
+        ]
+        for item in rule_coverage:
+            lines.append(
+                f"| {sanitize_inline(item.get('domain', '?'), 40)} "
+                f"| {item.get('rules_injected', 0)} "
+                f"| {item.get('rules_not_injected', 0)} "
+                f"| {item.get('used_bytes', 0)} "
+                f"| {item.get('limit_bytes', 0)} |"
+            )
+        lines.append("")
+        excluded_rules = [
+            (item.get("domain", "?"), rule)
+            for item in rule_coverage
+            for rule in (item.get("excluded") or [])
+        ]
+        if excluded_rules:
+            lines += [
+                "**未注入的规则正文**（审查依据不完整，结果因此标为未完成）：",
+                "",
+            ]
+            for domain, rule in excluded_rules[:100]:
+                lines.append(
+                    f"- `{sanitize_inline(rule.get('rule_id', '?'), 120)}`"
+                    f"（{sanitize_inline(str(domain), 40)}）— "
+                    f"{sanitize_inline(rule.get('reason', ''), 240)}"
+                )
+            if len(excluded_rules) > 100:
+                lines.append(f"- …其余 {len(excluded_rules) - 100} 条")
+            lines.append("")
+
     lines += ["## 已确认问题", ""]
     if not result.findings:
         lines.append(
@@ -388,6 +443,17 @@ def render_report(result: ReviewResult) -> str:
                 f"- `{r.get('path')}` @ `{str(r.get('sha'))[:8]}` "
                 f"行 {r.get('start')}-{r.get('end')}：{r.get('purpose')} "
                 f"（{r.get('bytes')} 字节）"
+            )
+        lines.append("")
+
+    header_missing = result.artifacts.get("header_context_missing") or []
+    if header_missing:
+        lines += ["## 未读取的关联头文件", ""]
+        for item in header_missing[:50]:
+            kind = "项目头文件（必要上下文）" if item.get("quoted") else "外部/角括号头文件"
+            lines.append(
+                f"- `{sanitize_inline(item.get('path', '?'), 200)}` "
+                f"（{kind}，引用自 `{sanitize_inline(item.get('file', '?'), 200)}`）"
             )
         lines.append("")
 

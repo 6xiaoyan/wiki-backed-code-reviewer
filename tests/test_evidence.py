@@ -26,14 +26,21 @@ def _changed(path="src/a.cpp", *, status="modified", added=(2,), context=(1, 3),
                        deletions=1, hunks=[hunk])
 
 
-def _verify(raw, files=None, head=None, base=None):
+def _verify(raw, files=None, head=None, base=None, rule_verifier=None, **kwargs):
+    items = []
+    for item in raw:
+        item = dict(item)
+        item.setdefault("rule_quote", "测试引用：可信规则正文")
+        items.append(item)
     return verify_findings(
-        raw,
+        items,
         files=files or [_changed()],
         head_contents=head or {"src/a.cpp": HEAD},
         base_contents=base or {"src/a.cpp": BASE},
         registry=REGISTRY,
         default_source="model",
+        rule_verifier=rule_verifier or (lambda rule_id, quote: (True, "")),
+        **kwargs,
     )
 
 
@@ -109,10 +116,12 @@ def test_deleted_file_finding_on_removed_line():
     cf.hunks[0].lines = [DiffLine("-", "int value = 0;", 2, None)]
     out = verify_findings(
         [{"file": "src/a.cpp", "line": 2, "rule_id": "cpp/no-bare-new-delete",
-          "severity": "critical", "message": "删除校验", "code": "int value = 0;"}],
+          "severity": "critical", "message": "删除校验", "code": "int value = 0;",
+          "rule_quote": "测试引用：可信规则正文"}],
         files=[cf], head_contents={"src/a.cpp": BASE},
         base_contents={"src/a.cpp": BASE}, registry=REGISTRY,
         default_source="model",
+        rule_verifier=lambda rule_id, quote: (True, ""),
     )
     assert out["confirmed"][0].change_relation == "deleted"
 
@@ -196,3 +205,107 @@ def test_deterministic_evidence_mismatch_dropped():
     )
     assert not out["confirmed"]
     assert out["filtered"][0]["reason"].startswith("声称的代码")
+
+
+def test_deterministic_finding_carries_wiki_clause():
+    out = filter_deterministic_violations(
+        [_det_violation(2, "禁止 Tab 缩进", "check_tab_indentation",
+                        current="int value = 1;")],
+        [_changed()], {"src/a.cpp": HEAD}, {"src/a.cpp": BASE},
+        rule_page_resolver=lambda slug: True,
+    )
+    finding = out["confirmed"][0]
+    assert finding.rule_page == "cpp/indentation"
+    assert "4 个空格" in finding.rule_basis
+    assert finding.rule_quote
+    assert "C++代码规范.md" in finding.rule_source
+
+
+# ---------------------------------------------------------------------------
+# 模型必须引用可信规则正文
+# ---------------------------------------------------------------------------
+def _model_finding(rule_id="cpp/indentation", quote="", code="int value = 1;"):
+    return {
+        "file": "src/a.cpp", "line": 2, "rule_id": rule_id,
+        "severity": "warning", "message": "缩进不符合规则", "code": code,
+        "rule_quote": quote,
+    }
+
+
+def test_missing_rule_quote_is_uncertain():
+    from code_checker.pr_review.rules import quote_supported
+
+    out = _verify([_model_finding()], rule_verifier=quote_supported)
+    assert not out["confirmed"]
+    assert "未引用规则正文" in out["uncertain"][0]["reason"]
+
+
+def test_fabricated_rule_quote_is_uncertain():
+    from code_checker.pr_review.rules import quote_supported
+
+    out = _verify(
+        [_model_finding(quote="这条规则允许使用 Tab 缩进")],
+        rule_verifier=quote_supported,
+    )
+    assert not out["confirmed"]
+    assert "无法核验" in out["uncertain"][0]["reason"]
+
+
+def test_valid_rule_quote_is_confirmed_with_basis():
+    from code_checker.pr_review.rules import quote_supported
+
+    quote = "所有 C++ 源代码文件必须使用**4 个空格**进行缩进"
+    out = _verify([_model_finding(quote=quote)], rule_verifier=quote_supported)
+    assert len(out["confirmed"]) == 1
+    finding = out["confirmed"][0]
+    assert finding.rule_quote == quote
+    assert "4 个空格" in finding.rule_basis
+    assert "C++代码规范.md" in finding.rule_source
+
+
+# ---------------------------------------------------------------------------
+# 规则作用域：只允许该 Agent 领域本轮实际注入的规则与正文
+# ---------------------------------------------------------------------------
+def _domain_texts():
+    return {"cpp": {"cpp/indentation": "### cpp/indentation — 缩进规范\n"
+                                       "所有 C++ 源代码文件必须使用 4 个空格缩进。"}}
+
+
+def test_missing_agent_domain_is_rejected():
+    out = _verify([_model_finding(quote="所有 C++ 源代码文件必须使用")],
+                  domain_rule_texts=_domain_texts())
+    assert not out["confirmed"]
+    assert "缺少 Agent 领域标记" in out["uncertain"][0]["reason"]
+
+
+def test_rule_not_injected_for_domain_is_rejected():
+    out = _verify([{
+        "file": "src/a.cpp", "line": 2, "rule_id": "qt/no-tabs",
+        "severity": "warning", "message": "x", "code": "int value = 1;",
+        "rule_quote": "所有 C++ 源代码文件必须使用",
+        "_agent_domain": "cpp",
+    }], domain_rule_texts=_domain_texts())
+    assert not out["confirmed"]
+    assert "未注入给 cpp 领域 Agent" in out["uncertain"][0]["reason"]
+
+
+def test_quote_outside_domain_injected_text_is_rejected():
+    out = _verify([{
+        "file": "src/a.cpp", "line": 2, "rule_id": "cpp/indentation",
+        "severity": "warning", "message": "x", "code": "int value = 1;",
+        "rule_quote": "这段文字来自页面其他章节",
+        "_agent_domain": "cpp",
+    }], domain_rule_texts=_domain_texts())
+    assert not out["confirmed"]
+    assert "不在本轮注入的正文范围内" in out["uncertain"][0]["reason"]
+
+
+def test_domain_injected_rule_and_quote_is_confirmed():
+    out = _verify([{
+        "file": "src/a.cpp", "line": 2, "rule_id": "cpp/indentation",
+        "severity": "warning", "message": "x", "code": "int value = 1;",
+        "rule_quote": "所有 C++ 源代码文件必须使用 4 个空格缩进。",
+        "_agent_domain": "cpp",
+    }], domain_rule_texts=_domain_texts())
+    assert len(out["confirmed"]) == 1
+    assert out["confirmed"][0].rule_quote == "所有 C++ 源代码文件必须使用 4 个空格缩进。"

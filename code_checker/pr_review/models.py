@@ -204,6 +204,8 @@ class BudgetConfig:
     review_timeout_seconds: int = 15 * 60
     model_retries_per_call: int = 2
     artifact_retention_days: int = 14
+    max_rule_context_bytes: int = 64 * 1024
+    max_rule_page_bytes: int = 4 * 1024
 
     @classmethod
     def from_dict(cls, data: Optional[dict]) -> "BudgetConfig":
@@ -222,6 +224,8 @@ class BudgetConfig:
             "review_timeout_seconds": self.review_timeout_seconds,
             "model_retries_per_call": self.model_retries_per_call,
             "artifact_retention_days": self.artifact_retention_days,
+            "max_rule_context_bytes": self.max_rule_context_bytes,
+            "max_rule_page_bytes": self.max_rule_page_bytes,
         }
 
 
@@ -296,6 +300,12 @@ class Finding:
     change_relation: str  # added|modified|deleted
     source: str
     rule_page: str = ""
+    rule_quote: str = ""
+    """模型从可信 Wiki 正文中逐字摘录、并已被证据核验的一句话依据。"""
+    rule_basis: str = ""
+    """从可信 Wiki 页面确定性提取的规则条款原文（报告展示用）。"""
+    rule_source: str = ""
+    """规则来源（source_file / source_section），来自页面 frontmatter。"""
     suggestion: str = ""
     end_line: Optional[int] = None
 
@@ -309,6 +319,9 @@ class Finding:
             "rule_id": self.rule_id,
             "rule_title": self.rule_title,
             "rule_page": self.rule_page,
+            "rule_quote": self.rule_quote,
+            "rule_basis": self.rule_basis,
+            "rule_source": self.rule_source,
             "message": self.message,
             "code_evidence": self.code_evidence,
             "change_relation": self.change_relation,
@@ -327,6 +340,9 @@ class Finding:
             rule_id=str(data.get("rule_id", "")),
             rule_title=str(data.get("rule_title", "")),
             rule_page=str(data.get("rule_page", "")),
+            rule_quote=str(data.get("rule_quote", "")),
+            rule_basis=str(data.get("rule_basis", "")),
+            rule_source=str(data.get("rule_source", "")),
             message=str(data.get("message", "")),
             code_evidence=str(data.get("code_evidence", "")),
             change_relation=str(data.get("change_relation", "added")),

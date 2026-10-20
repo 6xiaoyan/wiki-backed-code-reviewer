@@ -5,15 +5,17 @@
   2. 行号在固定版本文件范围内；
   3. 引用的代码与固定版本对应行一致（归一化比较）；
   4. 规则依据来自可信 Wiki/确定性检查（rule_id 可解析）；
-  5. 与改动关联：新增行 / 删除行；上下文行上的问题视为历史问题。
+  5. 模型引用的规则正文（rule_quote）确实出现在该领域本轮实际注入的正文中；
+  6. 与改动关联：新增行 / 删除行；上下文行上的问题视为历史问题。
 证据不足的候选进入 ``uncertain_findings``，不计入已确认问题，也不作为合并阻断。
 """
 
 from __future__ import annotations
 
 import re
-from typing import Iterable
+from typing import Callable, Iterable
 
+from code_checker.pr_review import rules as rules_module
 from code_checker.pr_review.models import (
     ChangedFile,
     Finding,
@@ -100,12 +102,22 @@ def verify_findings(
     registry: dict[str, dict],
     default_source: str,
     max_findings: int = 200,
+    rule_verifier: Callable[[str, str], tuple[bool, str]] | None = None,
+    domain_rule_texts: dict[str, dict[str, str]] | None = None,
 ) -> dict:
     """核验模型输出。
+
+    Args:
+        rule_verifier: 规则正文引用核验函数（仅在未提供 domain_rule_texts 时使用），
+            默认使用 ``rules.quote_supported``；测试可注入替身。
+        domain_rule_texts: ``{agent_domain: {rule_id: injected_text}}``。
+            提供时强制执行：发现必须带 ``_agent_domain``，规则必须是该领域本轮
+            实际注入的规则，引用必须出现在该注入正文中。
 
     Returns:
         {"confirmed": [Finding], "uncertain": [dict], "filtered": [dict]}
     """
+    verify_quote = rule_verifier or rules_module.quote_supported
     by_path = {f.path: f for f in files}
     confirmed: list[Finding] = []
     uncertain: list[dict] = []
@@ -127,6 +139,7 @@ def verify_findings(
         code = str(raw.get("code") or raw.get("current") or "").strip()
         suggestion = str(raw.get("suggestion") or "").strip()
         source = str(raw.get("source") or default_source)
+        agent_domain = str(raw.get("_agent_domain") or "").strip()
 
         if severity not in SEVERITY_ORDER:
             severity = "warning"
@@ -163,7 +176,38 @@ def verify_findings(
                 continue
             line = corrected
 
-        if not rule_id or (registry and rule_id not in registry):
+        if not rule_id:
+            uncertain.append(_entry(
+                path, line, rule_id, severity, source,
+                "缺少规则 ID，无法核验规则依据", raw,
+            ))
+            continue
+
+        # ── 规则作用域：只允许该 Agent 领域本轮实际注入的规则与正文 ──
+        injected_text: dict[str, str] | None = None
+        if domain_rule_texts is not None:
+            if not agent_domain:
+                uncertain.append(_entry(
+                    path, line, rule_id, severity, source,
+                    "发现缺少 Agent 领域标记，无法确认规则是否注入", raw,
+                ))
+                continue
+            injected_text = domain_rule_texts.get(agent_domain)
+            if injected_text is None:
+                uncertain.append(_entry(
+                    path, line, rule_id, severity, source,
+                    f"未知 Agent 领域: {agent_domain}", raw,
+                ))
+                continue
+            if rule_id not in injected_text:
+                uncertain.append(_entry(
+                    path, line, rule_id, severity, source,
+                    f"规则 {rule_id} 未注入给 {agent_domain} 领域 Agent"
+                    f"（属于其他领域或被预算排除）", raw,
+                ))
+                continue
+
+        if registry and rule_id not in registry:
             uncertain.append(_entry(
                 path, line, rule_id, severity, source,
                 "规则依据无法在可信 Wiki/确定性检查中解析", raw,
@@ -180,6 +224,26 @@ def verify_findings(
             filtered.append(_entry(path, line, rule_id, severity, source, reason, raw))
             continue
 
+        # ── 规则正文依据：引用必须出现在该领域本轮实际注入的正文中 ──
+        quote = str(raw.get("rule_quote") or "").strip()
+        if not quote:
+            uncertain.append(_entry(
+                path, line, rule_id, severity, source,
+                "未引用规则正文（rule_quote 缺失），无法证明结论有规则依据", raw,
+            ))
+            continue
+        supported, why = (
+            rules_module.quote_in_injected(rule_id, quote, injected_text)
+            if injected_text is not None
+            else verify_quote(rule_id, quote)
+        )
+        if not supported:
+            uncertain.append(_entry(
+                path, line, rule_id, severity, source,
+                f"规则正文引用无法核验：{why}", raw,
+            ))
+            continue
+
         key = (path, line, rule_id)
         if key in seen:
             continue
@@ -193,6 +257,9 @@ def verify_findings(
             rule_id=rule_id,
             rule_title=str((registry.get(rule_id) or {}).get("title") or rule_id),
             rule_page=rule_id if rule_id in registry else "",
+            rule_quote=quote[:800],
+            rule_basis=rules_module.rule_clause(rule_id),
+            rule_source=rules_module.rule_source(rule_id),
             message=message[:2000] or "（模型未给出说明）",
             code_evidence=(code or actual)[:500],
             change_relation=relation,
