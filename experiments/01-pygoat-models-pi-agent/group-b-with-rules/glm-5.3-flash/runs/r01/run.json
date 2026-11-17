@@ -1,0 +1,27 @@
+{
+  "experiment_id": "01-pygoat-models-pi-agent",
+  "group": "B-with-extra-rules",
+  "model_label": "glm-5.3-flash",
+  "run_id": "r01",
+  "harness": "pi-agent",
+  "input_directory": "D:/ai_share/langgraph/benchmark-data/pygoat-baseline/inputs/experiment-01/pygoat",
+  "source_commit": "2fb0c600245f50670e8b9233c784afe61e8b340b",
+  "started_at": "2026-11-17T13:56:13+08:00",
+  "finished_at": "2026-11-17T14:01:00+08:00",
+  "status": "completed",
+  "stop_reason": "完成规范阅读与主要Python/模板/子应用静态审查，在时间预算内保存全部产物；未覆盖内容见 limitations 与 coverage.json",
+  "limitations": [
+    "纯静态分析，未运行目标应用、未执行任何验证或利用代码，全部结论基于源码证据",
+    "约120个HTML模板中仅抽查与数据流相关的十余个；mitre_top1~25 等说明页未通读",
+    "migrations、tests.py、docker-compose/Dockerfile、gh-md-toc、.all-contributorsrc、LICENSE 未审查或仅浅层浏览",
+    "未进行依赖CVE清单比对（无网络），PyYAML==5.1 仅在代码用法直接证实时引用",
+    "findings 中 a9_lab2（ImageMath.eval）与 finding-037 的可利用性部分依赖运行时行为，置信度已标注为 medium",
+    "无法精确计算 token 用量与费用，相关字段填 null，由操作者用 pi 运行日志补充"
+  ],
+  "confirmed_model_id": "GLM-5.3-Flash",
+  "pi_version": null,
+  "reasoning_effort": "off",
+  "input_tokens": null,
+  "output_tokens": null,
+  "cost": null
+}

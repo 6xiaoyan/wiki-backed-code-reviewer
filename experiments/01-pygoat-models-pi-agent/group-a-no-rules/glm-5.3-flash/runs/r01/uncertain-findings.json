@@ -1,0 +1,54 @@
+{
+  "candidates": [
+    {
+      "path": "challenge/views.py",
+      "start": {
+        "line": 49,
+        "col": 9
+      },
+      "suspect": "DoItFast.post/delete 用数据库值构造 docker 命令：f\"docker run -d -p {port}:{chal.docker_port} {chal.docker_image}\"、f\"docker stop {user_chal.container_id}\"。",
+      "evidence": "命令由 Challenge 模型字段拼接后 subprocess.Popen 执行（未用 shell=True）。字段来自 challenge.json 经 populate_challenges 导入。",
+      "missing": "需要确认攻击者是否能控制 Challenge 表内容（需应用后台/管理界面或数据库写权限）。若可控制，可注入额外 docker 参数实现容器逃逸类攻击；静态证据不足以判定可达性。"
+    },
+    {
+      "path": "introduction/views.py",
+      "start": {
+        "line": 649,
+        "col": 9
+      },
+      "suspect": "a10_lab2 以 HTTP_X_FORWARDED_FOR 首值作为客户端 IP 记入日志（第649-672行），头可伪造；且日志行含未转义的用户名，存在日志伪造/注入空间。",
+      "evidence": "ip = x_forwarded_for.split(',')[0] 后直接 f-string 写入 logging.info/warning/error。",
+      "missing": "该头在无代理直连时仍可由客户端设置，影响主要为日志失真与低危害注入；未确认项目将日志用于何种安全决策，故未列为确认发现。"
+    },
+    {
+      "path": "introduction/static/js/a9.js",
+      "start": {
+        "line": 40,
+        "col": 13
+      },
+      "suspect": "li.innerHTML = data.logs[i] 将服务端返回日志直接写入 DOM，若日志内容含攻击者可控文本（log_code 写入的代码产生的日志）可构成 DOM XSS。",
+      "evidence": "仅 grep 检查该行，未阅读完整 a9.js 及日志生成链路。",
+      "missing": "需要完整阅读 a9.js 与 log_function_checker 的日志内容来源，确认攻击者能否把 HTML 注入 logs 响应。"
+    },
+    {
+      "path": "introduction/views.py",
+      "start": {
+        "line": 1193,
+        "col": 13
+      },
+      "suspect": "auth_failure_lab3 中 USER_A7_LAB3[username] 对未知用户名抛 KeyError 导致 500；会话 token 在凭据校验前生成。影响限于错误处理健壮性，无明确安全后果。",
+      "evidence": "USER_A7_LAB3 为硬编码字典（第1130-1135行），未做成员检查。",
+      "missing": "未确认框架层是否将 500 转为信息泄露（DEBUG=True 时会输出栈回溯，与 finding-039 重叠）。"
+    },
+    {
+      "path": "introduction/views.py",
+      "start": {
+        "line": 359,
+        "col": 13
+      },
+      "suspect": "ba_lab/a10_lab 等口令比对端点无速率限制与锁定机制，可在线爆破（finding-017 已覆盖 OTP 部分）。",
+      "evidence": "login.objects.filter(user='admin',password=password) 直接查询，无失败计数。",
+      "missing": "Django 层面未配置任何防爆破中间件；需结合部署环境确认是否由 WAF/网关补充，故未单列确认发现。"
+    }
+  ]
+}

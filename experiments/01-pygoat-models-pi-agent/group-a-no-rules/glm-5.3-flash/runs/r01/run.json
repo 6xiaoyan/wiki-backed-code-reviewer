@@ -1,0 +1,27 @@
+{
+  "experiment_id": "01-pygoat-models-pi-agent",
+  "group": "A-no-extra-rules",
+  "model_label": "glm-5.3-flash",
+  "run_id": "r01",
+  "harness": "pi-agent",
+  "input_directory": "D:/ai_share/langgraph/benchmark-data/pygoat-baseline/inputs/experiment-01/pygoat",
+  "source_commit": "2fb0c600245f50670e8b9233c784afe61e8b340b",
+  "started_at": "2026-11-17T13:38:36+08:00",
+  "finished_at": "2026-11-17T13:47:19+08:00",
+  "status": "completed",
+  "stop_reason": "analysis_completed_within_budget：在 30 分钟分析预算内完成计划内静态审查并保存全部结果，未触发时间上限。",
+  "limitations": [
+    "纯静态分析：未运行应用、未执行测试/利用代码、未调用扫描器，未对任何发现做动态验证。",
+    "未访问输入目录以外的材料、未联网、未读取标准答案或判分程序。",
+    "模板与前端资源仅做模式搜索与定点阅读，未逐行覆盖（见 coverage.json）。",
+    "迁移文件、部分管理命令与配置未完整阅读。",
+    "确认发现的前提条件中区分了源码已确认项与需部署环境确认项；未评估漏洞真实可达性。"
+  ],
+  "confirmed_model_id": "GLM-5.3-Flash",
+  "pi_version": null,
+  "reasoning_effort": "off",
+  "input_tokens": null,
+  "output_tokens": null,
+  "cost": null,
+  "confirmed_model_id_note": "来自运行环境变量 PI_MODEL=GLM-5.3-Flash（harness 上报标签），非模型自证。"
+}

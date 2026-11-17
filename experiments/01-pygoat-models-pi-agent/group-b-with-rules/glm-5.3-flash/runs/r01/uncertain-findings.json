@@ -1,0 +1,39 @@
+{
+  "candidates": [
+    {
+      "path": "introduction/apis.py",
+      "start": {"line": 28, "col": 27},
+      "suspected_issue": "ssrf_code_checker 将用户提交的 python_code 经 ssrf_code_converter 转换后写入 introduction/playground/ssrf/main.py（用户代码覆写会被导入执行的源文件，疑似 CWE-94）",
+      "existing_evidence": "ssrf_code_converter() 以 open(filename,'w') 写入 playground/ssrf/main.py；apis.py 顶部 from introduction.playground.ssrf import main，随后调用 main.ssrf_lab(inputs)；该端点有登录校验。",
+      "missing_conditions": "当前进程内 main 模块已导入，写入的新代码仅在模块重新加载（worker 重启/StatReloader 触发）后执行；无法在静态分析中确认部署的重载行为，故未并入确认发现。"
+    },
+    {
+      "path": "introduction/views.py",
+      "start": {"line": 1003, "col": 27},
+      "suspected_issue": "ssti_view_blog 以 render(request, f\"Lab_2021/A3_Injection/Blogs/{blog_id}.html\") 渲染用户可控的 blog_id 路径，疑似模板路径穿越（CWE-22）",
+      "existing_evidence": "blog_id 来自 URL <str:blog_id>，直接拼入模板名。",
+      "missing_conditions": "Django FileSystemLoader/AppDirsLoader 内部使用 safe_join，通常会对 '..' 抛出 SuspiciousFileOperation；未逐行核实所用 Django 4.2 loader 的具体实现，故存疑。"
+    },
+    {
+      "path": "introduction/views.py",
+      "start": {"line": 1122, "col": 5},
+      "suspected_issue": "auth_failure_lab2 锁定逻辑可疑：fail_attempt==5 时置 is_active=False，但登录流程从未检查 is_active，且 is_locked 判定在错误计数前（疑似 CWE-307 暴力破解防护失效/绕过）",
+      "existing_evidence": "if user.is_locked == True and user.lockout_cooldown > datetime.datetime.now(): 提前返回；后续 except 分支 fail_attempt 达 5 才锁定 1440 分钟。",
+      "missing_conditions": "未确认并发计数（竞态）及 is_active 未被强制执行的完整影响路径，未确认锁定期满后 failattempt 是否重置（仅在成功验证后重置），静态无法确认绕过是否实际可利用。"
+    },
+    {
+      "path": "challenge/views.py",
+      "start": {"line": 49, "col": 18},
+      "suspected_issue": "DoItFast.post 以 f-string 构造 docker run 命令（疑似 CWE-78）",
+      "existing_evidence": "command = f\"docker run -d -p {port}:{chal.docker_port} {chal.docker_image}\"，经 subprocess.Popen(command.split(\" \"))（无shell）执行。",
+      "missing_conditions": "docker_image/docker_port 来自 Challenge 数据库（challenge.json/populate_challenge.py 导入），非请求参数；仅当具备数据库写权限者注入恶意镜像名时才可利用，缺乏直接用户可控路径。"
+    },
+    {
+      "path": "introduction/playground/A9/api.py",
+      "start": {"line": 24, "col": 19},
+      "suspected_issue": "log_function_target 将 POST 用户名与口令明文写入日志（疑似 CWE-532）",
+      "existing_evidence": "L.info(f\"POST request with username {username} and password {password}\")。",
+      "missing_conditions": "默认 Log 类（playground/A9/main.py）的 info/warning/error 均为 pass（不落盘），且该文件可被 /2021/discussion/A9/api 覆写；实际日志行为取决于运行时使用的 Log 实现，故无法确认为已生效的敏感日志存储。"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "experiment_id": "01-pygoat-models-pi-agent",
+  "group": "A-no-extra-rules",
+  "model_label": "qwen-3.8-flash-next",
+  "run_id": "r01",
+  "harness": "pi-agent",
+  "input_directory": "D:/ai_share/langgraph/benchmark-data/pygoat-baseline/inputs/experiment-01/pygoat",
+  "source_commit": "2fb0c600245f50670e8b9233c784afe61e8b340b",
+  "started_at": "2026-11-17T13:39:42+08:00",
+  "finished_at": "2026-11-17T13:45:40+08:00",
+  "status": "completed",
+  "stop_reason": "分析在提示词给定的 30 分钟上限内自然收敛：核心 Python 代码（introduction/views.py、mitre.py、apis.py、utility.py、models.py、urls.py、pygoat 配置、challenge 应用、三个 dockerized_labs 子应用、playground 模块）已全部读完，模板/JS/配置文件做了针对性搜索并展开命中处，随后停止继续搜索转入结果写出。未被覆盖的文件已在 coverage.json 标为 partial/not_reviewed。",
+  "time_tracking": {
+    "time_source": "bash `date -Iseconds`（Windows/Git-Bash 系统时钟）与 PI_SESSION_FILE 文件名中的会话时间戳",
+    "session_file_start_utc": "2026-11-17T05:39:19.334Z",
+    "first_observed_clock_reading": "2026-11-17T13:39:42+08:00",
+    "last_observed_clock_reading": "2026-11-17T13:45:40+08:00",
+    "note": "起止时间均为工具实际读取到的系统时间；未按主观感受推算时长。系统时钟在多次工具调用之间推进的幅度较小（观察到约 5-6 分钟），与本次实际完成的阅读量不完全成比例，因此不额外推算精确耗时，仅保留原始读数。"
+  },
+  "confirmed_model_id": "Qwen3.8-Flash-Next",
+  "confirmed_model_id_source": "环境变量 PI_MODEL（harness 提供），provider=PI_PROVIDER=lenovo-token-hub；本 agent 无法自行验证底层真实模型身份，故该值仅为工具可读到的环境标注。",
+  "pi_version": "1.5.0",
+  "pi_version_source": "`pi --version` 输出，且与 C:/Users/zhuym5/.pi/agent/install/releases/1.5.0/node_modules/@earendil-works/pi-coding-agent/package.json 中 version 字段一致。",
+  "reasoning_effort": "off",
+  "reasoning_effort_source": "环境变量 PI_REASONING_LEVEL=off",
+  "input_tokens": null,
+  "output_tokens": null,
+  "cost": null,
+  "capabilities_used": [
+    "read",
+    "bash (grep/find/wc/date/mkdir)",
+    "write",
+    "edit"
+  ],
+  "capabilities_not_used": [
+    "依赖安装",
+    "运行目标应用",
+    "执行测试/利用代码",
+    "漏洞扫描器",
+    "子 agent 委派",
+    "联网检索"
+  ],
+  "artifacts": [
+    "findings.json",
+    "report.md",
+    "coverage.json",
+    "run.json",
+    "uncertain-findings.json",
+    "_gen/ (本次分析辅助脚本，仅保存在输出目录，未修改被审查代码)"
+  ],
+  "limitations": [
+    "confirmed_model_id 仅来自 harness 环境变量 PI_MODEL，模型无法自证身份；操作者应以 pi 真实运行日志为准。",
+    "input_tokens / output_tokens / cost 在本 agent 可见的工具结果中没有来源，按提示词要求填 null，未做任何估算。",
+    "全部结论为静态分析：未安装依赖、未启动应用、未执行任何验证或攻击代码，未调用扫描器。",
+    "未访问父目录、其他仓库、规范资料、判分程序、标准答案、其他运行结果与 Git 历史；未联网检索项目名或漏洞列表。",
+    "introduction/templates 下大量纯讲解 HTML、全部 CSS、多数 Django migrations 文件仅粗读或未读，详见 coverage.json 的 partial / not_reviewed 条目。",
+    "被移除的 db.sqlite3、README、文档与解答类文件不在输入目录中，因此涉及数据库实际内容（如各 lab 表内口令哈希、AF_admin 记录）的前提只能标注为需部署环境确认。",
+    "有意为之的教学漏洞与真实缺陷混杂：报告只按证据描述缺陷与影响，不推断出题意图，也不声称覆盖完整。",
+    "输出目录 runs/r01/ 事先存在但为空（仅含 PROMPT 同级 runs/.gitkeep 之外的空目录），未发生读取或覆盖旧结果的情况。"
+  ]
+}

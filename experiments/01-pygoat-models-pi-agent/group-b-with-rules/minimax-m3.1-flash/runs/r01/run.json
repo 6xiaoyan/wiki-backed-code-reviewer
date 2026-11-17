@@ -1,0 +1,29 @@
+{
+  "experiment_id": "01-pygoat-models-pi-agent",
+  "group": "B-with-extra-rules",
+  "model_label": "minimax-m3.1-flash",
+  "run_id": "r01",
+  "harness": "pi-agent",
+  "input_directory": "D:/ai_share/langgraph/benchmark-data/pygoat-baseline/inputs/experiment-01/pygoat",
+  "source_commit": "2fb0c600245f50670e8b9233c784afe61e8b340b",
+  "started_at": "2026-11-17T13:17:16+08:00",
+  "finished_at": "2026-11-17T13:32:30+08:00",
+  "status": "completed",
+  "stop_reason": "analysis_budget_reached",
+  "limitations": [
+    "Static analysis only: the application was never installed, started, tested or exploited; no runtime verification of any finding was performed.",
+    "Timings were taken from the system clock: run started at 13:17:16 +08:00, the output files were written at 13:27-13:32 +08:00. The analysis phase stayed inside the 30-minute budget and the writing phase inside the 5-minute budget (total elapsed about 15 minutes).",
+    "Only the files inside the input directory and the rules in rules-v1 were used; no parent directories, external repositories, advisories, network access, standard answers or scoring code were consulted.",
+    "Coverage is uneven: all Python sources of the three applications were read in full, but most HTML templates, static CSS/JS assets, migrations and shell scripts were only inspected through targeted searches (|safe / mark_safe / csrf_token / innerHTML / eval / subprocess / raw()), so template-level issues that do not involve those patterns may have been missed.",
+    "Several findings (for example finding-046 and finding-047) depend on runtime behaviour such as module re-import or library sandbox details; they are marked with reduced confidence and list the unverified condition in metadata.preconditions.",
+    "Deployment-specific facts (reachable routes, proxy configuration, installed dependency versions, database contents) could not be checked and are recorded per finding as 'needs deployment confirmation'.",
+    "input_tokens / output_tokens / cost are null because no token accounting was available to the agent; the operator should fill them from the pi run log (session id 01a1e7ef-1c38-71b0-90d9-a1661beaf8c3)."
+  ],
+  "confirmed_model_id": "MiniMax-M3.1-Flash",
+  "pi_version": "1.5.0",
+  "reasoning_effort": "high",
+  "input_tokens": null,
+  "output_tokens": null,
+  "cost": null,
+  "notes": "confirmed_model_id / pi_version / reasoning_effort were read from the runtime environment (PI_MODEL=MiniMax-M3.1-Flash, PI_PROVIDER=minimax-cn, PI_REASONING_LEVEL=high, `pi --version` -> 1.5.0). They describe the process that produced this run, not an independent verification of model identity."
+}

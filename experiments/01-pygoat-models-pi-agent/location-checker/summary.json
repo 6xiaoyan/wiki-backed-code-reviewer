@@ -1,0 +1,62 @@
+[
+  {
+    "run": "minimax-m3.1-flash/A",
+    "reports": 47,
+    "file_exists": 47,
+    "file_in_ground_truth": 46,
+    "check_1_file_exists_and_matches": 46,
+    "check_2_reported_start_within_10_lines": 43,
+    "check_3_at_least_one_source_line_in_quote": 47,
+    "all_three": 43
+  },
+  {
+    "run": "minimax-m3.1-flash/B",
+    "reports": 53,
+    "file_exists": 53,
+    "file_in_ground_truth": 53,
+    "check_1_file_exists_and_matches": 53,
+    "check_2_reported_start_within_10_lines": 51,
+    "check_3_at_least_one_source_line_in_quote": 52,
+    "all_three": 50
+  },
+  {
+    "run": "glm-5.3-flash/A",
+    "reports": 48,
+    "file_exists": 48,
+    "file_in_ground_truth": 47,
+    "check_1_file_exists_and_matches": 47,
+    "check_2_reported_start_within_10_lines": 46,
+    "check_3_at_least_one_source_line_in_quote": 43,
+    "all_three": 41
+  },
+  {
+    "run": "glm-5.3-flash/B",
+    "reports": 41,
+    "file_exists": 41,
+    "file_in_ground_truth": 41,
+    "check_1_file_exists_and_matches": 41,
+    "check_2_reported_start_within_10_lines": 40,
+    "check_3_at_least_one_source_line_in_quote": 37,
+    "all_three": 36
+  },
+  {
+    "run": "qwen-3.8-flash-next/A",
+    "reports": 47,
+    "file_exists": 47,
+    "file_in_ground_truth": 47,
+    "check_1_file_exists_and_matches": 47,
+    "check_2_reported_start_within_10_lines": 42,
+    "check_3_at_least_one_source_line_in_quote": 47,
+    "all_three": 42
+  },
+  {
+    "run": "qwen-3.8-flash-next/B",
+    "reports": 59,
+    "file_exists": 59,
+    "file_in_ground_truth": 55,
+    "check_1_file_exists_and_matches": 55,
+    "check_2_reported_start_within_10_lines": 50,
+    "check_3_at_least_one_source_line_in_quote": 59,
+    "all_three": 50
+  }
+]

@@ -1,0 +1,1276 @@
+{
+  "files": [
+    {
+      "path": ".all-contributorsrc",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": ".gitignore",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "Dockerfile",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "LICENSE.md",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "Procfile",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "PyGoatBot.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "challenge/__init__.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "challenge/admin.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "challenge/apps.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "challenge/challenge.json",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "challenge/management/commands/populate_challenge.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "challenge/management/commands/populate_challenges.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "challenge/migrations/0001_initial.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "challenge/migrations/0002_challenge_docker_port.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "challenge/migrations/0003_alter_challenge_docker_image_alter_challenge_id_and_more.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "challenge/migrations/__init__.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "challenge/models.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "challenge/templates/chal-not-found.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "challenge/templates/challenge.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "challenge/tests.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "challenge/urls.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "challenge/utility.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "challenge/views.py",
+      "status": "reviewed",
+      "note": "Read in full (87 lines); docker orchestration and per-user challenge binding reviewed."
+    },
+    {
+      "path": "docker-compose.yml",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/Dockerfile",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/app.py",
+      "status": "reviewed",
+      "note": "Read in full (122 lines); auth/session/reset-token logic reviewed."
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/docker-compose.yml",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/requirements.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/static/style.css",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/templates/base.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/templates/dashboard.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/templates/index.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/templates/lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/templates/reset.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/.dockerignore",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/Dockerfile",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/docker-compose.yml",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/main.py",
+      "status": "reviewed",
+      "note": "Read in full (56 lines); deserialization path reviewed."
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/requirements.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/static/style.css",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/templates/base.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/templates/index.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/templates/result.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/Dockerfile",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/__init__.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/forms.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/migrations/0001_initial.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/migrations/__init__.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/models.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/urls.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/views.py",
+      "status": "reviewed",
+      "note": "Read in full (142 lines); data exposure endpoints reviewed."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/docker-compose.yml",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/entrypoint.sh",
+      "status": "partial",
+      "note": "Partial: only the command invocations / first lines were inspected."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/manage.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/requirements.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/sensitive_data_lab/__init__.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/sensitive_data_lab/settings.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/sensitive_data_lab/urls.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/sensitive_data_lab/wsgi.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/about.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/base.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/index.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/lesson.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/login.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/profile.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/register.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "gh-md-toc",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "installer.sh",
+      "status": "partial",
+      "note": "Partial: only the command invocations / first lines were inspected."
+    },
+    {
+      "path": "introduction/__init__.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/admin.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/apis.py",
+      "status": "reviewed",
+      "note": "Read in full (137 lines); all API endpoints analysed."
+    },
+    {
+      "path": "introduction/apps.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/forms.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/lab_code/test.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/migrations/0001_initial.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0002_auto_20210414_1510.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0003_password_user.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0004_auto_20210415_1722.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0005_auto_20210415_1748.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0006_comments.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0007_auto_20210418_0022.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0008_otp.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0009_auto_20210517_2047.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0010_authlogin.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0011_tickits.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0012_alter_tickits_user.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0013_alter_comments_id_alter_faang_id_alter_info_id_and_more.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0014_sql_lab_table.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0015_blogs.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0016_alter_blogs_blog_id.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0017_cf_user.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0018_cf_user_password2.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0019_af_admin.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0020_af_session_id_alter_af_admin_lockout_cooldown.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/0021_csrf_user_tbl.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/migrations/__init__.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/mitre.py",
+      "status": "reviewed",
+      "note": "Read in full (246 lines); all views/API endpoints analysed."
+    },
+    {
+      "path": "introduction/models.py",
+      "status": "reviewed",
+      "note": "Read in full; credential storage fields reviewed."
+    },
+    {
+      "path": "introduction/playground/A6/soln.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/playground/A6/utility.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/playground/A9/api.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/playground/A9/archive.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/playground/A9/main.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/playground/__init__.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/playground/ssrf/__init__.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/playground/ssrf/main.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/playground/ssrf/secret.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/playground/ssrf/templates/Lab/ssrf/blogs/blog1.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/playground/ssrf/templates/Lab/ssrf/blogs/blog2.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/playground/ssrf/templates/Lab/ssrf/blogs/blog3.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/playground/ssrf/templates/Lab/ssrf/blogs/blog4.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/playground/ssrf/test.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/static/Lab/icons/pygoat-mini.svg",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/static/Lab/icons/pygoat-small.svg",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/static/Lab/icons/pygoat.svg",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/static/Lab/ssrf.css",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "introduction/static/Lab/ssrf.js",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "introduction/static/Lab/ssti.css",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "introduction/static/Lab/xss.js",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "introduction/static/css/common.css",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "introduction/static/css/dark-challenges.css",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "introduction/static/css/dark-theme.css",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "introduction/static/css/home.css",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "introduction/static/css/light.css",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "introduction/static/css/playground.css",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "introduction/static/css/style.css",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "introduction/static/fake.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/static/js/a6.js",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "introduction/static/js/a7.js",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "introduction/static/js/a9.js",
+      "status": "partial",
+      "note": "Partial: static asset; only searched for DOM sinks (innerHTML/document.write/eval) and for the endpoints used by the reviewed views."
+    },
+    {
+      "path": "introduction/static/real.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/templates/Lab/A10/a10.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/A10/a10_lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/A10/a10_lab2.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/A10/debug.log",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/templates/Lab/A11/a11.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/A11/a11_lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/A9/a9.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/A9/a9_lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/A9/a9_lab2.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/AUTH/auth_home.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/AUTH/auth_lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/AUTH/auth_lab_login.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/AUTH/auth_lab_signup.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/AUTH/auth_success.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/BrokenAccess/ba.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/BrokenAccess/ba_lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/BrokenAuth/bau.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/BrokenAuth/bau_lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/BrokenAuth/otp.html",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/templates/Lab/CMD/cmd.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/CMD/cmd_lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/CMD/cmd_lab2.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/DataExp/data_exp.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/DataExp/data_exp_lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/DataExp/robots.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/templates/Lab/SQL/sql.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/SQL/sql_lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/XSS/xss.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/XSS/xss_lab.html",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/templates/Lab/XSS/xss_lab_2.html",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/templates/Lab/XSS/xss_lab_3.html",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/templates/Lab/XXE/xxe.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/XXE/xxe_lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/insec_des/insec_des.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/insec_des/insec_des_lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/sec_mis/sec_mis.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/sec_mis/sec_mis_lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/sec_mis/sec_mis_lab3.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/blogs/blog1.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/blogs/blog2.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/blogs/blog3.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/blogs/blog4.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/secret.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/ssrf.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/ssrf_discussion.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/ssrf_lab.html",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/ssrf_lab2.html",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/ssrf_target.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A1_BrokenAccessControl/broken_access.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A1_BrokenAccessControl/broken_access_lab_1.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A1_BrokenAccessControl/broken_access_lab_2.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A1_BrokenAccessControl/broken_access_lab_3.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A1_BrokenAccessControl/secret.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A2_Crypto_failur/crypto_failure.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A2_Crypto_failur/crypto_failure_lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A2_Crypto_failur/crypto_failure_lab2.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A2_Crypto_failur/crypto_failure_lab3.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/Blogs/0db9c0e7093d.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/Blogs/9d73d120683d.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/Blogs/a2538af1b5e4.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/injection.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/sql_lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/ssti.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/ssti_lab.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A7_auth_failure/a7.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A7_auth_failure/lab2.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A7_auth_failure/lab3.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A8_software_and_data_integrity_failure/desc.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A8_software_and_data_integrity_failure/lab2.html",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A8_software_and_data_integrity_failure/lab3.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/introduction/base.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/introduction/home.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/csrf_dashboard.html",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/templates/mitre/csrf_lab_login.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_lab_17.html",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_lab_25.html",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top1.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top10.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top11.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top12.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top13.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top14.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top15.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top16.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top17.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top18.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top19.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top2.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top20.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top21.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top22.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top23.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top24.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top25.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top3.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top4.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top5.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top6.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top7.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top8.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top9.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/playground/A6/index.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/playground/A7/index.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/playground/A9/index.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/registration/login.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/registration/logout.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/templates/registration/register.html",
+      "status": "partial",
+      "note": "Partial: not read line-by-line; checked with targeted searches for |safe/mark_safe/csrf_token/form actions and for the data flows referenced by the reviewed views."
+    },
+    {
+      "path": "introduction/tests.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "introduction/urls.py",
+      "status": "reviewed",
+      "note": "Read in full; used to confirm routing/reachability of each analysed view."
+    },
+    {
+      "path": "introduction/utility.py",
+      "status": "reviewed",
+      "note": "Read in full; filter_blog/ssrf_code_converter/customHash reviewed."
+    },
+    {
+      "path": "introduction/views.py",
+      "status": "reviewed",
+      "note": "Read in full (1238 lines); all request-handling views analysed for injection, authorization, crypto and XSS sinks."
+    },
+    {
+      "path": "introduction/xee_see.txt",
+      "status": "partial",
+      "note": "Partial: inspected via targeted searches only; no security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "manage.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "pygoat/__init__.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "pygoat/asgi.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "pygoat/settings.py",
+      "status": "reviewed",
+      "note": "Read in full (172 lines); security-related settings reviewed."
+    },
+    {
+      "path": "pygoat/urls.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "pygoat/wsgi.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "requirements.txt",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "setup.py",
+      "status": "reviewed",
+      "note": "Read in full; reviewed for security-relevant behaviour."
+    },
+    {
+      "path": "uninstaller.py",
+      "status": "partial",
+      "note": "Partial: Django migration or small helper module; structure inspected, no additional security-relevant logic located in the reviewed scope."
+    },
+    {
+      "path": "uninstaller.sh",
+      "status": "partial",
+      "note": "Partial: only the command invocations / first lines were inspected."
+    }
+  ],
+  "excluded_binary_files": [
+    "introduction/static/Lab/icons/pygoat-mini.png",
+    "introduction/static/Lab/icons/pygoat-small.png",
+    "introduction/static/Lab/icons/pygoat.png",
+    "introduction/static/Lab/image/xxe.jpg",
+    "introduction/static/google.jpg"
+  ]
+}

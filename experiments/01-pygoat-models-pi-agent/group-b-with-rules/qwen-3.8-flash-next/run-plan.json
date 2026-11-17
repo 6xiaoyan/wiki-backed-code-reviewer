@@ -1,0 +1,19 @@
+{
+  "experiment_id": "01-pygoat-models-pi-agent",
+  "group": "B-with-extra-rules",
+  "model_label": "qwen-3.8-flash-next",
+  "run_id": "r01",
+  "configured_provider": "lenovo-token-hub",
+  "configured_model_id": "Qwen3.8-Flash-Next",
+  "configuration_note": "Keep provider, model and thinking configuration the same as this model A r01; verify actual settings from session logs.",
+  "rule_pack": "rules-v1",
+  "rule_manifest": "../rules-v1.manifest.json",
+  "rule_manifest_sha256": "2c8d562c5066865835c23762cf0b16327b7dbebe94c3ec59c0e3deb14dfbbf52",
+  "source_prompt_sha256": "27e407fa4884a958727c697d0068c512347d6abeeb26b08c06ceb3223f39ead0",
+  "only_prompt_differences": [
+    "MODEL_LABEL value",
+    "output directory"
+  ],
+  "prompt_sha256": "d0a82996413c24a6e71dd3fb41bb184a1eb74936cdacaa30afdcf3c9e8cfc509",
+  "output_directory": "D:/ai_share/langgraph/wiki-backed-code-reviewer/experiments/01-pygoat-models-pi-agent/group-b-with-rules/qwen-3.8-flash-next/runs/r01"
+}

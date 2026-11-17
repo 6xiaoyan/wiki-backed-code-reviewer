@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-17",
+  "review": {
+    "minimax-m3.1-flash": {
+      "input": 1,
+      "cached": 0.1,
+      "output": 4
+    },
+    "glm-5.3-flash": {
+      "input": 0.8,
+      "cached": 0.23,
+      "output": 2.8
+    },
+    "qwen-3.8-flash-next": {
+      "input": 0.8,
+      "cached": 0.1,
+      "output": 2.7
+    }
+  },
+  "deepseek": {
+    "peak": {
+      "input": 0.3,
+      "cached": 0.006,
+      "output": 1.2
+    },
+    "off_peak": {
+      "input": 0.15,
+      "cached": 0.003,
+      "output": 0.6
+    }
+  },
+  "sources": {
+    "MiniMax国内官方": "https://platform.minimax.cn/docs/pricing/overview",
+    "MiniMax国际官方": "https://platform.minimax.io/docs/pricing/overview",
+    "智谱国内官方": "https://docs.bigmodel.cn/cn/guide/start/pricing",
+    "Qwen同系列官方价格参考": "https://help.aliyun.com/zh/model-studio/qwen3-8-flash",
+    "DeepSeek官方": "https://api-docs.deepseek.com/quick_start/pricing/"
+  }
+}

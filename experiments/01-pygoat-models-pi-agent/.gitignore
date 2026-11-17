@@ -1,0 +1,14 @@
+/group-a-no-rules/runs/*
+!/group-a-no-rules/runs/.gitkeep
+/group-a-no-rules/*/runs/*
+!/group-a-no-rules/*/runs/.gitkeep
+/group-b-with-rules/runs/*
+!/group-b-with-rules/runs/.gitkeep
+__pycache__/
+/evaluations/
+
+/semantic-judge/
+
+/semantic-judge-v2/
+
+/group-b-with-rules/*/runs/*

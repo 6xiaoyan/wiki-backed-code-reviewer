@@ -1,0 +1,1276 @@
+{
+  "files": [
+    {
+      "path": ".all-contributorsrc",
+      "status": "not_reviewed",
+      "note": "元数据/文档/辅助脚本，未逐行阅读。"
+    },
+    {
+      "path": ".gitignore",
+      "status": "not_reviewed",
+      "note": "元数据/文档/辅助脚本，未逐行阅读。"
+    },
+    {
+      "path": "Dockerfile",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "LICENSE.md",
+      "status": "not_reviewed",
+      "note": "元数据/文档/辅助脚本，未逐行阅读。"
+    },
+    {
+      "path": "Procfile",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "PyGoatBot.py",
+      "status": "reviewed",
+      "note": "全文阅读，本地聊天脚本，无网络暴露面。"
+    },
+    {
+      "path": "docker-compose.yml",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "gh-md-toc",
+      "status": "not_reviewed",
+      "note": "元数据/文档/辅助脚本，未逐行阅读。"
+    },
+    {
+      "path": "installer.sh",
+      "status": "partial",
+      "note": "阅读前 50 行（apt 安装流程），其余为顺序安装命令。"
+    },
+    {
+      "path": "manage.py",
+      "status": "reviewed",
+      "note": "全文阅读，标准入口，无发现。"
+    },
+    {
+      "path": "requirements.txt",
+      "status": "reviewed",
+      "note": "全文阅读，逐条核对版本。"
+    },
+    {
+      "path": "setup.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "uninstaller.py",
+      "status": "reviewed",
+      "note": "全文阅读，安装/卸载脚本，无高危发现。"
+    },
+    {
+      "path": "uninstaller.sh",
+      "status": "not_reviewed",
+      "note": "元数据/文档/辅助脚本，未逐行阅读。"
+    },
+    {
+      "path": "challenge/__init__.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "challenge/admin.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "challenge/apps.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "challenge/challenge.json",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "challenge/models.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "challenge/tests.py",
+      "status": "partial",
+      "note": "未完整阅读；仅知体积极小（3 行）。"
+    },
+    {
+      "path": "challenge/urls.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "challenge/utility.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "challenge/views.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "challenge/management/commands/populate_challenge.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "challenge/management/commands/populate_challenges.py",
+      "status": "partial",
+      "note": "批量读取时输出被截断，仅确认其为挑战数据导入脚本，未逐行核对。"
+    },
+    {
+      "path": "challenge/migrations/0001_initial.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "challenge/migrations/0002_challenge_docker_port.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "challenge/migrations/0003_alter_challenge_docker_image_alter_challenge_id_and_more.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "challenge/migrations/__init__.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "challenge/templates/chal-not-found.html",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "challenge/templates/challenge.html",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/Dockerfile",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/app.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/docker-compose.yml",
+      "status": "partial",
+      "note": "全文查看（端口/环境变量）。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/requirements.txt",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/static/style.css",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/templates/base.html",
+      "status": "not_reviewed",
+      "note": "dockerized lab 模板，未逐行阅读。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/templates/dashboard.html",
+      "status": "not_reviewed",
+      "note": "dockerized lab 模板，未逐行阅读。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/templates/index.html",
+      "status": "not_reviewed",
+      "note": "dockerized lab 模板，未逐行阅读。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/templates/lab.html",
+      "status": "not_reviewed",
+      "note": "dockerized lab 模板，未逐行阅读。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/templates/reset.html",
+      "status": "not_reviewed",
+      "note": "dockerized lab 模板，未逐行阅读。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/.dockerignore",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/Dockerfile",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/docker-compose.yml",
+      "status": "partial",
+      "note": "全文查看（端口/环境变量）。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/main.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/requirements.txt",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/static/style.css",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/templates/base.html",
+      "status": "not_reviewed",
+      "note": "dockerized lab 模板，未逐行阅读。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/templates/index.html",
+      "status": "not_reviewed",
+      "note": "dockerized lab 模板，未逐行阅读。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/templates/result.html",
+      "status": "not_reviewed",
+      "note": "dockerized lab 模板，未逐行阅读。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/Dockerfile",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/docker-compose.yml",
+      "status": "partial",
+      "note": "全文查看（端口/启动命令）。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/entrypoint.sh",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/manage.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/requirements.txt",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/__init__.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/forms.py",
+      "status": "reviewed",
+      "note": "全文阅读，无发现。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/models.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/urls.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/views.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/migrations/0001_initial.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/migrations/__init__.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/sensitive_data_lab/__init__.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/sensitive_data_lab/settings.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/sensitive_data_lab/urls.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/sensitive_data_lab/wsgi.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/about.html",
+      "status": "not_reviewed",
+      "note": "dockerized lab 模板，未逐行阅读。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/base.html",
+      "status": "not_reviewed",
+      "note": "dockerized lab 模板，未逐行阅读。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/index.html",
+      "status": "not_reviewed",
+      "note": "dockerized lab 模板，未逐行阅读。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/lesson.html",
+      "status": "not_reviewed",
+      "note": "dockerized lab 模板，未逐行阅读。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/login.html",
+      "status": "not_reviewed",
+      "note": "dockerized lab 模板，未逐行阅读。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/profile.html",
+      "status": "not_reviewed",
+      "note": "dockerized lab 模板，未逐行阅读。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/register.html",
+      "status": "not_reviewed",
+      "note": "dockerized lab 模板，未逐行阅读。"
+    },
+    {
+      "path": "introduction/__init__.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "introduction/admin.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "introduction/apis.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "introduction/apps.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "introduction/forms.py",
+      "status": "reviewed",
+      "note": "全文阅读，标准 UserCreationForm，无发现。"
+    },
+    {
+      "path": "introduction/mitre.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "introduction/models.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "introduction/tests.py",
+      "status": "partial",
+      "note": "未完整阅读；仅知体积极小（3 行）。"
+    },
+    {
+      "path": "introduction/urls.py",
+      "status": "reviewed",
+      "note": "全文阅读，核对全部路由与视图对应关系。"
+    },
+    {
+      "path": "introduction/utility.py",
+      "status": "reviewed",
+      "note": "全文阅读（filter_blog 为恒等函数等）。"
+    },
+    {
+      "path": "introduction/views.py",
+      "status": "reviewed",
+      "note": "核心视图文件，全文逐段阅读（1238 行）。"
+    },
+    {
+      "path": "introduction/xee_see.txt",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "introduction/lab_code/test.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "introduction/migrations/0001_initial.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0002_auto_20210414_1510.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0003_password_user.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0004_auto_20210415_1722.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0005_auto_20210415_1748.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0006_comments.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0007_auto_20210418_0022.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0008_otp.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0009_auto_20210517_2047.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0010_authlogin.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0011_tickits.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0012_alter_tickits_user.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0013_alter_comments_id_alter_faang_id_alter_info_id_and_more.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0014_sql_lab_table.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0015_blogs.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0016_alter_blogs_blog_id.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0017_cf_user.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0018_cf_user_password2.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0019_af_admin.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0020_af_session_id_alter_af_admin_lockout_cooldown.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/0021_csrf_user_tbl.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/migrations/__init__.py",
+      "status": "not_reviewed",
+      "note": "数据库迁移文件，未逐行审查（仅确认存在）。"
+    },
+    {
+      "path": "introduction/playground/__init__.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "introduction/playground/A6/soln.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "introduction/playground/A6/utility.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "introduction/playground/A9/api.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "introduction/playground/A9/archive.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "introduction/playground/A9/main.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "introduction/playground/ssrf/__init__.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "introduction/playground/ssrf/main.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "introduction/playground/ssrf/secret.txt",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "introduction/playground/ssrf/test.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "introduction/playground/ssrf/templates/Lab/ssrf/blogs/blog1.txt",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "introduction/playground/ssrf/templates/Lab/ssrf/blogs/blog2.txt",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "introduction/playground/ssrf/templates/Lab/ssrf/blogs/blog3.txt",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "introduction/playground/ssrf/templates/Lab/ssrf/blogs/blog4.txt",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "introduction/static/fake.txt",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/real.txt",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/css/common.css",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/css/dark-challenges.css",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/css/dark-theme.css",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/css/home.css",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/css/light.css",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/css/playground.css",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/css/style.css",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/js/a6.js",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/js/a7.js",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/js/a9.js",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/Lab/ssrf.css",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/Lab/ssrf.js",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/Lab/ssti.css",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/Lab/xss.js",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/Lab/icons/pygoat-mini.svg",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/Lab/icons/pygoat-small.svg",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/Lab/icons/pygoat.svg",
+      "status": "not_reviewed",
+      "note": "静态 CSS/JS/文本资源，仅模式搜索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/introduction/base.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/introduction/home.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/A10/a10.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/A10/a10_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/A10/a10_lab2.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/A10/debug.log",
+      "status": "partial",
+      "note": "全文查看（服务器请求日志，含带凭据 URL 的记录）。"
+    },
+    {
+      "path": "introduction/templates/Lab/A11/a11.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/A11/a11_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/A9/a9.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/A9/a9_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/A9/a9_lab2.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/AUTH/auth_home.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/AUTH/auth_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/AUTH/auth_lab_login.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/AUTH/auth_lab_signup.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/AUTH/auth_success.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/BrokenAccess/ba.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/BrokenAccess/ba_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/BrokenAuth/bau.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/BrokenAuth/bau_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/BrokenAuth/otp.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/CMD/cmd.html",
+      "status": "partial",
+      "note": "仅 grep 检查 eval 相关说明文本，其余未读。"
+    },
+    {
+      "path": "introduction/templates/Lab/CMD/cmd_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/CMD/cmd_lab2.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/DataExp/data_exp.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/DataExp/data_exp_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/DataExp/robots.txt",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/insec_des/insec_des.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/insec_des/insec_des_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/sec_mis/sec_mis.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/sec_mis/sec_mis_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/sec_mis/sec_mis_lab3.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/SQL/sql.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/SQL/sql_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/secret.txt",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/ssrf.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/ssrf_discussion.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/ssrf_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/ssrf_lab2.html",
+      "status": "partial",
+      "note": "仅 grep 定位第 23 行 {{response | safe}}，其余未读。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/ssrf_target.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/blogs/blog1.txt",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/blogs/blog2.txt",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/blogs/blog3.txt",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/blogs/blog4.txt",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/XSS/xss.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/XSS/xss_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/XSS/xss_lab_2.html",
+      "status": "partial",
+      "note": "阅读第 14-30 行（|safe 输出点），其余为表单结构。"
+    },
+    {
+      "path": "introduction/templates/Lab/XSS/xss_lab_3.html",
+      "status": "reviewed",
+      "note": "全文阅读（约 30 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab/XXE/xxe.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab/XXE/xxe_lab.html",
+      "status": "partial",
+      "note": "仅 grep 定位第 18 行 data-url 指向 xxe_parse，其余未读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A1_BrokenAccessControl/broken_access.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A1_BrokenAccessControl/broken_access_lab_1.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A1_BrokenAccessControl/broken_access_lab_2.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A1_BrokenAccessControl/broken_access_lab_3.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A1_BrokenAccessControl/secret.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A2_Crypto_failur/crypto_failure.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A2_Crypto_failur/crypto_failure_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A2_Crypto_failur/crypto_failure_lab2.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A2_Crypto_failur/crypto_failure_lab3.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/injection.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/sql_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/ssti.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/ssti_lab.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/Blogs/0db9c0e7093d.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/Blogs/9d73d120683d.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/Blogs/a2538af1b5e4.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A7_auth_failure/a7.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A7_auth_failure/lab2.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A7_auth_failure/lab3.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A8_software_and_data_integrity_failure/desc.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A8_software_and_data_integrity_failure/lab2.html",
+      "status": "partial",
+      "note": "阅读第 15-30 行及 grep 定位的第 11 行 |safe 输出，其余未读。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A8_software_and_data_integrity_failure/lab3.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/csrf_dashboard.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/csrf_lab_login.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_lab_17.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_lab_25.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top1.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top10.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top11.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top12.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top13.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top14.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top15.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top16.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top17.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top18.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top19.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top2.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top20.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top21.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top22.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top23.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top24.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top25.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top3.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top4.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top5.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top6.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top7.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top8.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top9.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/playground/A6/index.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/playground/A7/index.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/playground/A9/index.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/registration/login.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/registration/logout.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "introduction/templates/registration/register.html",
+      "status": "not_reviewed",
+      "note": "HTML 模板，仅模式搜索（|safe、innerHTML、eval 等），未逐行阅读。"
+    },
+    {
+      "path": "pygoat/__init__.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "pygoat/asgi.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    },
+    {
+      "path": "pygoat/settings.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "pygoat/urls.py",
+      "status": "reviewed",
+      "note": "全文阅读。"
+    },
+    {
+      "path": "pygoat/wsgi.py",
+      "status": "not_reviewed",
+      "note": "未阅读；未纳入本次定点审查。"
+    }
+  ],
+  "excluded_binary_files": [
+    "introduction/static/google.jpg",
+    "introduction/static/Lab/icons/pygoat-mini.png",
+    "introduction/static/Lab/icons/pygoat-small.png",
+    "introduction/static/Lab/icons/pygoat.png",
+    "introduction/static/Lab/image/xxe.jpg"
+  ]
+}

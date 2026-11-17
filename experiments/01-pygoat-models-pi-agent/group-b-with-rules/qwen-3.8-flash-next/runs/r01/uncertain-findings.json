@@ -1,0 +1,144 @@
+{
+  "candidates": [
+    {
+      "path": "introduction/templates/Lab/XSS/xss_lab_3.html",
+      "start": {
+        "line": 19,
+        "col": 1
+      },
+      "end": {
+        "line": 22,
+        "col": 1
+      },
+      "suspicion": "xss_lab3() 用 re.sub(r'[a-zA-Z0-9]', '', username) 只删除字母数字，明显是为了保留 JSFuck 所需的 []()!+ 而设计；若模板存在非 HTML 正文输出上下文，即构成反射型 XSS。",
+      "evidence": "introduction/views.py:126-131 过滤逻辑；grep 命中 xss_lab_3.html:19 `<p>{{code}}</p>` 与 :22 `{{code}}`。",
+      "missing": "第 22 行的输出上下文未确认（是否位于 <script>、事件属性或 style 中）。若两处都在默认转义的 HTML 正文内，则本项不构成 XSS，应判为误报。"
+    },
+    {
+      "path": "challenge/views.py",
+      "start": {
+        "line": 44,
+        "col": 1
+      },
+      "end": {
+        "line": 52,
+        "col": 1
+      },
+      "suspicion": "DoItFast.post() 用数据库字段拼装 docker run 命令、delete() 用 container_id 拼装 docker stop，属于把外部可控值传入系统命令构造。",
+      "evidence": "command = f\"docker run -d -p {port}:{chal.docker_port} {chal.docker_image}\"; subprocess.Popen(command.split(\" \"), ...)",
+      "missing": "未找到普通用户可影响 Challenge.docker_image / docker_port / container_id 的写入通路（当前只能由 Django admin 或管理命令从 challenge/challenge.json 填充）；且使用 .split(\" \") 而非 shell=True。需要确认是否存在允许用户指定镜像名的功能或后台权限模型。"
+    },
+    {
+      "path": "challenge/challenge.json",
+      "start": {
+        "line": 1,
+        "col": 1
+      },
+      "end": {
+        "line": 12,
+        "col": 1
+      },
+      "suspicion": "仓库内以明文提交 CTF flag（flag{do_it_fast}）与镜像名，可能直接泄露答案。",
+      "evidence": "\"flag\": \"flag{do_it_fast}\"",
+      "missing": "challenge/models.py:26-29 的 save() 会把非 hashed_ 前缀的 flag 先做 sha256 再入库，数据库中不是明文；同时在视图与模板中未找到把 Challenge.flag 回显给普通用户的位置。需确认是否有其它接口/管理页面暴露该字段。"
+    },
+    {
+      "path": "pygoat/settings.py",
+      "start": {
+        "line": 32,
+        "col": 1
+      },
+      "end": {
+        "line": 32,
+        "col": 1
+      },
+      "suspicion": "ALLOWED_HOSTS 含 '0.0.0.0.'（尾点）这类可疑条目，可能导致 Host 头校验未按预期生效；另外 django_heroku.settings(locals())（settings.py:147）会覆盖 ALLOWED_HOSTS/DEBUG/数据库等配置，实际生效值不确定。",
+      "evidence": "ALLOWED_HOSTS = ['pygoat.herokuapp.com', '0.0.0.0.']；django_heroku.settings(locals())",
+      "missing": "Django 4.2 对该写法的精确匹配语义、以及 django-heroku 在本版本下具体覆盖哪些键，需要查阅库源码/官方文档；本次限定在给定目录内，未联网核实，因此未把“Host 头缓存投毒”作为确认证据。"
+    },
+    {
+      "path": "docker-compose.yml",
+      "start": {
+        "line": 1,
+        "col": 1
+      },
+      "end": {
+        "line": 15,
+        "col": 1
+      },
+      "suspicion": "web 服务以 .:/app 可写卷挂载整个项目目录且容器内进程无 read_only/no-new-privileges/cap_drop，使 finding-017/018/019 的源码写入既可持久化又能在 reload 后立即生效，放大了代码注入的影响面。",
+      "evidence": "volumes: - .:/app",
+      "missing": "缺少运行时上下文（gunicorn 是否以 root 运行、8000 端口是否直接对公网暴露、是否有 --reload）。安全影响需要部署确认，因此未单独计分。"
+    },
+    {
+      "path": "uninstaller.py",
+      "start": {
+        "line": 37,
+        "col": 1
+      },
+      "end": {
+        "line": 69,
+        "col": 1
+      },
+      "suspicion": "脚本判断写成 `if (platform.system != 'Windows'):`（漏写调用括号，条件恒真），并会以 -y 强制 pip uninstall pip，属于破坏本地开发环境的运维缺陷。",
+      "evidence": "if (platform.system != 'Windows'): ... subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', '-y', 'requirements.txt'])",
+      "missing": "该脚本只在本地由操作者主动执行，不存在网络输入数据通路，未见可被攻击者利用的路径，因此按运维风险而非安全漏洞处理。"
+    },
+    {
+      "path": "introduction/views.py",
+      "start": {
+        "line": 397,
+        "col": 1
+      },
+      "end": {
+        "line": 405,
+        "col": 1
+      },
+      "suspicion": "robots() 无需认证即返回 Disallow 条目（暴露 /500error 等隐藏路径）；error() 直接 `return `（返回 None），在 Django 中会抛 ValueError，DEBUG=True 时对外输出 traceback。",
+      "evidence": "def robots(request): ... render(request,'Lab/DataExp/robots.txt') / def error(request): return",
+      "missing": "robots.txt 仅一行 Disallow，单独作为漏洞价值过低；error() 的泄露程度取决于 Django 4.2 对该异常的具体报错内容与 DEBUG 状态，本次未运行应用验证。"
+    },
+    {
+      "path": "introduction/templates/introduction/base.html",
+      "start": {
+        "line": 13,
+        "col": 1
+      },
+      "end": {
+        "line": 30,
+        "col": 1
+      },
+      "suspicion": "基模板从多个第三方 CDN 加载脚本/样式，若无 SRI 覆盖或存在未带 integrity 的 script 引入，供应链脚本被替换后可在应用源执行；同时全仓未见 CSP。",
+      "evidence": "link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css\" integrity=... crossorigin=\"anonymous\"；随后仍有 use.fontawesome.com 等外部脚本引用。",
+      "missing": "base.html 只读了前 30 行，尚未逐个核对所有 <script> 标签是否都带 integrity；需完整阅读模板及其继承链。"
+    },
+    {
+      "path": "introduction/mitre.py",
+      "start": {
+        "line": 19,
+        "col": 1
+      },
+      "end": {
+        "line": 19,
+        "col": 1
+      },
+      "suspicion": "模块顶层硬编码 FLAG = \"NOT_SUPPOSED_TO_BE_ACCESSED\"（注释标记 target zone），疑为靶场答案常量。",
+      "evidence": "FLAG = \"NOT_SUPPOSED_TO_BE_ACCESSED\"",
+      "missing": "在 mitre.py 全部视图与已读模板中未找到读取/返回 FLAG 的位置，无法证明构成信息泄露。"
+    },
+    {
+      "path": "introduction/models.py",
+      "start": {
+        "line": 37,
+        "col": 1
+      },
+      "end": {
+        "line": 40,
+        "col": 1
+      },
+      "suspicion": "otp.otp 字段带 MaxValueValidator(300)，但 views.Otp() 写入 randint(100,999)，校验器与生成范围矛盾，说明 OTP 长度/取值设计随意。",
+      "evidence": "otp=models.IntegerField(validators=[MaxValueValidator(300)])",
+      "missing": "Django 仅在 full_clean()/表单层执行 validators，直接用 update()/create() 写入时不会触发；实际是否造成 OTP 被截断或校验异常需要运行验证，且其根因已被 finding-040（弱 OTP + 校验分支缺陷）覆盖。"
+    }
+  ]
+}

@@ -1,0 +1,369 @@
+{
+  "created_at_utc": "2026-11-17T02:38:47.003598+00:00",
+  "asset_root": "D:\\ai_share\\langgraph\\benchmark-data\\pygoat-baseline",
+  "tiktoken_version": "0.14.0",
+  "method": "Sum of independently tokenized UTF-8 file contents; excludes Git internals, binary/non-UTF-8 files, chat framing, tool schemas, prompts and model output. Tokenizers are proxies, not verified tokenizers for every baseline model.",
+  "repositories": {
+    "pygoat": {
+      "url": "https://github.com/kolega-ai-dev/realvuln-pygoat",
+      "commit": "2fb0c600245f50670e8b9233c784afe61e8b340b"
+    },
+    "realvuln": {
+      "url": "https://github.com/kolega-ai/Real-Vuln-Benchmark",
+      "commit": "90c3221a83e44242b7b67555094349107c21283f",
+      "sparse_checkout": [
+        "/score.py",
+        "/scorer/",
+        "/parsers/",
+        "/config/",
+        "/ground-truth/realvuln-pygoat/",
+        "/benchmark-manifest.json",
+        "/validate_gt.py",
+        "/compute_gt_hash.py",
+        "/README.md",
+        "/LICENSE",
+        "/pyproject.toml",
+        "/tests/",
+        "/llm-bench/prompts/",
+        "/llm-bench/README.md",
+        "/docs/"
+      ]
+    }
+  },
+  "ground_truth": {
+    "path": "D:\\ai_share\\langgraph\\benchmark-data\\pygoat-baseline\\judge\\realvuln\\ground-truth\\realvuln-pygoat\\ground-truth.json",
+    "sha256": "eb0a7dc452b78631d130b5ebd72c8d4283514da30f2c6616806a0b38a022aeb5",
+    "labels": {
+      "vulnerable": 78,
+      "false_positive_trap": 10
+    }
+  },
+  "totals_by_category": {
+    "judge_ground_truth": {
+      "files": 1,
+      "bytes": 84108,
+      "o200k_base": 23424,
+      "cl100k_base": 23435
+    },
+    "judge_scoring_code_and_config": {
+      "files": 9,
+      "bytes": 55065,
+      "o200k_base": 14161,
+      "cl100k_base": 14068
+    },
+    "judge_supporting_materials": {
+      "files": 22,
+      "bytes": 285361,
+      "o200k_base": 79028,
+      "cl100k_base": 78811
+    },
+    "rules_core": {
+      "files": 4,
+      "bytes": 57663,
+      "o200k_base": 13650,
+      "cl100k_base": 14918
+    },
+    "rules_optional-style": {
+      "files": 2,
+      "bytes": 168237,
+      "o200k_base": 42132,
+      "cl100k_base": 42025
+    },
+    "rules_supplemental": {
+      "files": 5,
+      "bytes": 129244,
+      "o200k_base": 27575,
+      "cl100k_base": 27406
+    },
+    "target_documentation": {
+      "files": 11,
+      "bytes": 57130,
+      "o200k_base": 14827,
+      "cl100k_base": 14857
+    },
+    "target_other_text": {
+      "files": 38,
+      "bytes": 69689,
+      "o200k_base": 20866,
+      "cl100k_base": 20758
+    },
+    "target_python": {
+      "files": 80,
+      "bytes": 146391,
+      "o200k_base": 32138,
+      "cl100k_base": 31554
+    },
+    "target_static_assets": {
+      "files": 21,
+      "bytes": 148457,
+      "o200k_base": 61958,
+      "cl100k_base": 61758
+    },
+    "target_templates": {
+      "files": 117,
+      "bytes": 346546,
+      "o200k_base": 80212,
+      "cl100k_base": 79227
+    }
+  },
+  "input_scenarios": {
+    "python_and_templates": {
+      "files": 197,
+      "bytes": 492937,
+      "o200k_base": 112350,
+      "cl100k_base": 110781
+    },
+    "python_templates_and_core_security_rules": {
+      "files": 201,
+      "bytes": 550600,
+      "o200k_base": 126000,
+      "cl100k_base": 125699
+    },
+    "python_templates_and_all_security_rules": {
+      "files": 206,
+      "bytes": 679844,
+      "o200k_base": 153575,
+      "cl100k_base": 153105
+    },
+    "all_target_text": {
+      "files": 267,
+      "bytes": 768213,
+      "o200k_base": 210001,
+      "cl100k_base": 208154
+    },
+    "all_rule_documents": {
+      "files": 11,
+      "bytes": 355144,
+      "o200k_base": 83357,
+      "cl100k_base": 84349
+    }
+  },
+  "all_downloaded_text": {
+    "bytes": 1547891,
+    "o200k_base": 409971,
+    "cl100k_base": 408817
+  },
+  "skipped_files": [
+    {
+      "role": "target",
+      "path": "Solutions/img/img4.png",
+      "bytes": 26879,
+      "reason": "binary or non-UTF-8; not counted"
+    },
+    {
+      "role": "target",
+      "path": "Solutions/img/pic1.png",
+      "bytes": 54183,
+      "reason": "binary or non-UTF-8; not counted"
+    },
+    {
+      "role": "target",
+      "path": "Solutions/img/pic2.png",
+      "bytes": 42865,
+      "reason": "binary or non-UTF-8; not counted"
+    },
+    {
+      "role": "target",
+      "path": "Solutions/img/pic3.png",
+      "bytes": 180795,
+      "reason": "binary or non-UTF-8; not counted"
+    },
+    {
+      "role": "target",
+      "path": "introduction/static/Lab/icons/pygoat-mini.png",
+      "bytes": 3611,
+      "reason": "binary or non-UTF-8; not counted"
+    },
+    {
+      "role": "target",
+      "path": "introduction/static/Lab/icons/pygoat-small.png",
+      "bytes": 7965,
+      "reason": "binary or non-UTF-8; not counted"
+    },
+    {
+      "role": "target",
+      "path": "introduction/static/Lab/icons/pygoat.png",
+      "bytes": 55741,
+      "reason": "binary or non-UTF-8; not counted"
+    },
+    {
+      "role": "target",
+      "path": "introduction/static/Lab/image/xxe.jpg",
+      "bytes": 4840,
+      "reason": "binary or non-UTF-8; not counted"
+    },
+    {
+      "role": "target",
+      "path": "introduction/static/google.jpg",
+      "bytes": 37700,
+      "reason": "binary or non-UTF-8; not counted"
+    }
+  ],
+  "largest_target_files": [
+    {
+      "role": "target",
+      "category": "target_static_assets",
+      "path": "introduction/static/Lab/icons/pygoat-mini.svg",
+      "bytes": 22869,
+      "characters": 22869,
+      "lines": 26,
+      "sha256": "09951ed35d21cc6d6c03dc15880b02ad90e9d1d519a2f360639bea52329e97bd",
+      "o200k_base": 13939,
+      "cl100k_base": 13925
+    },
+    {
+      "role": "target",
+      "category": "target_static_assets",
+      "path": "introduction/static/css/playground.css",
+      "bytes": 36997,
+      "characters": 36997,
+      "lines": 1477,
+      "sha256": "74aabcee6f73e978622fd37222fc97fcba4910fc70bcf9bbf1e85577c5920029",
+      "o200k_base": 12808,
+      "cl100k_base": 12802
+    },
+    {
+      "role": "target",
+      "category": "target_static_assets",
+      "path": "introduction/static/Lab/icons/pygoat-small.svg",
+      "bytes": 22895,
+      "characters": 22895,
+      "lines": 26,
+      "sha256": "02e80a70ed823535f01fe4634d8a2305f1765483b026007136ec1b2b8dffdad7",
+      "o200k_base": 11916,
+      "cl100k_base": 11902
+    },
+    {
+      "role": "target",
+      "category": "target_python",
+      "path": "introduction/views.py",
+      "bytes": 49152,
+      "characters": 49152,
+      "lines": 1238,
+      "sha256": "1a02f6318b4071e65e3174764baf68548f1feb621105097bac102da785c146ae",
+      "o200k_base": 10238,
+      "cl100k_base": 10103
+    },
+    {
+      "role": "target",
+      "category": "target_static_assets",
+      "path": "introduction/static/Lab/icons/pygoat.svg",
+      "bytes": 17103,
+      "characters": 17103,
+      "lines": 25,
+      "sha256": "b6378cf7187ae926b86aeacf2da03c55792a70f5557037b7d86aae28d50b4726",
+      "o200k_base": 8466,
+      "cl100k_base": 8453
+    },
+    {
+      "role": "target",
+      "category": "target_documentation",
+      "path": "Solutions/solution.md",
+      "bytes": 28558,
+      "characters": 28545,
+      "lines": 546,
+      "sha256": "a3a90a0d35569f33891ff96ecca89c4deec9bd508c82d9aa4eee032cd942bc78",
+      "o200k_base": 7832,
+      "cl100k_base": 7827
+    },
+    {
+      "role": "target",
+      "category": "target_other_text",
+      "path": "chatbot/pygoatbot.ipynb",
+      "bytes": 22082,
+      "characters": 21536,
+      "lines": 410,
+      "sha256": "02a0c3583b960d5974a3a15d4d2e3334433c5c6b2281007f8b0f05529f339645",
+      "o200k_base": 6254,
+      "cl100k_base": 6306
+    },
+    {
+      "role": "target",
+      "category": "target_templates",
+      "path": "introduction/templates/introduction/base.html",
+      "bytes": 27274,
+      "characters": 27274,
+      "lines": 743,
+      "sha256": "b5e74edb9a8717dc18adcb6971c0fd5cfb9afb36f285c5ecf91cad5704ffb18b",
+      "o200k_base": 6094,
+      "cl100k_base": 6038
+    },
+    {
+      "role": "target",
+      "category": "target_other_text",
+      "path": "introduction/templates/Lab/A10/debug.log",
+      "bytes": 15835,
+      "characters": 15835,
+      "lines": 317,
+      "sha256": "80b094151356e7c12cf642fdbdb61aa5575daf3ad8241bd4be0ca2b98d65c0ff",
+      "o200k_base": 5924,
+      "cl100k_base": 5824
+    },
+    {
+      "role": "target",
+      "category": "target_templates",
+      "path": "dockerized_labs/sensitive_data_exposure/templates/lesson.html",
+      "bytes": 18473,
+      "characters": 18469,
+      "lines": 342,
+      "sha256": "d931352759bdb9ea2f4fc469521e124e476aeac70a2c0ccec7c2756a7470fd26",
+      "o200k_base": 3556,
+      "cl100k_base": 3567
+    },
+    {
+      "role": "target",
+      "category": "target_other_text",
+      "path": "gh-md-toc",
+      "bytes": 11255,
+      "characters": 11255,
+      "lines": 361,
+      "sha256": "880b9db3a569c77bce218da16a4ac0c23ec4202abf7c4bb8588cc3fc29d83208",
+      "o200k_base": 3147,
+      "cl100k_base": 3128
+    },
+    {
+      "role": "target",
+      "category": "target_templates",
+      "path": "introduction/templates/Lab/ssrf/ssrf_discussion.html",
+      "bytes": 11215,
+      "characters": 11215,
+      "lines": 157,
+      "sha256": "9a0f428b2ec3775978b758b208561aaef8c1f2f96abfe2bff3e455a1ac4c39e2",
+      "o200k_base": 3050,
+      "cl100k_base": 2893
+    },
+    {
+      "role": "target",
+      "category": "target_static_assets",
+      "path": "introduction/static/css/light.css",
+      "bytes": 9146,
+      "characters": 9146,
+      "lines": 524,
+      "sha256": "f0819ff8413bbbddee91de834b368811ca226a9fc0f55ba08e832a811c1fe5ca",
+      "o200k_base": 2878,
+      "cl100k_base": 2866
+    },
+    {
+      "role": "target",
+      "category": "target_static_assets",
+      "path": "introduction/static/css/dark-theme.css",
+      "bytes": 9064,
+      "characters": 9064,
+      "lines": 530,
+      "sha256": "0d14bb63cc689bec9127719ff334a9f3853a0907227956c1cb621729a5bde257",
+      "o200k_base": 2827,
+      "cl100k_base": 2816
+    },
+    {
+      "role": "target",
+      "category": "target_static_assets",
+      "path": "introduction/static/css/style.css",
+      "bytes": 8705,
+      "characters": 8705,
+      "lines": 491,
+      "sha256": "d7f68d3342c7cf6ede26f1251d51ca836df4e834c7b64abdd82be9f7a61988bd",
+      "o200k_base": 2741,
+      "cl100k_base": 2730
+    }
+  ]
+}

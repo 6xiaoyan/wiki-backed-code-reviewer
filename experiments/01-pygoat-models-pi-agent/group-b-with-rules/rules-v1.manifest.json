@@ -1,0 +1,80 @@
+{
+  "rule_pack": "rules-v1",
+  "directory": "D:/ai_share/langgraph/benchmark-data/pygoat-baseline/inputs/experiment-01/rules-v1",
+  "documents": [
+    {
+      "path": "core/django-4.2-deployment-checklist.rst",
+      "original_sha256": "4bff38929a592023f6c7c47fb9b810db897c676187bd3b996c64f9aff5bc58dc",
+      "sha256": "4bff38929a592023f6c7c47fb9b810db897c676187bd3b996c64f9aff5bc58dc",
+      "modified": false,
+      "o200k_base_tokens": 1942
+    },
+    {
+      "path": "core/django-4.2-security.rst",
+      "original_sha256": "97fb485a4026f94674745b25c184be8cb11ee118ddd971a0aeb6e616d300025e",
+      "sha256": "a75d319e6c48951b2b8013c5ec4e539537d60e2e0857c396721f33a50d6b6d8c",
+      "modified": true,
+      "o200k_base_tokens": 3128
+    },
+    {
+      "path": "core/owasp-django-security.md",
+      "original_sha256": "389ac1f39b21aa9c755df875b637a7bdbc4e6f88540b02db63cff2a72f877745",
+      "sha256": "6261b5dd4ebe3cbae80c7e8f0b0d91806dabc3c067ed48ba30d77d44f3f84b8b",
+      "modified": true,
+      "o200k_base_tokens": 2834
+    },
+    {
+      "path": "core/tencent-python-security.md",
+      "original_sha256": "b1d1f0b779b4e6352667a95e4bf28e59eb96e3ff05c20bf43e772cc8c1048eed",
+      "sha256": "563ec74e815a6a3bb8886a3f2aa179143f9d4843c9fd85e6a7eb6a1bbc5038a4",
+      "modified": true,
+      "o200k_base_tokens": 5472
+    },
+    {
+      "path": "supplemental/owasp-authorization.md",
+      "original_sha256": "fb8b6e5c60ed783025beefb5049142fd9da02d01f5c95de18a19d26479737975",
+      "sha256": "fb8b6e5c60ed783025beefb5049142fd9da02d01f5c95de18a19d26479737975",
+      "modified": false,
+      "o200k_base_tokens": 6063
+    },
+    {
+      "path": "supplemental/owasp-deserialization.md",
+      "original_sha256": "f25441070ffcd5664758dff186c7804b8cb42e81258b4133760af2eee57e5a09",
+      "sha256": "c0d925a05ff6685c50fb4ec450af5f82e0406484f3b8e1b49d231f00a915c83e",
+      "modified": true,
+      "o200k_base_tokens": 4950
+    },
+    {
+      "path": "supplemental/owasp-sql-injection-prevention.md",
+      "original_sha256": "6c377eef95804d03ed29c27b8002a1d714ced833dfc651e1ee69ccf4abdadd6b",
+      "sha256": "6c377eef95804d03ed29c27b8002a1d714ced833dfc651e1ee69ccf4abdadd6b",
+      "modified": false,
+      "o200k_base_tokens": 2719
+    },
+    {
+      "path": "supplemental/owasp-ssrf-prevention.md",
+      "original_sha256": "cfd23149653bdb4390817864c818b4ac5b8460b75ddfc2805dda3fd353e81060",
+      "sha256": "cfd23149653bdb4390817864c818b4ac5b8460b75ddfc2805dda3fd353e81060",
+      "modified": false,
+      "o200k_base_tokens": 7249
+    },
+    {
+      "path": "supplemental/owasp-xss-prevention.md",
+      "original_sha256": "e4bbeced6010bb9029061910e97f01f4391cb8b89d1a0f31a390ca5a00a5e9a8",
+      "sha256": "e4bbeced6010bb9029061910e97f01f4391cb8b89d1a0f31a390ca5a00a5e9a8",
+      "modified": false,
+      "o200k_base_tokens": 6614
+    }
+  ],
+  "scope": "Nine complete security documents; optional style documents excluded.",
+  "editing_note": "Experiment-specific revisions, not unmodified statements by the original publishers. No ground truth IDs, source locations, flags, or per-vulnerability retrieval hints are supplied to the agent.",
+  "confirmed_comparison_model": {
+    "provider": "minimax-cn",
+    "model_id": "MiniMax-M3.1-Flash",
+    "api": "anthropic-messages",
+    "pi_thinking_setting": "high"
+  },
+  "prompt_sha256": "27e407fa4884a958727c697d0068c512347d6abeeb26b08c06ceb3223f39ead0",
+  "output_directory": "D:/ai_share/langgraph/wiki-backed-code-reviewer/experiments/01-pygoat-models-pi-agent/group-b-with-rules/minimax-m3.1-flash/runs/r01",
+  "o200k_base_rule_tokens": 40971
+}

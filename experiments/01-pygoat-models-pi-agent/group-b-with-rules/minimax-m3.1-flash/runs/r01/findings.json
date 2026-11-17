@@ -1,0 +1,1435 @@
+{
+  "results": [
+    {
+      "check_id": "finding-001",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 158,
+        "col": 17
+      },
+      "end": {
+        "line": 162,
+        "col": 42
+      },
+      "extra": {
+        "message": "SQL injection: the SQL statement is built by concatenating the raw POST fields 'name' and 'pass' and then executed through QuerySet.raw(). An attacker who can authenticate to the lab (any registered user) can inject SQL (e.g. name=' OR '1'='1 --) and read/modify arbitrary rows of introduction_login, or reach other tables through UNION. Root cause: user input is interpolated into SQL text instead of being bound as a query parameter (rule 1.2.1 '使用参数化查询' / django-4.2-security 'SQL injection protection').",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-001",
+          "cwe": [
+            "CWE-89"
+          ],
+          "confidence": "high",
+          "code_evidence": "name=request.POST.get('name')\n\npassword=request.POST.get('pass')\n...\nsql_query = \"SELECT * FROM introduction_login WHERE user='\"+name+\"' AND password='\"+password+\"'\"\nprint(sql_query)\ntry:\n    print(\"\\nin try\\n\")\n    val=login.objects.raw(sql_query)",
+          "preconditions": "Confirmed in source: the view requires an authenticated session (request.user.is_authenticated) and reads both values from request.POST. Needs deployment confirmation: whether the /sql_lab endpoint is reachable in the deployed environment and whether the database user has broad table privileges.",
+          "data_flow": "request.POST['name'] / request.POST['pass'] (untrusted, attacker controlled) -> string concatenation into sql_query -> login.objects.raw(sql_query) -> database executes attacker-controlled SQL text.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-002",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 864,
+        "col": 21
+      },
+      "end": {
+        "line": 878,
+        "col": 55
+      },
+      "extra": {
+        "message": "SQL injection (second, independent occurrence): the 2021 injection lab builds the raw SQL statement by concatenating request.POST['name'] and request.POST['pass'] and executes it with sql_lab_table.objects.raw(). Any authenticated user can inject SQL to bypass the password check or to read/alter other tables. Same root cause as the other raw() call but a different code location and view.",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-002",
+          "cwe": [
+            "CWE-89"
+          ],
+          "confidence": "high",
+          "code_evidence": "name=request.POST.get('name')\npassword=request.POST.get('pass')\n...\nsql_query = \"SELECT * FROM introduction_sql_lab_table WHERE id='\"+name+\"'AND password='\"+password+\"'\"\n...\nuser = sql_lab_table.objects.raw(sql_query)",
+          "preconditions": "Confirmed in source: authenticated user required (request.user.is_authenticated), POST body controls 'name' and 'pass'. Needs deployment confirmation: reachability of /injection_sql_lab.",
+          "data_flow": "request.POST['name'], request.POST['pass'] -> string concatenation -> sql_query -> sql_lab_table.objects.raw(sql_query) -> SQL execution with attacker-controlled input.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-003",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 424,
+        "col": 13
+      },
+      "end": {
+        "line": 434,
+        "col": 24
+      },
+      "extra": {
+        "message": "OS command injection: the 'domain' POST field is only stripped of an optional scheme/www prefix and is then interpolated into a shell command string executed with subprocess.Popen(..., shell=True). A value such as 'example.com; id' or '$(id)' runs arbitrary commands with the web server's privileges. Root cause: untrusted data concatenated into a shell command (rule 1.3.2 '安全传递外部程序参数').",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-003",
+          "cwe": [
+            "CWE-78"
+          ],
+          "confidence": "high",
+          "code_evidence": "domain=request.POST.get('domain')\ndomain = re.sub(r'^(?:(https?|ftp)://)?(?:www\\.)?', '', domain, flags=re.IGNORECASE)\n...\nif(os=='win'):\n    command=\"nslookup {}\".format(domain)\nelse:\n    command = \"dig {}\".format(domain)\n...\nprocess = subprocess.Popen(\n    command,\n    shell=True,\n    stdout=subprocess.PIPE,\n    stderr=subprocess.PIPE)",
+          "preconditions": "Confirmed in source: authenticated session required; POST 'domain' and 'os' fields are attacker controlled; shell=True is used. Needs deployment confirmation: whether the OS user running the server is privileged.",
+          "data_flow": "request.POST['domain'] -> regex prefix stripping (does not neutralise shell metacharacters) -> format() into 'dig {}'/'nslookup {}' -> subprocess.Popen(shell=True) -> OS shell interprets injected metacharacters.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-004",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 460,
+        "col": 28
+      },
+      "end": {
+        "line": 460,
+        "col": 42
+      },
+      "extra": {
+        "message": "Arbitrary code execution via eval(): the POST field 'val' is passed directly to eval(), so any authenticated user can execute arbitrary Python on the server (e.g. __import__('os').system('id')). Root cause: untrusted input used as program code (rule 1.3.3 '禁止不安全的代码执行').",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-004",
+          "cwe": [
+            "CWE-95"
+          ],
+          "confidence": "high",
+          "code_evidence": "val=request.POST.get('val')\nprint(val)\ntry:\n    output = eval(val)",
+          "preconditions": "Confirmed in source: authenticated session required; 'val' is taken verbatim from request.POST. Needs deployment confirmation: reachability of /cmd_lab2 and the privileges of the service account.",
+          "data_flow": "request.POST['val'] -> eval() -> arbitrary Python execution in the Django process context.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-005",
+      "path": "introduction/mitre.py",
+      "start": {
+        "line": 215,
+        "col": 1
+      },
+      "end": {
+        "line": 218,
+        "col": 31
+      },
+      "extra": {
+        "message": "Unauthenticated remote code execution via eval(): the mitre_lab_25_api view is decorated with @csrf_exempt and has no login check, and passes the POST field 'expression' directly to eval(). Any network client can execute arbitrary Python code on the server. Root cause: untrusted input treated as code (rule 1.3.3).",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-005",
+          "cwe": [
+            "CWE-95"
+          ],
+          "confidence": "high",
+          "code_evidence": "@csrf_exempt\ndef mitre_lab_25_api(request):\n    if request.method == \"POST\":\n        expression = request.POST.get('expression')\n        result = eval(expression)\n        return JsonResponse({'result': result})",
+          "preconditions": "Confirmed in source: no authentication decorator, @csrf_exempt, POST body 'expression' fully attacker controlled. Needs deployment confirmation: whether the /mitre/25/lab/api route is exposed by the deployed URL configuration (it is registered in introduction/urls.py).",
+          "data_flow": "request.POST['expression'] -> eval() -> arbitrary code execution, result returned to the attacker in the JSON response.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-006",
+      "path": "introduction/mitre.py",
+      "start": {
+        "line": 238,
+        "col": 1
+      },
+      "end": {
+        "line": 243,
+        "col": 24
+      },
+      "extra": {
+        "message": "OS command injection in the port-scanning API: the POST field 'ip' is concatenated into the command string 'nmap ' + ip and executed through command_out(), which uses subprocess.Popen(command, shell=True). The view is @csrf_exempt and unauthenticated, so a remote client can append shell metacharacters and run arbitrary commands. Root cause: untrusted data concatenated into a shell command (rule 1.3.2).",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-006",
+          "cwe": [
+            "CWE-78"
+          ],
+          "confidence": "high",
+          "code_evidence": "def command_out(command):\n    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)\n    return process.communicate()\n\n@csrf_exempt\ndef mitre_lab_17_api(request):\n    if request.method == 'POST':\n        ip = request.POST.get('ip')\n        command = \"nmap \" + ip\n        res, err = command_out(command)",
+          "preconditions": "Confirmed in source: unauthenticated, @csrf_exempt, POST 'ip' fully attacker controlled, shell=True. Needs deployment confirmation: whether nmap is installed in the deployment image (irrelevant for the injection itself).",
+          "data_flow": "request.POST['ip'] -> string concatenation 'nmap ' + ip -> subprocess.Popen(shell=True) -> shell interprets injected metacharacters; command output is returned to the caller.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-007",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 208,
+        "col": 12
+      },
+      "end": {
+        "line": 216,
+        "col": 27
+      },
+      "extra": {
+        "message": "Insecure deserialization of a client-controlled cookie: insec_des_lab reads the 'token' cookie, base64-decodes it and calls pickle.loads() on it. Pickle data is executable, so any user who can set the cookie can craft a payload whose __reduce__ executes arbitrary code on the server. Root cause: untrusted data passed to pickle.load/loads (rule 1.4.5).",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-007",
+          "cwe": [
+            "CWE-502"
+          ],
+          "confidence": "high",
+          "code_evidence": "token = request.COOKIES.get('token')\nif token == None:\n    token = encoded_user\n    response.set_cookie(key='token',value=token.decode('utf-8'))\nelse:\n    token = base64.b64decode(token)\n    admin = pickle.loads(token)\n    if admin.admin == 1:\n        response = render(request,'Lab/insec_des/insec_des_lab.html', {\"message\":\"Welcome Admin, SECRETKEY:ADMIN123\"})",
+          "preconditions": "Confirmed in source: the value comes from the client cookie, base64 decoding is not a trust boundary; the view requires an authenticated session but the cookie value itself is fully attacker controlled. Needs deployment confirmation: none for the deserialization path itself.",
+          "data_flow": "request.COOKIES['token'] -> base64.b64decode() -> pickle.loads() -> arbitrary object reconstruction and code execution during unpickling.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-008",
+      "path": "dockerized_labs/insec_des_lab/main.py",
+      "start": {
+        "line": 33,
+        "col": 9
+      },
+      "end": {
+        "line": 36,
+        "col": 31
+      },
+      "extra": {
+        "message": "Insecure deserialization in the standalone insec_des_lab Flask application: the 'serialized_data' form field is base64-decoded and passed to pickle.loads(). An unauthenticated client can submit a malicious pickle and achieve remote code execution. Root cause: untrusted data passed to pickle.load/loads (rule 1.4.5).",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-008",
+          "cwe": [
+            "CWE-502"
+          ],
+          "confidence": "high",
+          "code_evidence": "@app.route('/deserialize', methods=['POST'])\ndef deserialize_data():\n    try:\n        serialized_data = request.form.get('serialized_data', '')\n        decoded_data = base64.b64decode(serialized_data)\n        user = pickle.loads(decoded_data)",
+          "preconditions": "Confirmed in source: no authentication on the /deserialize route; form field fully attacker controlled. Needs deployment confirmation: whether this lab container is deployed and reachable (dockerized_labs/insec_des_lab/docker-compose.yml exists).",
+          "data_flow": "request.form['serialized_data'] -> base64.b64decode() -> pickle.loads() -> arbitrary code execution.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-009",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 560,
+        "col": 21
+      },
+      "end": {
+        "line": 560,
+        "col": 55
+      },
+      "extra": {
+        "message": "Unsafe YAML deserialization of an uploaded file: a9_lab loads the uploaded file with yaml.load(file, yaml.Loader). PyYAML's Loader resolves arbitrary Python objects, so a crafted YAML upload can instantiate attacker-chosen objects and execute code (requirements.txt pins PyYAML==5.1, whose default loaders are known to be exploitable). Root cause: untrusted data passed to an unsafe YAML loader (rule 1.4.5).",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-009",
+          "cwe": [
+            "CWE-502"
+          ],
+          "confidence": "high",
+          "code_evidence": "file=request.FILES[\"file\"]\ntry :\n    data = yaml.load(file,yaml.Loader)\n    \n    return render(request,\"Lab/A9/a9_lab.html\",{\"data\":data})",
+          "preconditions": "Confirmed in source: authenticated session required; the uploaded file content is fully attacker controlled; yaml.Loader (not safe_load) is used. Needs deployment confirmation: the exact installed PyYAML version at runtime (requirements.txt pins 5.1).",
+          "data_flow": "request.FILES['file'] -> yaml.load(file, yaml.Loader) -> object construction during parsing -> code execution with the web server privileges.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-010",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 256,
+        "col": 5
+      },
+      "end": {
+        "line": 261,
+        "col": 40
+      },
+      "extra": {
+        "message": "XML External Entity (XXE) injection: the XML parser used by xxe_parse explicitly enables external general entities (parser.setFeature(feature_external_ges, True)) and parses the raw request body, so a submitted DOCTYPE with an external entity can read local files (e.g. /etc/passwd, application settings) or trigger SSRF. The expanded entity text is then written to the database and rendered back to the user. Root cause: XML parser configured to resolve external entities (rule 1.4.4 '禁用XML外部实体的方法').",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-010",
+          "cwe": [
+            "CWE-611"
+          ],
+          "confidence": "high",
+          "code_evidence": "parser = make_parser()\nparser.setFeature(feature_external_ges, True)\ndoc = parseString(request.body.decode('utf-8'), parser=parser)\nfor event, node in doc:\n    if event == START_ELEMENT and node.tagName == 'text':\n        doc.expandNode(node)\n        text = node.toxml()",
+          "preconditions": "Confirmed in source: unauthenticated view (@csrf_exempt and no login check), body fully attacker controlled, external general entities enabled. Needs deployment confirmation: whether the deployed XML library still resolves external entities (expat behaviour) and whether the process can read local files/network.",
+          "data_flow": "request.body -> xml.sax parseString with feature_external_ges=True -> doc.expandNode(node) resolves external entities -> file/URL content stored in comments table and rendered back.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-011",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 984,
+        "col": 13
+      },
+      "end": {
+        "line": 996,
+        "col": 20
+      },
+      "extra": {
+        "message": "Server-side template injection through template source injection: the POST field 'blog' is only passed through filter_blog(), which is a no-op (introduction/utility.py: def filter_blog(code): return code), and the user content is written verbatim into a new Django template file under templates/Lab_2021/A3_Injection/Blogs/<id>.html, which is later rendered by ssti_view_blog. A user can therefore inject template tags (e.g. {% load ... %}{% debug %} or {% %}-based code execution) that the Django template engine executes on the server. Root cause: user content used as template source rather than as template data (rule 1.3.4 '服务端模板与数据分离').",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-011",
+          "cwe": [
+            "CWE-1336"
+          ],
+          "confidence": "high",
+          "code_evidence": "blog = request.POST[\"blog\"]\n...\nblog = filter_blog(blog)\nprepend_code = \"{% extends 'introduction/base.html' %}...\"\n\nblog = prepend_code + blog + \"{% endblock %}\"\nnew_blog = Blogs.objects.create(author = request.user, blog_id = id)\nnew_blog.save()\ndirname = os.path.dirname(__file__)\nfilename = os.path.join(dirname, f\"templates/Lab_2021/A3_Injection/Blogs/{id}.html\")\nfile = open(filename, \"w+\")\nfile.write(blog)\nfile.close()\nreturn redirect(f'blog/{id}')",
+          "preconditions": "Confirmed in source: authenticated session required; user content is written to a .html template file and rendered by ssti_view_blog; filter_blog performs no filtering. Needs deployment confirmation: whether the templates directory is writable at runtime and whether Django's template sandbox permits the injected constructs in the deployed configuration.",
+          "data_flow": "request.POST['blog'] -> filter_blog() (identity) -> written into a Django template file -> render(request, f'Lab_2021/A3_Injection/Blogs/{blog_id}.html') -> template engine executes the injected template tags.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-012",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 926,
+        "col": 17
+      },
+      "end": {
+        "line": 929,
+        "col": 24
+      },
+      "extra": {
+        "message": "Path traversal / arbitrary file read: the POST field 'blog' is joined to the application directory with os.path.join and opened without any validation, so a value such as '../../pygoat/settings.py' or '../../../etc/passwd' reads files outside the intended templates/Lab/ssrf/blogs directory. The content is returned to the requester in the page. Root cause: file path built from unvalidated external input without containment check (rule 1.4.3 '避免路径穿越').",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-012",
+          "cwe": [
+            "CWE-22"
+          ],
+          "confidence": "high",
+          "code_evidence": "file=request.POST[\"blog\"]\ntry :\n    dirname = os.path.dirname(__file__)\n    filename = os.path.join(dirname, file)\n    file = open(filename,\"r\")\n    data = file.read()\n    return render(request,\"Lab/ssrf/ssrf_lab.html\",{\"blog\":data})",
+          "preconditions": "Confirmed in source: authenticated session required; 'blog' fully attacker controlled; os.path.join does not neutralise '../' segments. Needs deployment confirmation: the read permission of the service account on the target files.",
+          "data_flow": "request.POST['blog'] -> os.path.join(dirname, file) -> open(filename).read() -> file content rendered back in the HTTP response.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-013",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 963,
+        "col": 13
+      },
+      "end": {
+        "line": 964,
+        "col": 40
+      },
+      "extra": {
+        "message": "Server-Side Request Forgery: the POST field 'url' is passed unchecked to requests.get(url), so an authenticated user can make the server issue requests to internal hosts (e.g. http://127.0.0.1:8000/... , cloud metadata endpoints) and read the response body. No protocol/host allowlist, no redirect restrictions and no private-address filtering are applied. Root cause: unrestricted outbound request to a user-supplied URL (rule 1.5.1 '限定访问网络资源地址范围').",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-013",
+          "cwe": [
+            "CWE-918"
+          ],
+          "confidence": "high",
+          "code_evidence": "url = request.POST[\"url\"]\ntry:\n    response = requests.get(url)\n    return render(request, \"Lab/ssrf/ssrf_lab2.html\", {\"response\": response.content.decode()})",
+          "preconditions": "Confirmed in source: authenticated session required (@authentication_decorator); 'url' fully attacker controlled; requests follows redirects by default. Needs deployment confirmation: whether the server can reach internal/metadata addresses in the deployment network.",
+          "data_flow": "request.POST['url'] -> requests.get(url) -> response body returned in the rendered template (also rendered unescaped, see the XSS finding).",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-014",
+      "path": "introduction/templates/Lab/XSS/xss_lab.html",
+      "start": {
+        "line": 27,
+        "col": 32
+      },
+      "end": {
+        "line": 27,
+        "col": 45
+      },
+      "extra": {
+        "message": "Reflected XSS: the 'q' query parameter is passed into the template and rendered with the |safe filter, which disables Django's automatic HTML escaping. The view performs no sanitisation (introduction/views.py xss_lab: q=request.GET.get('q','') -> render(request,'Lab/XSS/xss_lab.html', {'query': q})), so a URL such as /xssL?q=<script>alert(1)</script> executes script in the victim's browser. Root cause: untrusted data marked as safe (rule 1.6.3 / OWASP XSS cheat sheet 'avoid the safe filter').",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-014",
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "high",
+          "code_evidence": "<h3> The company '{{query|safe}}' You searched for is not Part of FAANG</h3>",
+          "preconditions": "Confirmed in source: the view requires an authenticated session; the query parameter is attacker controlled and reaches the template unescaped. Needs deployment confirmation: none for the escaping bypass itself.",
+          "data_flow": "request.GET['q'] -> view context 'query' -> template {{query|safe}} -> raw HTML injected into the response body -> script execution in the victim's browser.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-015",
+      "path": "introduction/templates/Lab/XSS/xss_lab_2.html",
+      "start": {
+        "line": 20,
+        "col": 8
+      },
+      "end": {
+        "line": 20,
+        "col": 29
+      },
+      "extra": {
+        "message": "Reflected XSS with an insufficient blacklist filter: the view (introduction/views.py xss_lab2) only removes the literal strings '<script>' and '</script>' from the POST field 'username' and the result is rendered with the |safe filter, so payloads such as '<img src=x onerror=alert(1)>' or '<svg onload=alert(1)>' are rendered unescaped. Root cause: blacklist-based sanitisation combined with the |safe filter.",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-015",
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "high",
+          "code_evidence": "<p>Hello, {{ username|safe }}</p>\n\n# view code:\nusername = request.POST.get('username', '')\nif username:\n    username = username.strip()\n    username = username.replace(\"<script>\", \"\").replace(\"</script>\", \"\")",
+          "preconditions": "Confirmed in source: authenticated session required; 'username' is attacker controlled; only the two <script> literals are stripped and |safe disables escaping. Needs deployment confirmation: none.",
+          "data_flow": "request.POST['username'] -> blacklist replace of two literals -> template {{username|safe}} -> HTML/JS injection in the response.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-016",
+      "path": "introduction/templates/Lab/XSS/xss_lab_3.html",
+      "start": {
+        "line": 22,
+        "col": 5
+      },
+      "end": {
+        "line": 23,
+        "col": 20
+      },
+      "extra": {
+        "message": "XSS through a JavaScript context with an insufficient input filter: xss_lab3 removes only alphanumeric characters from the POST field 'username' and the remainder is injected into a <script> block ({{code}} inside <script>...</script>). Because HTML escaping does not neutralise the surviving non-alphanumeric characters, an attacker can use bracket/parenthesis/operator-only payloads (JSFuck style) that the browser executes. Root cause: user data placed in a script context, protected only by a character blacklist.",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-016",
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "medium",
+          "code_evidence": "pattern = r'[a-zA-Z0-9]'\nresult = re.sub(pattern, '', username)\ncontext = {'code':result}\n...\n# template:\n<script>\n    // LAB 3 JS CODE\n    {{code}}\n</script>",
+          "preconditions": "Confirmed in source: authenticated session required; the value is inserted into a <script> block; only letters/digits are stripped. Needs deployment confirmation: exact exploitability depends on the browser parsing of the surviving characters; not verified dynamically in this run.",
+          "data_flow": "request.POST['username'] -> re.sub removing alphanumerics -> template {{code}} inside <script> -> script context injection.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-017",
+      "path": "introduction/templates/Lab_2021/A8_software_and_data_integrity_failure/lab2.html",
+      "start": {
+        "line": 11,
+        "col": 6
+      },
+      "end": {
+        "line": 11,
+        "col": 30
+      },
+      "extra": {
+        "message": "Reflected XSS: the 'username' GET parameter is rendered with the |safe filter in the A8 lab page. The view (introduction/views.py software_and_data_integrity_failure_lab2) passes request.GET['username'] straight into the template without escaping, so a crafted link executes script in the victim's browser.",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-017",
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "high",
+          "code_evidence": "<h1>Hey {{username | safe}},</h1>\n\n# view code:\nusername = request.GET[\"username\"]\nreturn render(request,\"Lab_2021/A8_software_and_data_integrity_failure/lab2.html\", {\"username\":username,\"success\":True})",
+          "preconditions": "Confirmed in source: authenticated session required (@authentication_decorator); GET parameter fully attacker controlled. Needs deployment confirmation: none.",
+          "data_flow": "request.GET['username'] -> template context 'username' -> {{username | safe}} -> raw HTML in the response.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-018",
+      "path": "introduction/templates/Lab/ssrf/ssrf_lab2.html",
+      "start": {
+        "line": 23,
+        "col": 66
+      },
+      "end": {
+        "line": 23,
+        "col": 87
+      },
+      "extra": {
+        "message": "XSS via unescaped remote content: the body fetched by the SSRF lab is rendered with the |safe filter, so any HTML/JavaScript contained in the fetched resource is injected into the application page. Combined with the unvalidated requests.get(url) this allows an attacker to host a page with a script and have it executed in the application's origin when a victim submits the SSRF lab form (stored/reflected XSS through a third-party response).",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-018",
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "high",
+          "code_evidence": "{% if response %}\n    <div style=\"width:70%;overflow:scroll;background-color:#000\">{{response | safe}}<div>\n{% endif %}",
+          "preconditions": "Confirmed in source: the view fetches an attacker-chosen URL and passes response.content.decode() into the template; |safe disables escaping. Needs deployment confirmation: attacker must control the fetched resource.",
+          "data_flow": "request.POST['url'] -> requests.get(url) -> response.content -> template {{response | safe}} -> attacker HTML/JS executed in the application origin.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-019",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 347,
+        "col": 13
+      },
+      "end": {
+        "line": 363,
+        "col": 20
+      },
+      "extra": {
+        "message": "Broken access control / privilege escalation via a client-controlled cookie: ba_lab grants the admin-only secret (0NLY_F0R_4DM1N5) whenever the request carries the cookie admin=1. Cookies are fully controlled by the client, so any authenticated user can set admin=1 and read the administrator-only data; the cookie is also set by the server after a successful admin login without any server-side signature. Root cause: authorization decision based on client-supplied, unvalidated state (rule 1.8.3 '避免越权访问').",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-019",
+          "cwe": [
+            "CWE-639"
+          ],
+          "confidence": "high",
+          "code_evidence": "if request.COOKIES.get('admin') == \"1\":\n    return render(\n        request, \n        'Lab/BrokenAccess/ba_lab.html', \n        {\n            \"data\":\"0NLY_F0R_4DM1N5\",\n            \"username\": \"admin\"\n        })\n...\nhtml.set_cookie(\"admin\", \"1\",max_age=200)",
+          "preconditions": "Confirmed in source: authenticated session required; the 'admin' cookie value is attacker supplied and is the only authorization check for the privileged branch. Needs deployment confirmation: none.",
+          "data_flow": "request.COOKIES['admin'] -> equality check against '1' -> privileged render of the admin secret data.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-020",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 758,
+        "col": 9
+      },
+      "end": {
+        "line": 774,
+        "col": 24
+      },
+      "extra": {
+        "message": "Broken access control via a client-controlled cookie (second, independent occurrence): a1_broken_access_lab_1 returns the admin-only secret 0NLY_F0R_4DM1N5 whenever the request contains the cookie admin=1, without any server-side check of the caller's role. Any authenticated user can forge the cookie and read administrator data.",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-020",
+          "cwe": [
+            "CWE-639"
+          ],
+          "confidence": "high",
+          "code_evidence": "if request.COOKIES.get('admin') == \"1\":\n    return render(\n        request, \n        'Lab_2021/A1_BrokenAccessControl/broken_access_lab_1.html', \n        {\n            \"data\":\"0NLY_F0R_4DM1N5\",\n            \"username\": \"admin\"\n        })",
+          "preconditions": "Confirmed in source: authenticated session required; cookie value fully attacker controlled. Needs deployment confirmation: none.",
+          "data_flow": "request.COOKIES['admin'] -> check against '1' -> privileged data rendered for any authenticated caller.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-021",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 535,
+        "col": 5
+      },
+      "end": {
+        "line": 540,
+        "col": 116
+      },
+      "extra": {
+        "message": "Security decision based on a client-supplied HTTP header: the 'secret' view exposes the secret key S3CR37K3Y to anyone who sends the header 'X-Host: admin.localhost:8000'. The header is entirely under the client's control, so the restriction provides no protection. Root cause: untrusted client header used to decide authorization (rule 1.8.5 '可信会话与授权决策').",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-021",
+          "cwe": [
+            "CWE-807"
+          ],
+          "confidence": "high",
+          "code_evidence": "XHost = request.headers.get('X-Host', 'None')\nif(XHost == 'admin.localhost:8000'):\n    return render(request,\"Lab/sec_mis/sec_mis_lab.html\", {\"secret\": \"S3CR37K3Y\"})\nelse:\n    return render(request,\"Lab/sec_mis/sec_mis_lab.html\", {\"no_secret\": \"Only admin.localhost:8000 can access, Your X-Host is \" + XHost})",
+          "preconditions": "Confirmed in source: the view has no authentication check at all and trusts request.headers['X-Host']. Needs deployment confirmation: whether a reverse proxy strips/overrides X-Host (none is configured in the repository).",
+          "data_flow": "request header 'X-Host' -> string comparison -> privileged secret rendered to the caller.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-022",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 791,
+        "col": 5
+      },
+      "end": {
+        "line": 799,
+        "col": 22
+      },
+      "extra": {
+        "message": "Administrator impersonation via the User-Agent header: a1_broken_access_lab_2 grants the admin secret and the 'status: admin' marker when request.META['HTTP_USER_AGENT'] equals 'pygoat_admin'. The User-Agent is fully attacker controlled, so any authenticated user can obtain administrator privileges/data by changing the header. Root cause: client-supplied header used as an authorization signal (rule 1.8.5).",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-022",
+          "cwe": [
+            "CWE-807"
+          ],
+          "confidence": "high",
+          "code_evidence": "user_agent = request.META['HTTP_USER_AGENT']\n...\nif name :  \n    if (user_agent == \"pygoat_admin\"):\n        return render(\n            request, \n            'Lab_2021/A1_BrokenAccessControl/broken_access_lab_2.html', \n            {\n                \"data\":\"0NLY_F0R_4DM1N5\",\n                \"username\": \"admin\",\n                \"status\": \"admin\"\n            })",
+          "preconditions": "Confirmed in source: authenticated session required; User-Agent value fully attacker controlled. Needs deployment confirmation: none.",
+          "data_flow": "request.META['HTTP_USER_AGENT'] -> equality check -> privileged admin data rendered.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-023",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 943,
+        "col": 5
+      },
+      "end": {
+        "line": 950,
+        "col": 22
+      },
+      "extra": {
+        "message": "Access control based on a spoofable client header: ssrf_target decides whether the requester may see the restricted page using the first value of the X-Forwarded-For header, falling back to REMOTE_ADDR. X-Forwarded-For is supplied by the client and no trusted-proxy configuration exists, so any client can spoof '127.0.0.1' and bypass the restriction. Root cause: client-controlled header used for an authorization decision (rule 1.8.5).",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-023",
+          "cwe": [
+            "CWE-290"
+          ],
+          "confidence": "high",
+          "code_evidence": "x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')\n\nif x_forwarded_for:\n    ip = x_forwarded_for.split(',')[0]\nelse:\n    ip = request.META.get('REMOTE_ADDR')\n\nif ip == '127.0.0.1':\n    return render(request,\"Lab/ssrf/ssrf_target.html\")\nelse:\n    return render(request,\"Lab/ssrf/ssrf_target.html\",{\"access_denied\":True})",
+          "preconditions": "Confirmed in source: no authentication and no trusted-proxy handling; the header value is taken verbatim from the client. Needs deployment confirmation: whether an upstream proxy strips client-supplied X-Forwarded-For (not configured in the repository).",
+          "data_flow": "request.META['HTTP_X_FORWARDED_FOR'] -> first element -> comparison with '127.0.0.1' -> access decision.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-024",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 287,
+        "col": 13
+      },
+      "end": {
+        "line": 291,
+        "col": 100
+      },
+      "extra": {
+        "message": "Plaintext storage of user passwords: auth_lab_signup stores the submitted password verbatim in the authLogin.password column (models.py: password = models.CharField(max_length=200)), and auth_lab_login compares the submitted plaintext against it. A database dump therefore discloses every user's password in cleartext, and the same plaintext comparison pattern is used for the login model (a10_lab, ba_lab). Root cause: passwords stored without a dedicated one-way hash (rule 1.3.3 '口令存储安全').",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-024",
+          "cwe": [
+            "CWE-256"
+          ],
+          "confidence": "high",
+          "code_evidence": "passwd  = request.POST['pass']\nobj = authLogin.objects.create(name=name,username=user_name,password=passwd)\n...\nobj = authLogin.objects.filter(username=user_name,password=passwd)[0]",
+          "preconditions": "Confirmed in source: password is stored and compared in cleartext; the signup view is unauthenticated. Needs deployment confirmation: database access by other principals (e.g. backups) determines the impact.",
+          "data_flow": "request.POST['pass'] -> authLogin.password column (plaintext) -> later equality comparison in auth_lab_login.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-025",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 1026,
+        "col": 17
+      },
+      "end": {
+        "line": 1027,
+        "col": 64
+      },
+      "extra": {
+        "message": "Weak password hashing: crypto_failure_lab verifies passwords with a single unsalted MD5 digest (md5(password.encode()).hexdigest()) and compares it with the stored value. MD5 is fast and unsalted, so stored hashes can be cracked or rainbow-tabled in bulk. Root cause: single fast digest used instead of a salted, adaptive password hash (rule 1.3.3).",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-025",
+          "cwe": [
+            "CWE-328"
+          ],
+          "confidence": "high",
+          "code_evidence": "username = request.POST[\"username\"]\npassword = request.POST[\"password\"]\ntry:\n    password = md5(password.encode()).hexdigest()\n    user = CF_user.objects.filter(username=username,password=password).first()",
+          "preconditions": "Confirmed in source: MD5 with no salt and no iteration count; the compared column is CF_user.password. Needs deployment confirmation: whether the CF_user table is populated with real credentials in the deployment.",
+          "data_flow": "request.POST['password'] -> md5 digest -> equality filter against CF_user.password.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-026",
+      "path": "introduction/mitre.py",
+      "start": {
+        "line": 159,
+        "col": 9
+      },
+      "end": {
+        "line": 162,
+        "col": 58
+      },
+      "extra": {
+        "message": "Weak password hashing in the CSRF lab login: the submitted password is reduced to a single unsalted MD5 digest and compared with the stored value in CSRF_user_tbl. MD5 digests are fast to compute, so attackers with read access to the table can crack the passwords offline. Root cause: single fast digest instead of a salted, adaptive password hash (rule 1.3.3).",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-026",
+          "cwe": [
+            "CWE-328"
+          ],
+          "confidence": "high",
+          "code_evidence": "password = request.POST.get('password')\nusername = request.POST.get('username')\npassword = md5(password.encode()).hexdigest()\nUser = CSRF_user_tbl.objects.filter(username=username, password=password)",
+          "preconditions": "Confirmed in source: unsalted single MD5; stored column CSRF_user_tbl.password (models.py password = models.CharField(max_length=200)). Needs deployment confirmation: presence of populated credentials in the deployment.",
+          "data_flow": "request.POST['password'] -> md5 hexdigest -> equality filter on CSRF_user_tbl.password.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-027",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 1194,
+        "col": 13
+      },
+      "end": {
+        "line": 1194,
+        "col": 69
+      },
+      "extra": {
+        "message": "Unsalted SHA-256 used for password verification: auth_failure_lab3 hashes the submitted password with a single unsalted SHA-256 call and compares it with the hardcoded digest table USER_A7_LAB3. A single fast, unsalted digest allows identical passwords to be recognised across accounts and makes offline cracking cheap; it is not a password hashing function. Root cause: rule 1.3.3 '口令存储安全' requires salted, adaptive hashing.",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-027",
+          "cwe": [
+            "CWE-328"
+          ],
+          "confidence": "high",
+          "code_evidence": "username = request.POST[\"username\"]\npassword = request.POST[\"password\"]\npassword = hashlib.sha256(password.encode()).hexdigest()\n...\nif USER_A7_LAB3[username]['password'] == password:",
+          "preconditions": "Confirmed in source: single unsalted SHA-256; digests are hardcoded in the source. Needs deployment confirmation: none for the weakness itself.",
+          "data_flow": "request.POST['password'] -> sha256 hexdigest -> comparison with hardcoded digest table.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-028",
+      "path": "introduction/mitre.py",
+      "start": {
+        "line": 169,
+        "col": 13
+      },
+      "end": {
+        "line": 171,
+        "col": 66
+      },
+      "extra": {
+        "message": "Hardcoded JWT signing key: the CSRF lab signs and verifies its authentication cookie with the literal string 'csrf_vulnerability'. Anyone who knows this value (it is in the source) can forge a valid auth_cookiee token with an arbitrary 'username' claim and thereby act as any user of the CSRF_user_tbl table, including accounts with credit balance. Root cause: hardcoded cryptographic key used for token signing (rule 2.3.1/2.3.2).",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-028",
+          "cwe": [
+            "CWE-798"
+          ],
+          "confidence": "high",
+          "code_evidence": "cookie = jwt.encode(payload, 'csrf_vulnerability', algorithm='HS256')\nresponse = redirect(\"/mitre/9/lab/transaction\")\nresponse.set_cookie('auth_cookiee', cookie)\n...\npayload = jwt.decode(cookie, 'csrf_vulnerability', algorithms=['HS256'])",
+          "preconditions": "Confirmed in source: the key is a literal string in the repository; no key rotation or external secret is used. Needs deployment confirmation: whether the deployed code uses the same key (the value is baked into the source).",
+          "data_flow": "attacker-known literal key -> jwt.encode({'username': '<victim>'}) -> cookie auth_cookiee accepted by csrf_transfer_monei / csrf_transfer_monei_api.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-029",
+      "path": "introduction/mitre.py",
+      "start": {
+        "line": 191,
+        "col": 1
+      },
+      "end": {
+        "line": 206,
+        "col": 23
+      },
+      "extra": {
+        "message": "State-changing financial operation without CSRF protection and without authentication: csrf_transfer_monei_api performs a money transfer when called with GET, and the view is neither decorated with @authentication_decorator nor protected against CSRF. A third-party page can therefore cause a logged-in victim's browser to issue GET /mitre/9/lab/api/<recipient>/<amount> and move money from the victim's balance (cookie auth_cookiee is attached automatically by the browser). Root cause: rule 1.8.6 '浏览器请求防伪造' and rule 1.8.1 '默认鉴权'.",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-029",
+          "cwe": [
+            "CWE-352"
+          ],
+          "confidence": "high",
+          "code_evidence": "def csrf_transfer_monei_api(request,recipent,amount):\n    if request.method == \"GET\":\n        cookie = request.COOKIES['auth_cookiee']\n        payload = jwt.decode(cookie, 'csrf_vulnerability', algorithms=['HS256'])\n        username = payload['username']\n        User = CSRF_user_tbl.objects.filter(username=username)\n        if not User:\n            return redirect('/mitre/9/lab/login')\n        if int(amount) > 0:\n            if int(amount) <= User[0].balance:\n                recipent = CSRF_user_tbl.objects.filter(username=recipent)\n                if recipent:\n                    recipent = recipent[0]\n                    recipent.balance = recipent.balance + int(amount)\n                    recipent.save()\n                    User[0].balance = User[0].balance - int(amount)\n                    User[0].save()",
+          "preconditions": "Confirmed in source: no authentication decorator, no CSRF token check, state change performed for the GET method. Needs deployment confirmation: the victim must have a valid auth_cookiee cookie and a balance; the route is registered in introduction/urls.py.",
+          "data_flow": "cross-site GET request (browser attaches auth_cookiee automatically) -> jwt.decode -> balance of the victim is debited and credited to the attacker-chosen recipient.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-030",
+      "path": "pygoat/settings.py",
+      "start": {
+        "line": 171,
+        "col": 1
+      },
+      "end": {
+        "line": 171,
+        "col": 29
+      },
+      "extra": {
+        "message": "Hardcoded, weak JWT signing key: SECRET_COOKIE_KEY = \"PYGOAT\" is a literal constant committed to the repository and is used to sign and verify the 'auth_cookie' JWT in sec_misconfig_lab3. Anybody who reads the source can craft a token with the claim {'user': 'admin'} and obtain the administrator view. Root cause: hardcoded cryptographic key (rule 2.3.1/2.3.2 '禁止硬编码敏感配置').",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-030",
+          "cwe": [
+            "CWE-321"
+          ],
+          "confidence": "high",
+          "code_evidence": "SECRET_COOKIE_KEY = \"PYGOAT\"\n\n# usage in introduction/views.py:\npayload = jwt.decode(cookie, SECRET_COOKIE_KEY, algorithms=['HS256'])\nif payload['user'] == 'admin':\n    return render(request,\"Lab/sec_mis/sec_mis_lab3.html\", {\"admin\":True} )",
+          "preconditions": "Confirmed in source: the key is a short literal in the settings module and is imported by introduction/views.py. Needs deployment confirmation: whether the deployment overrides SECRET_COOKIE_KEY (no override exists in the repository).",
+          "data_flow": "known constant 'PYGOAT' -> jwt.encode({'user':'admin'}) -> cookie auth_cookie -> jwt.decode accepts it -> admin branch rendered.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-031",
+      "path": "pygoat/settings.py",
+      "start": {
+        "line": 25,
+        "col": 1
+      },
+      "end": {
+        "line": 25,
+        "col": 69
+      },
+      "extra": {
+        "message": "Django SECRET_KEY hardcoded in the source repository: the value is a fixed literal committed to version control and is used for signing sessions, CSRF tokens and password-reset tokens. Disclosure of the repository therefore discloses the key, allowing session/CSRF token forgery and password-reset token forgery. Root cause: rule 2.3.2 '禁止硬编码敏感配置' and the Django deployment checklist ('keep SECRET_KEY secret, load it from the environment').",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-031",
+          "cwe": [
+            "CWE-798"
+          ],
+          "confidence": "high",
+          "code_evidence": "# SECURITY WARNING: keep the secret key used in production secret!\nSECRET_KEY = 'lr66%-a!$km5ed@n5ug!tya5bv!0(yqwa1tn!q%0%3m2nh%oml'",
+          "preconditions": "Confirmed in source: literal key in the settings module; no environment override. Needs deployment confirmation: whether the deployed instance uses this exact value (django_heroku.settings(locals()) does not replace it).",
+          "data_flow": "repository source -> SECRET_KEY -> signing of session cookies, CSRF tokens and any password-reset tokens.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-032",
+      "path": "pygoat/settings.py",
+      "start": {
+        "line": 30,
+        "col": 1
+      },
+      "end": {
+        "line": 30,
+        "col": 13
+      },
+      "extra": {
+        "message": "DEBUG mode is enabled in the shipped settings module. With DEBUG=True Django exposes detailed tracebacks, source snippets, local variables and settings values to any client that triggers an error, turning application errors into an information-disclosure channel. Root cause: rule 1.11.1 '生产环境关闭调试模式' and the Django deployment checklist ('You must never enable debug in production').",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-032",
+          "cwe": [
+            "CWE-489"
+          ],
+          "confidence": "high",
+          "code_evidence": "# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True",
+          "preconditions": "Confirmed in source: DEBUG = True in the only settings module of the project; the Dockerfile runs gunicorn against this settings module. Needs deployment confirmation: whether the deployment overrides DEBUG through an environment-specific settings module (none is present in the repository).",
+          "data_flow": "settings.DEBUG -> Django technical error pages -> source code, settings and local variables returned to unauthenticated clients.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-033",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 291,
+        "col": 13
+      },
+      "end": {
+        "line": 291,
+        "col": 88
+      },
+      "extra": {
+        "message": "Authentication cookie set without secure/httponly/samesite protections: the 'userid' cookie that identifies the logged-in user of the AUTH lab is issued with secure=False and samesite=None and without httponly=True, so it can be sent over plain HTTP and read by JavaScript. Root cause: rule 1.6.2 '设置安全的HTTP响应头' requires HttpOnly/Secure/SameSite on credential cookies.",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-033",
+          "cwe": [
+            "CWE-614"
+          ],
+          "confidence": "high",
+          "code_evidence": "response.set_cookie('userid', obj.userid, max_age=31449600, samesite=None, secure=False)",
+          "preconditions": "Confirmed in source: set_cookie is called with secure=False, samesite=None and no httponly argument (Django default httponly=False). Needs deployment confirmation: whether the site is served over HTTPS (the cookie would still be transmitted over any plain-HTTP request).",
+          "data_flow": "set_cookie('userid', ...) -> browser stores and sends the identity cookie over HTTP and exposes it to scripts.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-034",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 496,
+        "col": 9
+      },
+      "end": {
+        "line": 507,
+        "col": 41
+      },
+      "extra": {
+        "message": "One-time-password verification code disclosed in the HTTP response: the /otp GET handler renders the generated 3-digit code into the page ('otp': otpN), so anybody who requests a code for an address learns the code and can immediately complete the login. In addition the code is generated with the non-cryptographic randint(), is only 3 digits long, is stored in a shared table row and is never invalidated after use. Root cause: rule 1.3.6 '安全生成和验证认证令牌' and '不得在请求验证码的普通响应中直接返回答案'.",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-034",
+          "cwe": [
+            "CWE-330"
+          ],
+          "confidence": "high",
+          "code_evidence": "otpN=randint(100,999)\nif email and otpN:\n    if email==\"admin@pygoat.com\":\n        otp.objects.filter(id=2).update(otp=otpN)\n        html = render(request, \"Lab/BrokenAuth/otp.html\", {\"otp\":\"Sent To Admin Mail ID\"})\n        html.set_cookie(\"email\", email)\n        return html\n\n    else:\n        otp.objects.filter(id=1).update(email=email, otp=otpN)\n        html=render (request,\"Lab/BrokenAuth/otp.html\",{\"otp\":otpN})\n        html.set_cookie(\"email\",email)",
+          "preconditions": "Confirmed in source: unauthenticated endpoints; the OTP value is written into the response template; randint() is not a CSPRNG; no expiry and no attempt counter. Needs deployment confirmation: none.",
+          "data_flow": "request.GET['email'] -> randint(100,999) -> otp table -> rendered into the response body -> the same code is later accepted by the POST verification branch.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-035",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 512,
+        "col": 9
+      },
+      "end": {
+        "line": 518,
+        "col": 62
+      },
+      "extra": {
+        "message": "OTP authentication not bound to the requested account and without attempt limits: the POST branch of /otp accepts a code when otp.objects.filter(email=email,otp=otpR) matches, where 'email' is taken from the client-controlled 'email' cookie, or when the single admin record (id=2) matches, without any binding to the session, no expiry, no one-time use and no rate limiting. With only 3-digit codes, an attacker can brute-force the admin code or reuse a disclosed code for any address. Root cause: rule 1.3.6 '验证码与目标账号和用途绑定，限制有效期、尝试次数和使用次数'.",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-035",
+          "cwe": [
+            "CWE-287"
+          ],
+          "confidence": "high",
+          "code_evidence": "otpR=request.POST.get(\"otp\")\nemail=request.COOKIES.get(\"email\")\nif otp.objects.filter(email=email,otp=otpR) or otp.objects.filter(id=2,otp=otpR):\n    return render (request,\"Lab/BrokenAuth/otp.html\",{\"email\":email})\nelse:\n    return render (request,\"Lab/BrokenAuth/otp.html\",{\"otp\":\"Invalid OTP Please Try Again\"})",
+          "preconditions": "Confirmed in source: the account identifier comes from a client cookie, the code space is 900 values, there is no attempt counter or expiry, and the id=2 admin row is checked independently of the requested email. Needs deployment confirmation: none.",
+          "data_flow": "request.POST['otp'] + request.COOKIES['email'] (both client controlled) -> database filter on (email, otp) or (id=2, otp) -> successful login rendering.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-036",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 679,
+        "col": 5
+      },
+      "end": {
+        "line": 680,
+        "col": 96
+      },
+      "extra": {
+        "message": "Predictable ticket codes generated with a non-cryptographic PRNG: gentckt() builds ticket identifiers with random.choices() from the Mersenne Twister, whose state can be recovered from observed outputs, so the tickets that are supposed to be unique and unguessable can be predicted. Root cause: rule 1.3.6 '会话令牌、API Key ... 使用密码学安全随机源，例如 Python secrets'.",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-036",
+          "cwe": [
+            "CWE-330"
+          ],
+          "confidence": "high",
+          "code_evidence": "def gentckt():\n    return (''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase, k=10)))",
+          "preconditions": "Confirmed in source: random.choices (Mersenne Twister) is used for security-relevant ticket codes; the tickets are stored in the DB and used as ownership tokens. Needs deployment confirmation: whether ticket codes are used as an authorization token in the deployment (the lab treats them as such).",
+          "data_flow": "random.choices() -> ticket code stored in tickits.tickit -> used as the user ticket identifier.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-037",
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/views.py",
+      "start": {
+        "line": 38,
+        "col": 5
+      },
+      "end": {
+        "line": 42,
+        "col": 63
+      },
+      "extra": {
+        "message": "API keys generated with a non-cryptographic PRNG: generate_api_key() builds the per-user API key with random.choices(), so the Mersenne Twister state can be reconstructed and the keys predicted; the key is stored per user and returned by the data-exposure API. Root cause: rule 1.3.6 'API Key ... 使用密码学安全随机源'.",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-037",
+          "cwe": [
+            "CWE-330"
+          ],
+          "confidence": "high",
+          "code_evidence": "def generate_api_key():\n    # generate a random api key\n    chars = string.ascii_lowercase + string.digits\n    return ''.join(random.choices(chars, k=16))  # 16 chars should be enough right?",
+          "preconditions": "Confirmed in source: random.choices used for an API credential; 16 chars from a 36-symbol alphabet is also a small key space. Needs deployment confirmation: whether the API key is accepted anywhere as an authentication credential in the deployment (it is exposed by the API endpoints).",
+          "data_flow": "random.choices() -> UserData.api_key -> returned in api_data_view / all_users_data_view JSON responses.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-038",
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/views.py",
+      "start": {
+        "line": 112,
+        "col": 1
+      },
+      "end": {
+        "line": 126,
+        "col": 5
+      },
+      "extra": {
+        "message": "Unauthenticated endpoint discloses every user's sensitive data: all_users_data_view has no authentication or authorization check and returns, for all accounts, the username, full credit card number, full SSN and API key as JSON. Any anonymous client can harvest this data. Root cause: rule 1.8.1 '默认鉴权' and rule 1.7.3 '高敏感信息禁止存储、展示'.",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-038",
+          "cwe": [
+            "CWE-306"
+          ],
+          "confidence": "high",
+          "code_evidence": "def all_users_data_view(request):\n    # MAJOR SECURITY FLAW: This endpoint allows ANY user (even unauthenticated ones!)\n    # to see ALL users' sensitive data!\n    all_users_data = []\n    for user_data in UserData.objects.all():\n        all_users_data.append({\n            'username': user_data.user.username,\n            'credit_card': user_data.credit_card,\n            'ssn': user_data.ssn,\n            'api_key': user_data.api_key\n        })\n    return JsonResponse({'users': all_users_data})",
+          "preconditions": "Confirmed in source: no @login_required, no role check; the route /api/all-users/ is registered in dataexposure/urls.py. Needs deployment confirmation: whether the lab container is deployed and reachable.",
+          "data_flow": "anonymous HTTP request -> UserData.objects.all() -> JSON response containing credit card numbers, SSNs and API keys of all users.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-039",
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/views.py",
+      "start": {
+        "line": 87,
+        "col": 1
+      },
+      "end": {
+        "line": 107,
+        "col": 26
+      },
+      "extra": {
+        "message": "Sensitive data returned unmasked by the authenticated API: api_data_view returns the full credit card number, the full SSN and the API key of the requesting user as JSON without any masking, although the same data is masked in the profile page. Root cause: rule 1.7.2/1.7.4 '敏感信息须在后台进行脱敏处理' and '个人敏感信息需脱敏展示'.",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-039",
+          "cwe": [
+            "CWE-200"
+          ],
+          "confidence": "high",
+          "code_evidence": "data = {\n    'username': request.user.username,\n    'credit_card': user_data.credit_card,\n    'ssn': user_data.ssn,\n    'api_key': user_data.api_key\n}\n# Intentionally exposing sensitive data through API\nreturn JsonResponse(data)",
+          "preconditions": "Confirmed in source: only @login_required is applied (no staff/owner check), and no masking is performed. Needs deployment confirmation: whether the JSON endpoint is exposed publicly in the deployment.",
+          "data_flow": "authenticated request -> UserData row -> unmasked credit card / SSN / API key in the JSON body.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-040",
+      "path": "dockerized_labs/broken_auth_lab/app.py",
+      "start": {
+        "line": 45,
+        "col": 9
+      },
+      "end": {
+        "line": 51,
+        "col": 50
+      },
+      "extra": {
+        "message": "Forgeable session token: the 'session' cookie only contains base64(username:timestamp) and the dashboard re-derives the identity by base64-decoding it (username = base64.b64decode(session_token).decode().split(':')[0]). The value has no signature, no server-side session record and no expiry check, so anyone can craft base64('admin:<timestamp>') and be accepted as the administrator. Root cause: CWE-345 insufficient verification of data authenticity / CWE-287 improper authentication.",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-040",
+          "cwe": [
+            "CWE-345"
+          ],
+          "confidence": "high",
+          "code_evidence": "session_token = base64.b64encode(f\"{username}:{datetime.now()}\".encode()).decode()\n...\nresponse.set_cookie('session', session_token)\n...\ndef dashboard():\n    session_token = request.cookies.get('session')\n    ...\n    username = base64.b64decode(session_token).decode().split(':')[0]\n    if username in users:\n        return render_template('dashboard.html', username=username, role=users[username]['role'], email=users[username]['email'])",
+          "preconditions": "Confirmed in source: no signature/HMAC on the cookie, no server-side session store, no expiry validation. Needs deployment confirmation: whether the lab container is deployed and reachable.",
+          "data_flow": "attacker-crafted base64 cookie -> base64.b64decode -> username extracted -> users[username] loaded -> role/email rendered as an authenticated user.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-041",
+      "path": "dockerized_labs/broken_auth_lab/app.py",
+      "start": {
+        "line": 8,
+        "col": 1
+      },
+      "end": {
+        "line": 8,
+        "col": 44
+      },
+      "extra": {
+        "message": "Hardcoded Flask secret key: app.secret_key is the literal 'your-secret-key-here'. Because Flask signs its session cookies with this key, anybody who knows the source can forge valid Flask session cookies for the application. Root cause: rule 2.3.2 '禁止硬编码敏感配置'.",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-041",
+          "cwe": [
+            "CWE-798"
+          ],
+          "confidence": "high",
+          "code_evidence": "app.secret_key = 'your-secret-key-here'  # Vulnerable: Hardcoded secret key",
+          "preconditions": "Confirmed in source: literal key committed to the repository; no environment override in the lab. Needs deployment confirmation: whether the lab is deployed with an overridden key (none configured).",
+          "data_flow": "source code -> known Flask secret key -> ability to sign arbitrary session cookies.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-042",
+      "path": "dockerized_labs/broken_auth_lab/app.py",
+      "start": {
+        "line": 11,
+        "col": 5
+      },
+      "end": {
+        "line": 25,
+        "col": 6
+      },
+      "extra": {
+        "message": "Hardcoded administrator credentials and plaintext password storage: the in-memory user table contains the hardcoded account 'admin' with password 'admin123' and 'user' with password 'password123', and the passwords of newly registered users are also stored in cleartext and compared in cleartext (users[username]['password'] == password). Root cause: rule 1.3.3 '口令存储安全' and CWE-798 use of hard-coded credentials.",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-042",
+          "cwe": [
+            "CWE-798"
+          ],
+          "confidence": "high",
+          "code_evidence": "users = {\n    'admin': {\n        'password': 'admin123',\n        'email': 'admin@example.com',\n        'role': 'admin'\n    },\n    'user': {\n        'password': 'password123',\n        'email': 'user@example.com',\n        'role': 'user'\n    }\n}",
+          "preconditions": "Confirmed in source: credentials are literals in the source and are used by the /login route. Needs deployment confirmation: whether the lab container is deployed and reachable.",
+          "data_flow": "hardcoded credential -> login comparison -> role 'admin' session for the attacker.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-043",
+      "path": "dockerized_labs/broken_auth_lab/app.py",
+      "start": {
+        "line": 86,
+        "col": 13
+      },
+      "end": {
+        "line": 91,
+        "col": 74
+      },
+      "extra": {
+        "message": "Predictable and disclosed password-reset token: the reset token is md5(f'{email}:{datetime.now()}') - a fast, unsalted digest over predictable inputs - and the token is additionally printed back to the requester in the response ('Password reset link: /reset/<token>'), so anybody who knows an account's e-mail address can obtain a valid reset token. Root cause: rule 1.3.6 '密码重置令牌应足够难猜、限时、一次性使用'.",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-043",
+          "cwe": [
+            "CWE-330"
+          ],
+          "confidence": "high",
+          "code_evidence": "for username, user_data in users.items():\n    if user_data['email'] == email:\n        # Predictable token generation\n        token = hashlib.md5(f\"{email}:{datetime.now()}\".encode()).hexdigest()\n        password_reset_tokens[token] = username\n        flash(f'Password reset link: /reset/{token}')",
+          "preconditions": "Confirmed in source: the token is derived from the e-mail address and the current time via MD5 and is echoed in the response; it never expires and is not single-use. Needs deployment confirmation: whether the lab container is deployed.",
+          "data_flow": "request.form['email'] -> md5(email:timestamp) -> token disclosed in the response -> token accepted by /reset/<token>.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-044",
+      "path": "introduction/apis.py",
+      "start": {
+        "line": 61,
+        "col": 1
+      },
+      "end": {
+        "line": 74,
+        "col": 14
+      },
+      "extra": {
+        "message": "Unauthenticated arbitrary write of Python source files: log_function_checker (the @authentication_decorator above it is commented out) takes the POST fields 'log_code' and 'api_code' and writes them verbatim over introduction/playground/A9/main.py and introduction/playground/A9/api.py. Both modules are imported by the application (introduction/urls.py imports log_function_target from A9.api, introduction/apis.py imports Log from A9.main), so the injected source is executed by the interpreter the next time the application starts - persistent remote code execution. Root cause: rule 1.3.3/1.3.4 '禁止外部输入覆写会被导入执行的源文件'.",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-044",
+          "cwe": [
+            "CWE-94"
+          ],
+          "confidence": "high",
+          "code_evidence": "@csrf_exempt\n# @authentication_decorator\ndef log_function_checker(request):\n    if request.method == 'POST':\n        csrf_token = request.POST.get(\"csrfmiddlewaretoken\")\n        log_code = request.POST.get('log_code')\n        api_code = request.POST.get('api_code')\n        dirname = os.path.dirname(__file__)\n        log_filename = os.path.join(dirname, \"playground/A9/main.py\")\n        api_filename = os.path.join(dirname, \"playground/A9/api.py\")\n        f = open(log_filename,\"w\")\n        f.write(log_code)\n        f.close()\n        f = open(api_filename,\"w\")\n        f.write(api_code)\n        f.close()",
+          "preconditions": "Confirmed in source: no authentication check (decorator commented out), @csrf_exempt, POST body fully attacker controlled, the written files are imported application modules. Needs deployment confirmation: the application package directory must be writable at runtime (it is in the Docker image where the source is copied to /app), and a process restart (or reload) is required for the injected code to execute.",
+          "data_flow": "request.POST['log_code'] / request.POST['api_code'] -> open(...,'w').write(...) -> introduction/playground/A9/main.py and api.py -> imported by the Django app on the next start -> attacker code executes with the application privileges.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-045",
+      "path": "introduction/apis.py",
+      "start": {
+        "line": 126,
+        "col": 1
+      },
+      "end": {
+        "line": 135,
+        "col": 16
+      },
+      "extra": {
+        "message": "Arbitrary write of an imported Python module: A6_disscussion_api_2 accepts the POST field 'code' and writes it over introduction/playground/A6/utility.py, which is imported at application start (introduction/apis.py: from introduction.playground.A6.utility import check_vuln). The written source therefore runs at the next application start, giving persistent code execution. Root cause: rule 1.3.3/1.3.4 (external input overwriting source files that are imported and executed).",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-045",
+          "cwe": [
+            "CWE-94"
+          ],
+          "confidence": "high",
+          "code_evidence": "@csrf_exempt\ndef A6_disscussion_api_2(request):\n    if request.method != 'POST':\n        return JsonResponse({\"message\":\"method not allowed\"},status = 405)\n    try:\n        code = request.POST.get('code')\n        dirname = os.path.dirname(__file__)\n        filename = os.path.join(dirname, \"playground/A6/utility.py\")\n        f = open(filename,\"w\")\n        f.write(code)\n        f.close()",
+          "preconditions": "Confirmed in source: no authentication check, @csrf_exempt, code fully attacker controlled, target file is an imported module. Needs deployment confirmation: writable package directory and a restart/reload of the application for the injected code to run.",
+          "data_flow": "request.POST['code'] -> introduction/playground/A6/utility.py -> imported by introduction/apis.py at start-up -> attacker code executed.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-046",
+      "path": "introduction/utility.py",
+      "start": {
+        "line": 34,
+        "col": 5
+      },
+      "end": {
+        "line": 36,
+        "col": 17
+      },
+      "extra": {
+        "message": "User-supplied code written into an imported Python module: ssrf_code_converter takes the POST field 'python_code' and writes the derived source into introduction/playground/ssrf/main.py. That module is imported by introduction/apis.py (from introduction.playground.ssrf import main) and its function is then invoked, so the attacker-controlled source becomes part of the executed application code (immediately after a reload, and on the next start-up). Root cause: rule 1.3.3/1.3.4.",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-046",
+          "cwe": [
+            "CWE-94"
+          ],
+          "confidence": "medium",
+          "code_evidence": "def ssrf_code_converter(code):\n    ...\n    dirname = os.path.dirname(__file__)\n    filename = os.path.join(dirname, \"playground/ssrf/main.py\")\n    f = open(filename,\"w\")\n    f.write(output_Code)\n    f.close()\n    return 1",
+          "preconditions": "Confirmed in source: 'python_code' is fully attacker controlled (authenticated), the derived text is written to an imported module file. Needs deployment confirmation: whether the deployment re-imports the module after the write (the module is imported once at start-up, so the injected code runs on the next start-up or after a reload); this was not verified dynamically.",
+          "data_flow": "request.POST['python_code'] -> ssrf_code_converter() -> introduction/playground/ssrf/main.py -> imported by introduction/apis.py -> executed in the application context.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-047",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 583,
+        "col": 13
+      },
+      "end": {
+        "line": 588,
+        "col": 74
+      },
+      "extra": {
+        "message": "Expression evaluation of user-controlled input: a9_lab2 passes the POST field 'function' to PIL's ImageMath.eval(), which compiles and evaluates the string in the interpreter. The expression language is restricted to the predeclared ImageMath namespace, but the attacker controls the source text that is evaluated, and Python object introspection inside an eval() context allows escaping the intended namespace. Root cause: rule 1.3.3 '禁止把不可信输入当作程序执行'.",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-047",
+          "cwe": [
+            "CWE-95"
+          ],
+          "confidence": "medium",
+          "code_evidence": "file=request.FILES[\"file\"]\nfunction_str = request.POST.get(\"function\")\nimg  = Image.open(file)\nimg = img.convert(\"RGB\")\nr,g,b  = img.split()\noutput = ImageMath.eval(function_str,img = img, b=b, r=r, g=g)",
+          "preconditions": "Confirmed in source: authenticated session required; 'function' is fully attacker controlled and is evaluated by ImageMath.eval. Needs deployment confirmation: the exact escape depends on the installed Pillow version (requirements.txt pins Pillow==9.4.0) and its ImageMath sandbox; the concrete exploit was not validated in this run.",
+          "data_flow": "request.POST['function'] -> ImageMath.eval(expression) -> evaluation of attacker-controlled expression inside the server process.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-048",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 831,
+        "col": 9
+      },
+      "end": {
+        "line": 833,
+        "col": 78
+      },
+      "extra": {
+        "message": "Hardcoded credentials in the application source: the broken access control lab authenticates users by comparing the submitted values against literals in the source ('John'/'reaper' and 'admin'/'admin_pass'), so the administrator account password is publicly known from the repository. Root cause: rule 2.3.2 '禁止硬编码敏感配置' / CWE-798.",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-048",
+          "cwe": [
+            "CWE-798"
+          ],
+          "confidence": "high",
+          "code_evidence": "if username == 'John' and password == 'reaper':\n    return render(request,'Lab_2021/A1_BrokenAccessControl/broken_access_lab_3.html', {'loggedin':True, 'admin': False})\nelif username == 'admin' and password == 'admin_pass':\n    return render(request,'Lab_2021/A1_BrokenAccessControl/broken_access_lab_3.html', {'loggedin':True, 'admin': True})",
+          "preconditions": "Confirmed in source: credential literals in the source file; the view is reachable for authenticated users. Needs deployment confirmation: whether the deployment keeps these values (they are hardcoded, so yes).",
+          "data_flow": "hardcoded credential pair -> comparison -> privileged 'admin': True context rendered.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-049",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 837,
+        "col": 1
+      },
+      "end": {
+        "line": 843,
+        "col": 55
+      },
+      "extra": {
+        "message": "Missing authorization on a sensitive endpoint: a1_broken_access_lab3_secret only verifies that a session exists and then returns the secret page to every authenticated user; the code comment explicitly states 'no checking applied here'. No object- or role-level permission check is performed, so any registered user can read the protected secret. Root cause: rule 1.8.3 '避免越权访问' / CWE-862 missing authorization.",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-049",
+          "cwe": [
+            "CWE-862"
+          ],
+          "confidence": "medium",
+          "code_evidence": "def a1_broken_access_lab3_secret(request):\n    if not request.user.is_authenticated:\n        return redirect('login')\n    # no checking applied here\n    return render(request, 'Lab_2021/A1_BrokenAccessControl/secret.html')",
+          "preconditions": "Confirmed in source: only an authentication check is present; the secret content is rendered for every authenticated user. Needs deployment confirmation: the sensitivity of the rendered secret.html content.",
+          "data_flow": "any authenticated session -> render of secret.html without a permission check.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-050",
+      "path": "dockerized_labs/broken_auth_lab/app.py",
+      "start": {
+        "line": 121,
+        "col": 1
+      },
+      "end": {
+        "line": 121,
+        "col": 1
+      },
+      "extra": {
+        "message": "Flask debug mode enabled and bound to all interfaces: the standalone broken-auth lab starts with app.run(host='0.0.0.0', port=5000, debug=True). The Werkzeug debugger provides an interactive Python console to any client that can reach the port, which leads to remote code execution, and it exposes detailed stack traces. Root cause: rule 1.10.1 '生产环境关闭调试模式'.",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-050",
+          "cwe": [
+            "CWE-489"
+          ],
+          "confidence": "high",
+          "code_evidence": "if __name__ == '__main__':\n    app.run(host='0.0.0.0', port=5000, debug=True)",
+          "preconditions": "Confirmed in source: debug=True and host 0.0.0.0 in the entry point. Needs deployment confirmation: whether the lab container actually runs this entry point and is reachable from untrusted networks.",
+          "data_flow": "untrusted network access -> Werkzeug interactive debugger -> arbitrary Python execution.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-051",
+      "path": "dockerized_labs/sensitive_data_exposure/sensitive_data_lab/settings.py",
+      "start": {
+        "line": 8,
+        "col": 1
+      },
+      "end": {
+        "line": 13,
+        "col": 25
+      },
+      "extra": {
+        "message": "Insecure deployment settings in the sensitive-data lab: the Django settings module hardcodes SECRET_KEY = 'django-insecure-key-for-demonstration-only', enables DEBUG = True and sets ALLOWED_HOSTS = ['*']. Together these allow Host header poisoning, detailed error pages with source/settings disclosure and forging of any signed Django value (sessions, CSRF tokens). Root cause: rules 1.11.1 and 2.3.2, and the Django deployment checklist.",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-051",
+          "cwe": [
+            "CWE-489"
+          ],
+          "confidence": "high",
+          "code_evidence": "# SECURITY WARNING: keep the secret key used in production secret!\nSECRET_KEY = 'django-insecure-key-for-demonstration-only'\n\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\n\nALLOWED_HOSTS = ['*']",
+          "preconditions": "Confirmed in source: this is the only settings module of the lab application (sensitive_data_lab/urls.py refers to it). Needs deployment confirmation: whether the lab container is deployed and reachable.",
+          "data_flow": "settings module -> DEBUG/ALLOWED_HOSTS/SECRET_KEY -> error pages, Host header handling and Django signature verification.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-052",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 1060,
+        "col": 17
+      },
+      "end": {
+        "line": 1060,
+        "col": 58
+      },
+      "extra": {
+        "message": "Authentication token stored in an unsigned cookie: crypto_failure_lab3 issues the cookie value f\"{username}|{expire}\" and later treats the part before '|' as the authenticated identity. The cookie carries no signature, MAC or server-side session state, so a client can simply set cookie=\"admin|<future timestamp>\" and be granted the administrator branch (admin=True). Root cause: reliance on client-supplied data without integrity protection (rule 1.8.5 '可信会话与授权决策').",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-052",
+          "cwe": [
+            "CWE-565"
+          ],
+          "confidence": "high",
+          "code_evidence": "cookie = request.COOKIES[\"cookie\"]\n...\nelif cookie.split('|')[0] == 'admin':\n    return render(request,\"Lab_2021/A2_Crypto_failur/crypto_failure_lab3.html\",{\"success\":True, \"failure\":False, \"admin\":True})\n...\ncookie = f\"{username}|{expire}\"\nresponse.set_cookie(\"cookie\", cookie)",
+          "preconditions": "Confirmed in source: the cookie is read back from the request and its unsigned content decides the admin flag; only the expiry timestamp is validated, not the origin of the value. Needs deployment confirmation: the view requires an authenticated session (the forged cookie only changes the role flag, the session itself is still required).",
+          "data_flow": "request.COOKIES['cookie'] -> split('|')[0] compared with 'admin' -> administrator context rendered; the same unsigned value is issued by the POST branch.",
+          "validation": "static_analysis_only"
+        }
+      }
+    },
+    {
+      "check_id": "finding-053",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 302,
+        "col": 18
+      },
+      "end": {
+        "line": 305,
+        "col": 96
+      },
+      "extra": {
+        "message": "Account takeover through a predictable, client-supplied identifier: the GET branch of auth_lab_login identifies the logged-in user purely by the 'userid' cookie, and authLogin.userid is an AutoField (sequential integer). An attacker only has to set the cookie to userid=1 (or any small integer) to be logged in as the first registered account - no password check and no signature are involved. Root cause: identity taken from an unvalidated client-controlled key (rule 1.8.3 / rule 1.8.5).",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-053",
+          "cwe": [
+            "CWE-639"
+          ],
+          "confidence": "high",
+          "code_evidence": "def auth_lab_login(request):\n    if request.method == 'GET':\n        try:\n            obj = authLogin.objects.filter(userid=request.COOKIES['userid'])[0]\n            rendered = render_to_string('Lab/AUTH/auth_success.html', {'username': obj.username,'userid':obj.userid,'name':obj.name, 'err_msg':'Login Successful'})\n            response = HttpResponse(rendered)\n            response.set_cookie('userid', obj.userid, max_age=31449600, samesite=None, secure=False)",
+          "preconditions": "Confirmed in source: the identity is selected by a client-provided cookie value that is an AutoField primary key; the exception handler silently falls back to the login page. Needs deployment confirmation: whether the deployed database contains accounts with such identifiers (the lab creates them through the signup view).",
+          "data_flow": "request.COOKIES['userid'] -> authLogin.objects.filter(userid=...) -> the account's username/role is rendered as the logged-in identity.",
+          "validation": "static_analysis_only"
+        }
+      }
+    }
+  ]
+}

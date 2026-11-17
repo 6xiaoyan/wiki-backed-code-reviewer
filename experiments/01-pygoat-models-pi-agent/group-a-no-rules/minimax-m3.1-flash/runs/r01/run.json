@@ -1,0 +1,27 @@
+{
+  "experiment_id": "01-pygoat-models-pi-agent",
+  "group": "A-no-extra-rules",
+  "model_label": "minimax-m3.1-flash",
+  "run_id": "r01",
+  "harness": "pi-agent",
+  "input_directory": "D:/ai_share/langgraph/benchmark-data/pygoat-baseline/inputs/experiment-01/pygoat",
+  "source_commit": "2fb0c600245f50670e8b9233c784afe61e8b340b",
+  "started_at": "2026-11-17T03:12:03Z",
+  "finished_at": "2026-11-17T03:36:59Z",
+  "status": "completed",
+  "stop_reason": "analysis_time_budget_reached_after_full_review_of_backend_code_and_targeted_review_of_templates",
+  "limitations": [
+    "纯静态分析：未运行应用、未执行测试或利用代码、未运行漏洞扫描器、未安装依赖。",
+    "未逐行通读全部模板与静态资源；模板/CSS/JS 仅做关键字级检查（见 coverage.json 的 partial 状态说明）。",
+    "涉及运行期行为的结论（被写入源码的执行时机、ImageMath.eval 的实际可利用性）已按部署相关条件标注或降低置信度。",
+    "未审计第三方依赖内部实现，也未审计数据库初始数据与运行时状态。",
+    "本记录中的 confirmed_model_id / token 用量 / 费用等字段无法从当前运行环境获取，故为 null，需由操作者用 pi 运行日志补充。",
+    "分析阶段实际用时约 25 分钟（started_at 2026-11-17T03:12:03Z -> finished_at 2026-11-17T03:36:59Z，UTC），随后约数分钟用于整理输出文件。"
+  ],
+  "confirmed_model_id": null,
+  "pi_version": null,
+  "reasoning_effort": null,
+  "input_tokens": null,
+  "output_tokens": null,
+  "cost": null
+}

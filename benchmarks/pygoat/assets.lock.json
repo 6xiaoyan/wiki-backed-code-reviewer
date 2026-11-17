@@ -1,0 +1,184 @@
+{
+  "prepared_at_utc": "2026-11-17T02:36:09.092746+00:00",
+  "repositories": {
+    "pygoat": {
+      "url": "https://github.com/kolega-ai-dev/realvuln-pygoat",
+      "commit": "2fb0c600245f50670e8b9233c784afe61e8b340b"
+    },
+    "realvuln": {
+      "url": "https://github.com/kolega-ai/Real-Vuln-Benchmark",
+      "commit": "90c3221a83e44242b7b67555094349107c21283f",
+      "sparse_checkout": [
+        "/score.py",
+        "/scorer/",
+        "/parsers/",
+        "/config/",
+        "/ground-truth/realvuln-pygoat/",
+        "/benchmark-manifest.json",
+        "/validate_gt.py",
+        "/compute_gt_hash.py",
+        "/README.md",
+        "/LICENSE",
+        "/pyproject.toml",
+        "/tests/",
+        "/llm-bench/prompts/",
+        "/llm-bench/README.md",
+        "/docs/"
+      ]
+    }
+  },
+  "ground_truth": {
+    "path": "D:\\ai_share\\langgraph\\benchmark-data\\pygoat-baseline\\judge\\realvuln\\ground-truth\\realvuln-pygoat\\ground-truth.json",
+    "sha256": "eb0a7dc452b78631d130b5ebd72c8d4283514da30f2c6616806a0b38a022aeb5",
+    "labels": {
+      "vulnerable": 78,
+      "false_positive_trap": 10
+    }
+  },
+  "rule_sources": {
+    "tencent": {
+      "repository": "Tencent/secguide",
+      "requested_ref": "main",
+      "commit": "bfda087142e3bb3f5840cbc6af82c1982d1d14e4"
+    },
+    "django": {
+      "repository": "django/django",
+      "requested_ref": "4.2",
+      "commit": "879e5d587b84e6fc961829611999431778eb9f6a"
+    },
+    "owasp": {
+      "repository": "OWASP/CheatSheetSeries",
+      "requested_ref": "master",
+      "commit": "18e4396f7605582391d440a0e44503541258bbb0"
+    },
+    "google": {
+      "repository": "google/styleguide",
+      "requested_ref": "gh-pages",
+      "commit": "a9c5f82b19811f1552d73df384a9f9d7c75ca16e"
+    },
+    "pep": {
+      "repository": "python/peps",
+      "requested_ref": "main",
+      "commit": "5595f77d7d9cdddae99d4510b145df2496a9c891"
+    }
+  },
+  "documents": [
+    {
+      "group": "core",
+      "path": "rules/core/tencent-python-security.md",
+      "source_url": "https://raw.githubusercontent.com/Tencent/secguide/bfda087142e3bb3f5840cbc6af82c1982d1d14e4/Python%E5%AE%89%E5%85%A8%E6%8C%87%E5%8D%97.md",
+      "source_repository": "Tencent/secguide",
+      "source_commit": "bfda087142e3bb3f5840cbc6af82c1982d1d14e4",
+      "upstream_path": "Python安全指南.md",
+      "bytes": 20622,
+      "sha256": "b1d1f0b779b4e6352667a95e4bf28e59eb96e3ff05c20bf43e772cc8c1048eed"
+    },
+    {
+      "group": "core",
+      "path": "rules/core/django-4.2-security.rst",
+      "source_url": "https://raw.githubusercontent.com/django/django/879e5d587b84e6fc961829611999431778eb9f6a/docs/topics/security.txt",
+      "source_repository": "django/django",
+      "source_commit": "879e5d587b84e6fc961829611999431778eb9f6a",
+      "upstream_path": "docs/topics/security.txt",
+      "bytes": 14517,
+      "sha256": "97fb485a4026f94674745b25c184be8cb11ee118ddd971a0aeb6e616d300025e"
+    },
+    {
+      "group": "core",
+      "path": "rules/core/django-4.2-deployment-checklist.rst",
+      "source_url": "https://raw.githubusercontent.com/django/django/879e5d587b84e6fc961829611999431778eb9f6a/docs/howto/deployment/checklist.txt",
+      "source_repository": "django/django",
+      "source_commit": "879e5d587b84e6fc961829611999431778eb9f6a",
+      "upstream_path": "docs/howto/deployment/checklist.txt",
+      "bytes": 9558,
+      "sha256": "4bff38929a592023f6c7c47fb9b810db897c676187bd3b996c64f9aff5bc58dc"
+    },
+    {
+      "group": "core",
+      "path": "rules/core/owasp-django-security.md",
+      "source_url": "https://raw.githubusercontent.com/OWASP/CheatSheetSeries/18e4396f7605582391d440a0e44503541258bbb0/cheatsheets/Django_Security_Cheat_Sheet.md",
+      "source_repository": "OWASP/CheatSheetSeries",
+      "source_commit": "18e4396f7605582391d440a0e44503541258bbb0",
+      "upstream_path": "cheatsheets/Django_Security_Cheat_Sheet.md",
+      "bytes": 12966,
+      "sha256": "389ac1f39b21aa9c755df875b637a7bdbc4e6f88540b02db63cff2a72f877745"
+    },
+    {
+      "group": "supplemental",
+      "path": "rules/supplemental/owasp-sql-injection-prevention.md",
+      "source_url": "https://raw.githubusercontent.com/OWASP/CheatSheetSeries/18e4396f7605582391d440a0e44503541258bbb0/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md",
+      "source_repository": "OWASP/CheatSheetSeries",
+      "source_commit": "18e4396f7605582391d440a0e44503541258bbb0",
+      "upstream_path": "cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md",
+      "bytes": 13500,
+      "sha256": "6c377eef95804d03ed29c27b8002a1d714ced833dfc651e1ee69ccf4abdadd6b"
+    },
+    {
+      "group": "supplemental",
+      "path": "rules/supplemental/owasp-xss-prevention.md",
+      "source_url": "https://raw.githubusercontent.com/OWASP/CheatSheetSeries/18e4396f7605582391d440a0e44503541258bbb0/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md",
+      "source_repository": "OWASP/CheatSheetSeries",
+      "source_commit": "18e4396f7605582391d440a0e44503541258bbb0",
+      "upstream_path": "cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md",
+      "bytes": 31821,
+      "sha256": "e4bbeced6010bb9029061910e97f01f4391cb8b89d1a0f31a390ca5a00a5e9a8"
+    },
+    {
+      "group": "supplemental",
+      "path": "rules/supplemental/owasp-ssrf-prevention.md",
+      "source_url": "https://raw.githubusercontent.com/OWASP/CheatSheetSeries/18e4396f7605582391d440a0e44503541258bbb0/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md",
+      "source_repository": "OWASP/CheatSheetSeries",
+      "source_commit": "18e4396f7605582391d440a0e44503541258bbb0",
+      "upstream_path": "cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md",
+      "bytes": 30915,
+      "sha256": "cfd23149653bdb4390817864c818b4ac5b8460b75ddfc2805dda3fd353e81060"
+    },
+    {
+      "group": "supplemental",
+      "path": "rules/supplemental/owasp-deserialization.md",
+      "source_url": "https://raw.githubusercontent.com/OWASP/CheatSheetSeries/18e4396f7605582391d440a0e44503541258bbb0/cheatsheets/Deserialization_Cheat_Sheet.md",
+      "source_repository": "OWASP/CheatSheetSeries",
+      "source_commit": "18e4396f7605582391d440a0e44503541258bbb0",
+      "upstream_path": "cheatsheets/Deserialization_Cheat_Sheet.md",
+      "bytes": 21987,
+      "sha256": "f25441070ffcd5664758dff186c7804b8cb42e81258b4133760af2eee57e5a09"
+    },
+    {
+      "group": "supplemental",
+      "path": "rules/supplemental/owasp-authorization.md",
+      "source_url": "https://raw.githubusercontent.com/OWASP/CheatSheetSeries/18e4396f7605582391d440a0e44503541258bbb0/cheatsheets/Authorization_Cheat_Sheet.md",
+      "source_repository": "OWASP/CheatSheetSeries",
+      "source_commit": "18e4396f7605582391d440a0e44503541258bbb0",
+      "upstream_path": "cheatsheets/Authorization_Cheat_Sheet.md",
+      "bytes": 31021,
+      "sha256": "fb8b6e5c60ed783025beefb5049142fd9da02d01f5c95de18a19d26479737975"
+    },
+    {
+      "group": "optional-style",
+      "path": "rules/optional-style/google-python-style.md",
+      "source_url": "https://raw.githubusercontent.com/google/styleguide/a9c5f82b19811f1552d73df384a9f9d7c75ca16e/pyguide.md",
+      "source_repository": "google/styleguide",
+      "source_commit": "a9c5f82b19811f1552d73df384a9f9d7c75ca16e",
+      "upstream_path": "pyguide.md",
+      "bytes": 117441,
+      "sha256": "45ad9731b1142f97ce010942c1ae21f0d921b77b1d17a867e12a4b4fabfb4419"
+    },
+    {
+      "group": "optional-style",
+      "path": "rules/optional-style/pep-0008.rst",
+      "source_url": "https://raw.githubusercontent.com/python/peps/5595f77d7d9cdddae99d4510b145df2496a9c891/peps/pep-0008.rst",
+      "source_repository": "python/peps",
+      "source_commit": "5595f77d7d9cdddae99d4510b145df2496a9c891",
+      "upstream_path": "peps/pep-0008.rst",
+      "bytes": 50796,
+      "sha256": "6028935c6cb2c674d5f4d512c7ba6ce2923713b1c47ce1a78adc690db817fc5d"
+    }
+  ],
+  "notes": [
+    "PyGoat pins Django 4.2; Django documentation is pinned to tag 4.2.",
+    "OWASP and Tencent documents include version-dependent or dated recommendations; raw snapshots are not yet an adjudicated experimental ruleset.",
+    "Optional Google/PEP8 style documents are excluded from the proposed security-only group B.",
+    "Judge/ground-truth are stored outside the target checkout. This is directory separation, not an enforced access-control boundary.",
+    "No target dependencies installed, no target code executed, no model evaluation run."
+  ]
+}

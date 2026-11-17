@@ -1,0 +1,100 @@
+{
+  "review_runs": [
+    {
+      "run": "minimax-m3.1-flash/A",
+      "input": 74124,
+      "output": 45992,
+      "cacheRead": 4036608,
+      "cacheWrite": 0,
+      "totalTokens": 4156724,
+      "cacheWrite1h": 0,
+      "reasoning": 18370,
+      "official_price_estimate_cny": 0.6617528,
+      "pi_estimate_usd": 0.09870440399999995
+    },
+    {
+      "run": "minimax-m3.1-flash/B",
+      "input": 128272,
+      "output": 55098,
+      "cacheRead": 3984764,
+      "cacheWrite": 0,
+      "totalTokens": 4168134,
+      "cacheWrite1h": 0,
+      "reasoning": 17993,
+      "official_price_estimate_cny": 0.7471404,
+      "pi_estimate_usd": 0.11146338519999997
+    },
+    {
+      "run": "glm-5.3-flash/A",
+      "input": 2775938,
+      "output": 51303,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 25647,
+      "totalTokens": 2827241,
+      "official_price_estimate_cny": 2.3643988,
+      "pi_estimate_usd": null
+    },
+    {
+      "run": "glm-5.3-flash/B",
+      "input": 1927959,
+      "output": 38890,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 12905,
+      "totalTokens": 1966849,
+      "official_price_estimate_cny": 1.6512592000000001,
+      "pi_estimate_usd": null
+    },
+    {
+      "run": "qwen-3.8-flash-next/A",
+      "input": 3098014,
+      "output": 70605,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 20749,
+      "totalTokens": 3168619,
+      "official_price_estimate_cny": 2.6690447,
+      "pi_estimate_usd": null
+    },
+    {
+      "run": "qwen-3.8-flash-next/B",
+      "input": 7447815,
+      "output": 81168,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 28779,
+      "totalTokens": 7528983,
+      "official_price_estimate_cny": 6.177405599999999,
+      "pi_estimate_usd": null
+    }
+  ],
+  "review_total_tokens": 23816550,
+  "review_official_price_estimate_cny": 14.2710015,
+  "deepseek_successful_once": {
+    "attempts": 262,
+    "usage_received": 262,
+    "tokens": {
+      "prompt_tokens": 556006,
+      "completion_tokens": 395156,
+      "total_tokens": 951162,
+      "prompt_cache_hit_tokens": 40064,
+      "prompt_cache_miss_tokens": 515942,
+      "reasoning_tokens": 342160
+    },
+    "estimate_usd": 0.6292101840000002
+  },
+  "deepseek_including_retries": {
+    "attempts": 279,
+    "usage_received": 266,
+    "tokens": {
+      "prompt_tokens": 565187,
+      "completion_tokens": 427924,
+      "total_tokens": 993111,
+      "prompt_cache_hit_tokens": 40576,
+      "prompt_cache_miss_tokens": 524611,
+      "reasoning_tokens": 374819
+    },
+    "estimate_usd": 0.6711355560000002
+  }
+}

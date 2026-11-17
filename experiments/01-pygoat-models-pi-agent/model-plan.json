@@ -1,0 +1,87 @@
+{
+  "experiment_id": "01-pygoat-models-pi-agent",
+  "group": "A-no-extra-rules",
+  "harness": "pi-agent",
+  "common_prompt_sha256": "1da03e71ebeed351d0b74b79a4471e5a4a172076e5a322ac292079c33d343912",
+  "only_prompt_differences": [
+    "MODEL_LABEL value",
+    "output directory"
+  ],
+  "operator_notes": [
+    "MiniMax's verified coding model name is M3.1 Flash; the requested H3.1 Flash label was not used.",
+    "Display names/folder labels are not verified API model IDs. Fill actual IDs/revisions from pi/provider logs.",
+    "Qwen3.8-Flash-Next replaces DeepSeek in the active A-group comparison. Existing DeepSeek prompts/results are retained as historical material.",
+    "Configured GLM and Qwen IDs were checked in local pi model configuration. Confirm the actual models and thinking settings from each run's logs.",
+    "This generator does not modify provider credentials or run models. Existing prompts must match the common protocol to be reused."
+  ],
+  "models": [
+    {
+      "model_label": "minimax-m3.1-flash",
+      "planned_display_name": "MiniMax M3.1 Flash",
+      "actual_provider": null,
+      "actual_model_id": null,
+      "actual_model_revision": null,
+      "pi_version": null,
+      "reasoning_configuration": null,
+      "model_reference": "https://www.minimax.io/blog/minimax-m31f",
+      "prompt_file": "group-a-no-rules/minimax-m3.1-flash/PROMPT.md",
+      "prompt_sha256": "8531c5025e3d25ae3928c26bcd3c4e1c1eb5273f020d7038cc8ed70215099366",
+      "run_id": "r01",
+      "output_directory": "D:\\ai_share\\langgraph\\wiki-backed-code-reviewer\\experiments\\01-pygoat-models-pi-agent\\group-a-no-rules\\minimax-m3.1-flash\\runs\\r01",
+      "configured_provider": "minimax-cn",
+      "configured_model_id": "MiniMax-M3.1-Flash",
+      "configuration_note": "Endpoint configuration is not proof of the model actually used in a run; verify from session logs."
+    },
+    {
+      "model_label": "glm-5.3-flash",
+      "planned_display_name": "GLM-5.3-Flash",
+      "actual_provider": null,
+      "actual_model_id": null,
+      "actual_model_revision": null,
+      "pi_version": null,
+      "reasoning_configuration": null,
+      "model_reference": "https://z.ai/blog/glm-5.3-flash",
+      "prompt_file": "group-a-no-rules/glm-5.3-flash/PROMPT.md",
+      "prompt_sha256": "bc44b226eaa53b8b4f8f148703a82912743096d978d53a33c10a976d30072b3d",
+      "run_id": "r01",
+      "output_directory": "D:\\ai_share\\langgraph\\wiki-backed-code-reviewer\\experiments\\01-pygoat-models-pi-agent\\group-a-no-rules\\glm-5.3-flash\\runs\\r01",
+      "configured_provider": "lenovo-token-hub",
+      "configured_model_id": "GLM-5.3-Flash",
+      "configuration_note": "Endpoint configuration is not proof of the model actually used in a run; verify from session logs."
+    },
+    {
+      "model_label": "qwen-3.8-flash-next",
+      "planned_display_name": "Qwen3.8-Flash-Next",
+      "actual_provider": null,
+      "actual_model_id": null,
+      "actual_model_revision": null,
+      "pi_version": null,
+      "reasoning_configuration": null,
+      "model_reference": null,
+      "prompt_file": "group-a-no-rules/qwen-3.8-flash-next/PROMPT.md",
+      "prompt_sha256": "e95555fdfeacf7b075518d71e79a90a788816fb1e6b52068cb5af033da6a4b22",
+      "run_id": "r01",
+      "output_directory": "D:\\ai_share\\langgraph\\wiki-backed-code-reviewer\\experiments\\01-pygoat-models-pi-agent\\group-a-no-rules\\qwen-3.8-flash-next\\runs\\r01",
+      "configured_provider": "lenovo-token-hub",
+      "configured_model_id": "Qwen3.8-Flash-Next",
+      "configuration_note": "Endpoint configuration is not proof of the model actually used in a run; verify from session logs."
+    }
+  ],
+  "retired_models": [
+    {
+      "model_label": "deepseek-v4.1-flash",
+      "planned_display_name": "DeepSeek V4.1 Flash",
+      "actual_provider": null,
+      "actual_model_id": null,
+      "actual_model_revision": null,
+      "pi_version": null,
+      "reasoning_configuration": null,
+      "model_reference": "https://api-docs.deepseek.com/news/news261017/",
+      "prompt_file": "group-a-no-rules/deepseek-v4.1-flash/PROMPT.md",
+      "prompt_sha256": "dd504fec06168d2d64af85236ab617542871a2b69755c3183571fa5e5b33cf9f",
+      "run_id": "r01",
+      "output_directory": "D:\\ai_share\\langgraph\\wiki-backed-code-reviewer\\experiments\\01-pygoat-models-pi-agent\\group-a-no-rules\\deepseek-v4.1-flash\\runs\\r01",
+      "retired_reason": "Replaced by Qwen3.8-Flash-Next at the user's request; existing files retained."
+    }
+  ]
+}

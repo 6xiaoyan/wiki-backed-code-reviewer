@@ -1,0 +1,1111 @@
+{
+  "results": [
+    {
+      "check_id": "finding-001",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 158,
+        "col": 13
+      },
+      "end": {
+        "line": 165,
+        "col": 40
+      },
+      "extra": {
+        "message": "SQL注入：sql_lab 视图将用户POST参数 name 和 password 直接拼接进SQL字符串，并通过 login.objects.raw(sql_query) 执行，未经参数化处理。攻击者可用 ' OR '1'='1 之类的payload绕过认证或读取/操纵 introduction_login 表数据。",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-001",
+          "cwe": [
+            "CWE-89"
+          ],
+          "confidence": "high",
+          "code_evidence": "sql_query = \"SELECT * FROM introduction_login WHERE user='\"+name+\"' AND password='\"+password+\"'\" ... val=login.objects.raw(sql_query)",
+          "preconditions": "源码已确认：视图受 request.user.is_authenticated 保护（需已登录账号）；POST 参数 name/password 完全用户可控且未过滤。无需其他部署条件。",
+          "data_flow": "request.POST['name']/['pass'] → name/password 变量 → 字符串拼接 sql_query → login.objects.raw() 执行原始SQL。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-002",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 864,
+        "col": 13
+      },
+      "end": {
+        "line": 876,
+        "col": 53
+      },
+      "extra": {
+        "message": "SQL注入：injection_sql_lab 视图将 POST 参数 name、password 拼接进 SQL 并用 sql_lab_table.objects.raw() 执行，与 sql_lab 为不同端点的独立注入点，可读取 introduction_sql_lab_table 全表数据。",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-002",
+          "cwe": [
+            "CWE-89"
+          ],
+          "confidence": "high",
+          "code_evidence": "sql_query = \"SELECT * FROM introduction_sql_lab_table WHERE id='\"+name+\"'AND password='\"+password+\"'\" ... user = sql_lab_table.objects.raw(sql_query)",
+          "preconditions": "源码已确认：需已登录（is_authenticated 检查）；参数用户可控、无过滤。",
+          "data_flow": "request.POST['name']/['pass'] → sql_query 拼接 → objects.raw() 执行。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-003",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 214,
+        "col": 20
+      },
+      "end": {
+        "line": 218,
+        "col": 74
+      },
+      "extra": {
+        "message": "不安全反序列化：insec_des_lab 对用户Cookie 'token' 做 base64 解码后直接 pickle.loads，pickle 可携带 __reduce__ 指令导致服务端任意代码执行。成功伪造 admin=1 的pickle还可读取硬编码秘密 SECRETKEY:ADMIN123。",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-003",
+          "cwe": [
+            "CWE-502"
+          ],
+          "confidence": "high",
+          "code_evidence": "token = base64.b64decode(token)\n            admin = pickle.loads(token)\n            if admin.admin == 1:",
+          "preconditions": "源码已确认：Cookie 值完全由客户端控制；视图需登录。任意已登录用户可通过构造恶意pickle Cookie实现RCE。",
+          "data_flow": "request.COOKIES['token'] → base64.b64decode → pickle.loads → 对象属性比较；pickle 载荷在 loads 时即执行任意构造器。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-004",
+      "path": "dockerized_labs/insec_des_lab/main.py",
+      "start": {
+        "line": 36,
+        "col": 15
+      },
+      "end": {
+        "line": 36,
+        "col": 44
+      },
+      "extra": {
+        "message": "不安全反序列化（独立Flask子应用）：/deserialize 端点对用户提交的 serialized_data 做 base64 解码后 pickle.loads，且类定义了 __reduce__，攻击者可提交恶意pickle实现容器内任意代码执行。",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-004",
+          "cwe": [
+            "CWE-502"
+          ],
+          "confidence": "high",
+          "code_evidence": "decoded_data = base64.b64decode(serialized_data)\n        user = pickle.loads(decoded_data)",
+          "preconditions": "源码已确认：POST /deserialize 无认证要求；该子应用按 docker-compose 独立部署时可达。",
+          "data_flow": "request.form['serialized_data'] → b64decode → pickle.loads → 任意代码执行。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-005",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 259,
+        "col": 5
+      },
+      "end": {
+        "line": 268,
+        "col": 62
+      },
+      "extra": {
+        "message": "XXE：xxe_parse 显式开启 feature_external_ges 并用 xml.dom.pulldom.parseString 解析原始请求体，外部实体可被解析导致任意本地文件读取/内网请求。该端点 @csrf_exempt 且未做任何登录校验（URL /xxe_parse 可匿名访问），解析结果还会写入 comments 表并回显到 /xxe_see 页面。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-005",
+          "cwe": [
+            "CWE-611"
+          ],
+          "confidence": "high",
+          "code_evidence": "parser = make_parser()\n    parser.setFeature(feature_external_ges, True)\n    doc = parseString(request.body.decode('utf-8'), parser=parser)",
+          "preconditions": "源码已确认：无认证、无CSRF保护；XML解析器允许外部实体。默认Python xml.sax 解析器不主动阻止外部实体解析（不解析未声明DTD取回时可触发外部实体读取）。",
+          "data_flow": "request.body（用户完全控制的XML）→ parseString（外部实体开启）→ 提取 text 节点内容 → comments.objects.filter(id=1).update(comment=text) → /xxe_see 页面展示。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-006",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 424,
+        "col": 17
+      },
+      "end": {
+        "line": 431,
+        "col": 22
+      },
+      "extra": {
+        "message": "命令注入：cmd_lab 将用户POST的 domain 仅做协议前缀正则剥离后直接 format 进 'nslookup {}/dig {}' 字符串，并以 subprocess.Popen(command, shell=True) 执行。攻击者可用分号、反引号等追加任意系统命令（如 '; cat /etc/passwd'）。",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-006",
+          "cwe": [
+            "CWE-78"
+          ],
+          "confidence": "high",
+          "code_evidence": "command=\"nslookup {}\".format(domain) ... process = subprocess.Popen(\n                    command,\n                    shell=True,",
+          "preconditions": "源码已确认：需已登录；POST 参数 domain 用户可控，正则仅去除协议前缀不影响命令分隔符注入。",
+          "data_flow": "request.POST['domain'] → 正则替换协议 → 拼入 command 字符串 → Popen(shell=True) 执行。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-007",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 460,
+        "col": 26
+      },
+      "end": {
+        "line": 460,
+        "col": 40
+      },
+      "extra": {
+        "message": "任意代码执行：cmd_lab2 对用户POST参数 val 直接调用 eval(val)，攻击者可提交任意Python表达式（配合 __import__ 可执行任意代码）。",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-007",
+          "cwe": [
+            "CWE-94"
+          ],
+          "confidence": "high",
+          "code_evidence": "val=request.POST.get('val')\n            ...\n                output = eval(val)",
+          "preconditions": "源码已确认：需已登录；POST 参数 val 完全可控。",
+          "data_flow": "request.POST['val'] → eval() 直接求值。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-008",
+      "path": "introduction/mitre.py",
+      "start": {
+        "line": 218,
+        "col": 18
+      },
+      "end": {
+        "line": 218,
+        "col": 34
+      },
+      "extra": {
+        "message": "任意代码执行（未认证）：mitre_lab_25_api 为 @csrf_exempt 且认证装饰器被注释掉，POST 的 expression 参数直接 eval，匿名攻击者可远程执行任意Python代码。",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-008",
+          "cwe": [
+            "CWE-94"
+          ],
+          "confidence": "high",
+          "code_evidence": "@csrf_exempt\ndef mitre_lab_25_api(request):\n    if request.method == \"POST\":\n        expression = request.POST.get('expression')\n        result = eval(expression)",
+          "preconditions": "源码已确认：/mitre/25/lab/api 路由对匿名用户开放，无需任何认证。",
+          "data_flow": "POST /mitre/25/lab/api 的 expression 字段 → eval() 直接求值。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-009",
+      "path": "introduction/mitre.py",
+      "start": {
+        "line": 239,
+        "col": 18
+      },
+      "end": {
+        "line": 243,
+        "col": 38
+      },
+      "extra": {
+        "message": "命令注入：mitre_lab_17_api 将用户POST的 ip 直接拼接为 'nmap ' + ip 并经 command_out(subprocess.Popen(shell=True)) 执行，@csrf_exempt 且无认证检查，攻击者可注入任意shell命令。",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-009",
+          "cwe": [
+            "CWE-78"
+          ],
+          "confidence": "high",
+          "code_evidence": "ip = request.POST.get('ip')\n        command = \"nmap \" + ip \n        res, err = command_out(command)\n...\ndef command_out(command):\n    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)",
+          "preconditions": "源码已确认：/mitre/17/lab/api 匿名可达（无认证装饰器）；ip 参数可控；需主机安装 nmap 才能复现完整流程，但命令注入不依赖 nmap 存在与否（shell 解析先于程序执行）。",
+          "data_flow": "POST ip → 'nmap '+ip → Popen(shell=True)。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-010",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 560,
+        "col": 27
+      },
+      "end": {
+        "line": 560,
+        "col": 51
+      },
+      "extra": {
+        "message": "不安全反序列化（YAML）：a9_lab 使用 yaml.load(file, yaml.Loader) 解析用户上传文件。PyYAML==5.1（requirements.txt 锁定）的 Loader 允许构造任意Python对象，上传 '!!python/object/apply:os.system [...]' 即可RCE。",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-010",
+          "cwe": [
+            "CWE-502"
+          ],
+          "confidence": "high",
+          "code_evidence": "data = yaml.load(file,yaml.Loader)",
+          "preconditions": "源码已确认：需已登录；上传文件内容完全可控；requirements.txt 使用 PyYAML==5.1，yaml.Loader 非安全Loader。",
+          "data_flow": "request.FILES['file'] → yaml.load(Loader) → 反序列化时执行python/object构造。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-011",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 588,
+        "col": 22
+      },
+      "end": {
+        "line": 588,
+        "col": 71
+      },
+      "extra": {
+        "message": "代码求值注入：a9_lab2 将用户POST的 function 参数直接传入 PIL.ImageMath.eval，ImageMath.eval 会按Python表达式求值图像像素运算，可被滥用构建表达式访问内置对象实现沙箱逃逸/任意代码执行。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-011",
+          "cwe": [
+            "CWE-94"
+          ],
+          "confidence": "medium",
+          "code_evidence": "function_str = request.POST.get(\"function\")\n            ...\n            output = ImageMath.eval(function_str,img = img, b=b, r=r, g=g)",
+          "preconditions": "源码已确认：需已登录，需上传合法图片；function 字符串完全可控。ImageMath.eval 的具体逃逸能力取决于 Pillow 版本实现（requirements 锁定 Pillow==9.4.0），逃逸路径待运行时确认，故置信度 medium。",
+          "data_flow": "POST function → ImageMath.eval() 表达式求值。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-012",
+      "path": "introduction/apis.py",
+      "start": {
+        "line": 128,
+        "col": 9
+      },
+      "end": {
+        "line": 134,
+        "col": 12
+      },
+      "extra": {
+        "message": "任意代码写入并执行：A6_disscussion_api_2（@csrf_exempt、无认证检查）将用户POST的 code 原样写入 introduction/playground/A6/utility.py；该文件被 apis.py 模块导入且 check_vuln 在 /2021/discussion/A6/api 中被调用，写入的代码会在模块加载/重新加载时执行。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-012",
+          "cwe": [
+            "CWE-94"
+          ],
+          "confidence": "high",
+          "code_evidence": "code = request.POST.get('code')\n        ...\n        f = open(filename,\"w\")\n        f.write(code)\n        f.close()",
+          "preconditions": "源码已确认：写入端点无认证；代码被执行需要 Python 进程重新导入该模块（如多worker重启或开发服务器自动重载 StatReloader 检测到文件变更），属部署相关条件。",
+          "data_flow": "POST code → open(playground/A6/utility.py,'w') 写入 → from introduction.playground.A6.utility import check_vuln 导入执行。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-013",
+      "path": "introduction/apis.py",
+      "start": {
+        "line": 60,
+        "col": 9
+      },
+      "end": {
+        "line": 75,
+        "col": 12
+      },
+      "extra": {
+        "message": "任意代码写入（未认证）：log_function_checker 的认证装饰器被注释，@csrf_exempt，将用户提交的 log_code/api_code 原样写入 introduction/playground/A9/main.py 与 api.py；二者被 urls.py/apis.py 导入并实例化 Log 类执行，构成匿名代码注入。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-013",
+          "cwe": [
+            "CWE-94"
+          ],
+          "confidence": "high",
+          "code_evidence": "f = open(log_filename,\"w\")\n        f.write(log_code)\n        f.close()\n        f = open(api_filename,\"w\")\n        f.write(api_code)",
+          "preconditions": "源码已确认：端点无认证（装饰器被注释）；执行同样依赖模块重新导入（worker 重启/自动重载），属部署相关条件。",
+          "data_flow": "POST log_code/api_code → 写入 playground/A9/main.py、api.py → from introduction.playground.A9.main import Log 导入执行。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-014",
+      "path": "introduction/templates/Lab/XSS/xss_lab.html",
+      "start": {
+        "line": 27,
+        "col": 27
+      },
+      "end": {
+        "line": 27,
+        "col": 40
+      },
+      "extra": {
+        "message": "反射型XSS：xss_lab 视图将 GET 参数 q 原样传入模板，模板以 {{query|safe}} 输出，safe 过滤器关闭Django自动转义，攻击者可通过 /xssL?q=<img src=x onerror=alert(1)> 注入任意HTML/JS。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-014",
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "high",
+          "code_evidence": "<h3> The company '{{query|safe}}' You searched for is not Part of FAANG</h3>",
+          "preconditions": "源码已确认：需已登录；q 参数未过滤直接 safe 输出；受害者需点击攻击者构造的链接。",
+          "data_flow": "GET q → 视图 {'query': q}（introduction/views.py:85 附近）→ 模板 |safe 输出到HTML正文。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-015",
+      "path": "introduction/templates/Lab/XSS/xss_lab_2.html",
+      "start": {
+        "line": 20,
+        "col": 10
+      },
+      "end": {
+        "line": 20,
+        "col": 30
+      },
+      "extra": {
+        "message": "XSS（过滤不充分+safe输出）：xss_lab2 仅删除字面 '<script>'/'</script>' 字符串（大小写敏感、不处理 img/svg/onerror 等向量），随后模板以 {{ username|safe }} 输出，攻击者用 '<img src=x onerror=...>' 即可绕过实现XSS。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-015",
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "high",
+          "code_evidence": "username = username.replace(\"<script>\", \"\").replace(\"</script>\", \"\")\n... \n<p>Hello, {{ username|safe }}</p>",
+          "preconditions": "源码已确认：需已登录；POST username 可控；黑名单删除仅针对小写 <script> 标签。",
+          "data_flow": "POST username → 剥离<script> → 上下文 {'username':...} → 模板 |safe 输出。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-016",
+      "path": "introduction/templates/Lab/XSS/xss_lab_3.html",
+      "start": {
+        "line": 22,
+        "col": 5
+      },
+      "end": {
+        "line": 22,
+        "col": 13
+      },
+      "extra": {
+        "message": "XSS（JavaScript上下文注入）：xss_lab3 将用户输入剔除字母数字后以 {{code}} 嵌入页面 <script> 块内。HTML自动转义在script元素内不阻止JS语法注入（如 </script><script>... 或 []['filter']['constructor'](...) 类JSFuck载荷），输入仍在可执行JS上下文中。",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-016",
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "high",
+          "code_evidence": "<script>\n    // LAB 3 JS CODE\n    {{code}}\n</script>",
+          "preconditions": "源码已确认：需已登录；POST username 可控且模板置于 <script> 标签内直接拼接。",
+          "data_flow": "POST username → re.sub 去除字母数字 → 上下文 {'code':result} → 模板 <script>{{code}}</script>。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-017",
+      "path": "introduction/templates/Lab_2021/A8_software_and_data_integrity_failure/lab2.html",
+      "start": {
+        "line": 11,
+        "col": 10
+      },
+      "end": {
+        "line": 11,
+        "col": 30
+      },
+      "extra": {
+        "message": "反射型XSS：software_and_data_integrity_failure_lab2 将 GET 参数 username 原样传入模板并以 {{username | safe}} 输出，safe 关闭自动转义，可注入任意HTML/JS。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-017",
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "high",
+          "code_evidence": "<h1>Hey {{username | safe}},</h1>",
+          "preconditions": "源码已确认：需已登录（authentication_decorator）；GET username 可控；受害者需点击构造链接。",
+          "data_flow": "GET username → 上下文 {'username':username,'success':True} → 模板 |safe 输出。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-018",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 984,
+        "col": 19
+      },
+      "end": {
+        "line": 1000,
+        "col": 16
+      },
+      "extra": {
+        "message": "服务端模板注入（SSTI）：ssti_lab 将用户POST的 blog 经 filter_blog（utility.py 中该函数原样返回，无任何过滤）拼入Django模板语法并写入 templates/Lab_2021/A3_Injection/Blogs/<id>.html，随后 ssti_view_blog 用 render() 渲染该文件，用户内容成为模板源码，可实现RCE（如 {% include %}、{{ settings.SECRET_KEY }} 等模板语句）。",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-018",
+          "cwe": [
+            "CWE-1336"
+          ],
+          "confidence": "high",
+          "code_evidence": "blog = filter_blog(blog)\n            prepend_code = \"{% extends 'introduction/base.html' %}...\"\n            blog = prepend_code + blog + \"{% endblock %}\"\n            ...file.write(blog) ... return redirect(f'blog/{id}')",
+          "preconditions": "源码已确认：需已登录；blog 内容可控；filter_blog 为恒等函数（introduction/utility.py: 'def filter_blog(code): return code'）。文件写入目录为应用模板目录。",
+          "data_flow": "POST blog → filter_blog(无过滤) → 拼接模板标签 → 写入 templates/Lab_2021/A3_Injection/Blogs/{id}.html → GET /ssti/blog/{id} → render() 执行模板源码。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-019",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 923,
+        "col": 21
+      },
+      "end": {
+        "line": 927,
+        "col": 28
+      },
+      "extra": {
+        "message": "路径穿越/任意文件读取：ssrf_lab 将POST参数 blog 与视图目录直接 os.path.join 后 open().read()，无任何路径规范化或根目录校验，攻击者提交 '../../pygoat/settings.py' 等相对路径可读取服务器任意文件（含SECRET_KEY、数据库内容）。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-019",
+          "cwe": [
+            "CWE-22"
+          ],
+          "confidence": "high",
+          "code_evidence": "file=request.POST[\"blog\"]\n            ...\n                filename = os.path.join(dirname, file)\n                file = open(filename,\"r\")\n                data = file.read()",
+          "preconditions": "源码已确认：需已登录；blog 参数为完全可控的相对路径；进程对该路径有读权限。",
+          "data_flow": "POST blog → os.path.join(dirname, blog) → open/read → 内容回显到模板 {\"blog\":data}。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-020",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 963,
+        "col": 27
+      },
+      "end": {
+        "line": 965,
+        "col": 90
+      },
+      "extra": {
+        "message": "SSRF：ssrf_lab2 对用户POST的 url 直接 requests.get(url)，无协议/主机/IP白名单校验，可访问内网服务、云元数据(169.254.169.254)、localhost（绕过 ssrf_target 的 127.0.0.1 校验）。响应内容还以 {{response | safe}} 输出到页面（ssrf_lab2.html:23），内网返回内容可作为HTML执行造成存储型/反射型XSS。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-020",
+          "cwe": [
+            "CWE-918"
+          ],
+          "confidence": "high",
+          "code_evidence": "url = request.POST[\"url\"]\n        try:\n            response = requests.get(url)\n            return render(request, \"Lab/ssrf/ssrf_lab2.html\", {\"response\": response.content.decode()})",
+          "preconditions": "源码已确认：需已登录；url 完全可控；requests 默认跟随重定向且不校验目标地址。云元数据可达性取决于部署环境（本地/容器内则为localhost与内网）。",
+          "data_flow": "POST url → requests.get(url) → response.content → 模板 |safe 输出。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-021",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 837,
+        "col": 5
+      },
+      "end": {
+        "line": 841,
+        "col": 80
+      },
+      "extra": {
+        "message": "失效的访问控制：a1_broken_access_lab3_secret 渲染 secret.html（含管理员秘密）时仅检查登录态，注释明确写着 'no checking applied here'，未校验是否为lab3中认定的admin身份，任意已登录普通用户可直接GET /broken_access_controle/secret 获取秘密页。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-021",
+          "cwe": [
+            "CWE-862"
+          ],
+          "confidence": "high",
+          "code_evidence": "def a1_broken_access_lab3_secret(request):\n    if not request.user.is_authenticated:\n        return redirect('login')\n    # no checking applied here\n    return render(request, 'Lab_2021/A1_BrokenAccessControl/secret.html')",
+          "preconditions": "源码已确认：任意已注册并登录的用户即可访问。",
+          "data_flow": "GET /broken_access_controle/secret → 仅 is_authenticated 判断 → 渲染 secret.html。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-022",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 347,
+        "col": 17
+      },
+      "end": {
+        "line": 354,
+        "col": 25
+      },
+      "extra": {
+        "message": "基于客户端Cookie的授权决策：ba_lab 以 request.COOKIES.get('admin') == \"1\" 判定管理员并返回秘密 '0NLY_F0R_4DM1N5'，Cookie 无签名可被客户端任意伪造（a1_broken_access_lab_1 视图 views.py:756 存在同样模式）。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-022",
+          "cwe": [
+            "CWE-807"
+          ],
+          "confidence": "high",
+          "code_evidence": "if request.COOKIES.get('admin') == \"1\":\n                return render(... {\"data\":\"0NLY_F0R_4DM1N5\", \"username\": \"admin\"})",
+          "preconditions": "源码已确认：需已登录；攻击者只需在请求中带 admin=1 Cookie。",
+          "data_flow": "客户端Cookie 'admin' → 直接用于授权判断 → 返回管理员秘密。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-023",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 791,
+        "col": 17
+      },
+      "end": {
+        "line": 797,
+        "col": 25
+      },
+      "extra": {
+        "message": "信任User-Agent做授权：a1_broken_access_lab_2 以 request.META['HTTP_USER_AGENT'] == 'pygoat_admin' 作为管理员判定并返回秘密，User-Agent是客户端完全可控的请求头。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-023",
+          "cwe": [
+            "CWE-807"
+          ],
+          "confidence": "high",
+          "code_evidence": "user_agent = request.META['HTTP_USER_AGENT']\n    ...\n        if (user_agent == \"pygoat_admin\"):\n            return render(... {\"data\":\"0NLY_F0R_4DM1N5\", ...})",
+          "preconditions": "源码已确认：需已登录；攻击者设置请求头 User-Agent: pygoat_admin 即可。",
+          "data_flow": "HTTP User-Agent 头 → 授权判断 → 返回管理员秘密。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-024",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 535,
+        "col": 5
+      },
+      "end": {
+        "line": 540,
+        "col": 108
+      },
+      "extra": {
+        "message": "信任X-Host请求头做授权：secret 视图以 request.headers.get('X-Host') == 'admin.localhost:8000' 判定并返回秘密 S3CR37K3Y。该视图未做任何登录校验，任何匿名请求者伪造 X-Host 头即可获取秘密。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-024",
+          "cwe": [
+            "CWE-807"
+          ],
+          "confidence": "high",
+          "code_evidence": "XHost = request.headers.get('X-Host', 'None')\n    if(XHost == 'admin.localhost:8000'):\n        return render(request,\"Lab/sec_mis/sec_mis_lab.html\", {\"secret\": \"S3CR37K3Y\"})",
+          "preconditions": "源码已确认：无认证要求；X-Host 为客户端可控头（需部署环境未由可信代理清洗，直连Django时即可伪造）。",
+          "data_flow": "HTTP X-Host 头 → 授权判断 → 返回 S3CR37K3Y。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-025",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 493,
+        "col": 5
+      },
+      "end": {
+        "line": 522,
+        "col": 87
+      },
+      "extra": {
+        "message": "OTP认证设计缺陷：GET /otp 直接把3位OTP明文返回在响应中（{\"otp\":otpN}）；POST 校验时 otp.objects.filter(id=2,otp=otpR) 允许任何邮箱用管理员(id=2)的OTP通过验证；OTP仅3位数字且无尝试次数限制/有效期，可暴力枚举；GET 请求还会修改服务器端OTP状态。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-025",
+          "cwe": [
+            "CWE-307"
+          ],
+          "confidence": "high",
+          "code_evidence": "otpN=randint(100,999)\n        ...\n            html=render (request,\"Lab/BrokenAuth/otp.html\",{\"otp\":otpN})\n        ...\n        if otp.objects.filter(email=email,otp=otpR) or otp.objects.filter(id=2,otp=otpR):",
+          "preconditions": "源码已确认：/otp 无需登录（登录前功能）；otp.html 模板确认将 {{otp}} 渲染给用户；无速率限制逻辑。",
+          "data_flow": "GET email → randint(100,999) 生成OTP → 明文回显/写库 → POST otpR → OR 条件允许用 admin OTP 或本人OTP登录。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-026",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 1049,
+        "col": 5
+      },
+      "end": {
+        "line": 1080,
+        "col": 90
+      },
+      "extra": {
+        "message": "可伪造的未签名认证Cookie：crypto_failure_lab3 登录后设置 'cookie' 值为 'username|expire' 明文字符串，无签名无加密；GET 分支仅按 '|' 切分并比对 username=='admin' 判定管理员，攻击者可自行构造 'admin|<未来时间>' Cookie 获得管理员视图。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-026",
+          "cwe": [
+            "CWE-345"
+          ],
+          "confidence": "high",
+          "code_evidence": "cookie = f\"{username}|{expire}\"\n                    ...\n                    response.set_cookie(\"cookie\", cookie)\n            ...\n                elif cookie.split('|')[0] == 'admin':",
+          "preconditions": "源码已确认：需已登录；Cookie 值完全由客户端控制；set_cookie 未设 httponly/secure/samesite。",
+          "data_flow": "POST 登录成功 → set_cookie('cookie', 'User|<expire>') → GET 时 split('|') 取用户名判断 admin。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-027",
+      "path": "pygoat/settings.py",
+      "start": {
+        "line": 165,
+        "col": 19
+      },
+      "end": {
+        "line": 165,
+        "col": 34
+      },
+      "extra": {
+        "message": "硬编码JWT签名密钥：SECRET_COOKIE_KEY=\"PYGOAT\" 写在源码中，sec_misconfig_lab3（views.py:1095/1107）用它对 auth_cookie 做HS256签名/验证，任何知道该常量的攻击者可伪造 payload {'user':'admin'} 的JWT获取管理员视图。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-027",
+          "cwe": [
+            "CWE-321"
+          ],
+          "confidence": "high",
+          "code_evidence": "SECRET_COOKIE_KEY = \"PYGOAT\"",
+          "preconditions": "源码已确认：密钥随源码公开；需已登录访问 sec_misconfig_lab3。",
+          "data_flow": "settings.SECRET_COOKIE_KEY → jwt.decode(cookie, SECRET_COOKIE_KEY) → payload['user']=='admin' 授权。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-028",
+      "path": "introduction/mitre.py",
+      "start": {
+        "line": 186,
+        "col": 5
+      },
+      "end": {
+        "line": 205,
+        "col": 47
+      },
+      "extra": {
+        "message": "CSRF（GET修改资金状态）：csrf_transfer_monei_api 通过 GET /mitre/9/lab/api/<recipent>/<amount> 执行转账并修改数据库余额，无CSRF令牌、无来源校验，浏览器凭 auth_cookiee 自动携带，恶意页面一个 <img src=...> 即可完成CSRF转账。JWT密钥还为硬编码字符串 'csrf_vulneribility'（mitre.py:169/182/194），可离线伪造登录态。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-028",
+          "cwe": [
+            "CWE-352"
+          ],
+          "confidence": "high",
+          "code_evidence": "def csrf_transfer_monei_api(request,recipent,amount):\n    if request.method == \"GET\":\n        ...\n            User[0].balance = User[0].balance - int(amount)\n            User[0].save()",
+          "preconditions": "源码已确认：GET方法修改状态且无CSRF防护；受害者需已登录该lab（持有效auth_cookiee）并访问攻击者页面。",
+          "data_flow": "GET 请求 → auth_cookiee(JWT, 硬编码密钥'csrf_vulneribility') → 读取username → 修改 CSRF_user_tbl 余额并保存。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-029",
+      "path": "pygoat/settings.py",
+      "start": {
+        "line": 24,
+        "col": 13
+      },
+      "end": {
+        "line": 24,
+        "col": 63
+      },
+      "extra": {
+        "message": "硬编码SECRET_KEY：Django SECRET_KEY 明文写在源码中（'lr66%-a!$km5ed@n5ug!tya5bv!0(yqwa1tn!q%0%3m2nh%oml'），用于会话签名、CSRF令牌、密码重置等，源码公开即允许伪造会话/CSRF/重置令牌。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-029",
+          "cwe": [
+            "CWE-798"
+          ],
+          "confidence": "high",
+          "code_evidence": "SECRET_KEY = 'lr66%-a!$km5ed@n5ug!tya5bv!0(yqwa1tn!q%0%3m2nh%oml'",
+          "preconditions": "源码已确认：密钥随源码分发；生产部署若未替换该值即受影响。",
+          "data_flow": "SECRET_KEY → Django 签名/会话/CSRF 机制；攻击者持有该值可离线伪造签名对象。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-030",
+      "path": "pygoat/settings.py",
+      "start": {
+        "line": 28,
+        "col": 1
+      },
+      "end": {
+        "line": 28,
+        "col": 12
+      },
+      "extra": {
+        "message": "生产环境开启DEBUG：DEBUG = True 会使错误页向客户端暴露源码、配置、环境变量等敏感信息（django_heroku.settings(locals()) 亦无法弥补）。符合规范 django-4.2-security/deployment-checklist 中禁止生产开启debug的要求。",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-030",
+          "cwe": [
+            "CWE-489"
+          ],
+          "confidence": "high",
+          "code_evidence": "DEBUG = True",
+          "preconditions": "源码已确认：默认配置即为True；是否面向公网取决于部署（Procfile/Dockerfile 未覆盖该值）。",
+          "data_flow": "settings.DEBUG → Django 错误处理 → 异常时向客户端返回完整调试页。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-031",
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/views.py",
+      "start": {
+        "line": 113,
+        "col": 5
+      },
+      "end": {
+        "line": 131,
+        "col": 44
+      },
+      "extra": {
+        "message": "未授权访问全部用户敏感数据：all_users_data_view 无任何认证/授权检查（login_required缺失，注释亦说明），返回所有用户的明文信用卡号、SSN与API key，/api/all-users/ 可被匿名访问。",
+        "severity": "critical",
+        "metadata": {
+          "finding_id": "finding-031",
+          "cwe": [
+            "CWE-862"
+          ],
+          "confidence": "high",
+          "code_evidence": "def all_users_data_view(request):\n    ...\n    for user_data in UserData.objects.all():\n        all_users_data.append({\n            'username': user_data.user.username,\n            'credit_card': user_data.credit_card,\n            'ssn': user_data.ssn,\n            'api_key': user_data.api_key",
+          "preconditions": "源码已确认：urls.py 中 path('api/all-users/') 直接路由到该视图，无认证中间件拦截（仅依赖视图内检查，而视图内无检查）。",
+          "data_flow": "GET /api/all-users/ → UserData.objects.all() → JsonResponse 返回全部敏感字段。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-032",
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/views.py",
+      "start": {
+        "line": 40,
+        "col": 9
+      },
+      "end": {
+        "line": 42,
+        "col": 73
+      },
+      "extra": {
+        "message": "使用非密码学随机数生成API密钥：generate_api_key 使用 random.choices（Mersenne Twister，可预测），生成的16位 api_key 用于身份凭据，可被预测/重现。",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-032",
+          "cwe": [
+            "CWE-338"
+          ],
+          "confidence": "high",
+          "code_evidence": "chars = string.ascii_lowercase + string.digits\n    return ''.join(random.choices(chars, k=16))",
+          "preconditions": "源码已确认：API key 生成路径使用标准 random 模块；可预测性利用需知悉内部状态或观测大量输出。",
+          "data_flow": "random.choices → api_key 存储 → 经 /api/all-users/ 等接口对外暴露。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-033",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 285,
+        "col": 13
+      },
+      "end": {
+        "line": 287,
+        "col": 88
+      },
+      "extra": {
+        "message": "明文口令存储：auth_lab_signup 将用户注册口令原样写入 authLogin 模型（models.py 中 password 为普通 CharField，无哈希）；auth_lab_login 亦以明文比对。同类的 introduction_login(login) 模型亦存明文口令（a10_lab、ba_lab、sql_lab 使用）。",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-033",
+          "cwe": [
+            "CWE-256"
+          ],
+          "confidence": "high",
+          "code_evidence": "obj = authLogin.objects.create(name=name,username=user_name,password=passwd)",
+          "preconditions": "源码已确认：口令未做任何哈希即入库；数据库文件泄露即可获得全部明文口令。",
+          "data_flow": "POST pass → authLogin.objects.create(password=passwd) → SQLite 存储；登录时 filter(password=passwd) 明文比对。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-034",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 1026,
+        "col": 27
+      },
+      "end": {
+        "line": 1026,
+        "col": 60
+      },
+      "extra": {
+        "message": "弱口令哈希：crypto_failure_lab 使用单次无盐MD5存储/校验口令（CWE-328/916）；crypto_failure_lab2 使用 customHash = sha256(password)[::-1]（introduction/utility.py:24），同样为无盐快速哈希加简单变换，均不满足专用口令哈希要求。mitre.py:150 中 CSRF_user_tbl 登录亦使用无盐MD5。",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-034",
+          "cwe": [
+            "CWE-916"
+          ],
+          "confidence": "high",
+          "code_evidence": "password = md5(password.encode()).hexdigest()\n                user = CF_user.objects.filter(username=username,password=password).first()",
+          "preconditions": "源码已确认：口令摘要以无盐快速哈希存储于 CF_user.password；库泄露后可离线高速爆破。",
+          "data_flow": "POST password → md5/customHash → CF_user.password 存储 → 登录时同算法比对。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-035",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 766,
+        "col": 18
+      },
+      "end": {
+        "line": 766,
+        "col": 62
+      },
+      "extra": {
+        "message": "硬编码凭据：源码中多处硬编码口令用于认证判定——'jack'/'jacktheripper'（views.py:766、806）、'John'/'reaper'、'admin'/'admin_pass'（a1_broken_access_lab_3）、注释中的管理员口令 '2022_in_pygoat@pygoat.com'（auth_failure_lab2 上方注释）、playground/A9/api.py 中 admin/admin。凭据随源码泄露即可登录相应lab。",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-035",
+          "cwe": [
+            "CWE-798"
+          ],
+          "confidence": "high",
+          "code_evidence": "elif (name=='jack' and password=='jacktheripper'): # Will implement hashing here",
+          "preconditions": "源码已确认：凭据在源码中明文可见；需已登录才能访问这些lab视图。",
+          "data_flow": "POST name/password → 与源码内常量比较 → 授予相应身份/秘密。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-036",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 658,
+        "col": 19
+      },
+      "end": {
+        "line": 672,
+        "col": 57
+      },
+      "extra": {
+        "message": "日志注入与日志伪造：a10_lab2 将未经校验的用户输入（username）和可伪造的 X-Forwarded-For 头取值直接写入日志（logging.info/warning/error），攻击者可注入换行或日志分隔符伪造日志条目；同时 logging.basicConfig(level=logging.DEBUG) 在生产记录DEBUG日志。",
+        "severity": "low",
+        "metadata": {
+          "finding_id": "finding-036",
+          "cwe": [
+            "CWE-117"
+          ],
+          "confidence": "high",
+          "code_evidence": "ip = x_forwarded_for.split(',')[0]\n        ...\n            logging.warning(f\"{now}:{ip}:{user}\")\n            logging.info(f\"{now}:{ip}:{user}\")",
+          "preconditions": "源码已确认：HTTP_X_FORWARDED_FOR 与 POST name 均未做字符规范化即写日志；日志文件 app.log 可被后续读取/分析时误导。",
+          "data_flow": "X-Forwarded-For / POST name → f-string 拼接 → logging 输出到 app.log。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-037",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 636,
+        "col": 5
+      },
+      "end": {
+        "line": 639,
+        "col": 59
+      },
+      "extra": {
+        "message": "服务器日志文件对外暴露：/debug 端点将内含服务器请求日志的 templates/Lab/A10/debug.log（含 /admin/ 访问记录等内部信息）以 text/plain 返回，仅要求登录而不区分权限，且未审计该访问。",
+        "severity": "low",
+        "metadata": {
+          "finding_id": "finding-037",
+          "cwe": [
+            "CWE-532"
+          ],
+          "confidence": "medium",
+          "code_evidence": "def debug(request):\n    response = render(request,'Lab/A10/debug.log')\n    response['Content-Type'] =  'text/plain'\n    return response",
+          "preconditions": "源码已确认：任意已登录用户可读；debug.log 内容为真实服务器日志样本（含admin路径访问记录）。",
+          "data_flow": "GET /debug → render(debug.log) → 日志内容返回给客户端。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-038",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 302,
+        "col": 29
+      },
+      "end": {
+        "line": 308,
+        "col": 95
+      },
+      "extra": {
+        "message": "可预测的顺序ID作为会话凭据：auth_lab_login 的GET分支直接以 request.COOKIES['userid'] 查询 authLogin 完成登录，userid 为自增主键（AutoField），攻击者枚举/猜测 userid 即可接管任意该lab账号；Cookie 还以 samesite=None、secure=False 设置（views.py:293），无HttpOnly语义保障。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-038",
+          "cwe": [
+            "CWE-639"
+          ],
+          "confidence": "high",
+          "code_evidence": "obj = authLogin.objects.filter(userid=request.COOKIES['userid'])[0]\n            rendered = render_to_string('Lab/AUTH/auth_success.html', {'username': obj.username,'userid':obj.userid,'name':obj.name, 'err_msg':'Login Successful'})",
+          "preconditions": "源码已确认：登录态仅由客户端Cookie userid 决定，无签名/会话校验；id 顺序可枚举。",
+          "data_flow": "Cookie userid → filter(userid=...) → 命中即视为登录成功并重设Cookie。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-039",
+      "path": "introduction/views.py",
+      "start": {
+        "line": 679,
+        "col": 5
+      },
+      "end": {
+        "line": 681,
+        "col": 95
+      },
+      "extra": {
+        "message": "使用非密码学随机数生成工单码：gentckt 用 random.choices（Mersenne Twister）生成10位工单码，工单用于 insec_desgine_lab 的抽签/验证语义，可预测性破坏其唯一性/公平性设计。",
+        "severity": "low",
+        "metadata": {
+          "finding_id": "finding-039",
+          "cwe": [
+            "CWE-338"
+          ],
+          "confidence": "medium",
+          "code_evidence": "def gentckt():\n    return (''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase, k=10)))",
+          "preconditions": "源码已确认：生成时使用标准 random 模块；实际影响依赖对工单码预测的攻击场景。",
+          "data_flow": "random.choices → ticket_code → tickits 表存储 → insec_desgine_lab 校验。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-040",
+      "path": "dockerized_labs/broken_auth_lab/app.py",
+      "start": {
+        "line": 78,
+        "col": 26
+      },
+      "end": {
+        "line": 78,
+        "col": 92
+      },
+      "extra": {
+        "message": "可伪造的未签名会话Cookie（Flask子应用）：login 成功后 session Cookie 为 base64('username:timestamp')，dashboard 仅 base64 解码取用户名即认定登录，无签名校验，攻击者可伪造任意用户（含admin）会话。同一应用还硬编码 secret_key（app.py:8）、明文口令（users 字典）、可预测的 md5(email:timestamp) 重置令牌并直接回显（app.py:86）、app.run(debug=True)（app.py:123）。",
+        "severity": "high",
+        "metadata": {
+          "finding_id": "finding-040",
+          "cwe": [
+            "CWE-347"
+          ],
+          "confidence": "high",
+          "code_evidence": "session_token = base64.b64encode(f\"{username}:{datetime.now()}\".encode()).decode()\n        ...\n        username = base64.b64decode(session_token).decode().split(':')[0]\n        if username in users:",
+          "preconditions": "源码已确认：会话值无签名；该子应用经 docker-compose 独立部署时可达。",
+          "data_flow": "POST /login → base64 会话Cookie → GET /dashboard 时解码取 username 直接授权。"
+        },
+        "validation": "static_analysis_only"
+      }
+    },
+    {
+      "check_id": "finding-041",
+      "path": "dockerized_labs/sensitive_data_exposure/sensitive_data_lab/settings.py",
+      "start": {
+        "line": 8,
+        "col": 14
+      },
+      "end": {
+        "line": 13,
+        "col": 25
+      },
+      "extra": {
+        "message": "子应用Django配置不安全：SECRET_KEY 为硬编码占位值 'django-insecure-key-for-demonstration-only'，DEBUG=True 且 ALLOWED_HOSTS=['*']，组合后错误页会泄露源码与配置，且任意Host头可命中该站点（缓存污染/密码重置链接投毒的先决条件）。",
+        "severity": "medium",
+        "metadata": {
+          "finding_id": "finding-041",
+          "cwe": [
+            "CWE-798"
+          ],
+          "confidence": "high",
+          "code_evidence": "SECRET_KEY = 'django-insecure-key-for-demonstration-only'\n...\nDEBUG = True\n...\nALLOWED_HOSTS = ['*']",
+          "preconditions": "源码已确认：该子应用默认配置即为如此；是否暴露公网取决于其 docker-compose 部署。",
+          "data_flow": "settings → 异常处理/Host校验 → 客户端可见的调试信息与任意Host接受。"
+        },
+        "validation": "static_analysis_only"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1293 @@
+{
+  "input_directory": "D:/ai_share/langgraph/benchmark-data/pygoat-baseline/inputs/experiment-01/pygoat",
+  "analysis_type": "static_analysis_only",
+  "files": [
+    {
+      "path": ".all-contributorsrc",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": ".gitignore",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "Dockerfile",
+      "status": "reviewed",
+      "note": "全文通读；确认以 gunicorn 运行、使用仓库内 requirements。"
+    },
+    {
+      "path": "LICENSE.md",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "Procfile",
+      "status": "reviewed",
+      "note": "全文通读。"
+    },
+    {
+      "path": "PyGoatBot.py",
+      "status": "reviewed",
+      "note": "全文通读；本地命令行聊天机器人，不属于 Web 攻击面。"
+    },
+    {
+      "path": "challenge/__init__.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "challenge/admin.py",
+      "status": "reviewed",
+      "note": "全文通读；仅注册 ModelAdmin。"
+    },
+    {
+      "path": "challenge/apps.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "challenge/challenge.json",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "challenge/management/commands/populate_challenge.py",
+      "status": "reviewed",
+      "note": "全文通读。"
+    },
+    {
+      "path": "challenge/management/commands/populate_challenges.py",
+      "status": "reviewed",
+      "note": "全文通读。"
+    },
+    {
+      "path": "challenge/migrations/0001_initial.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "challenge/migrations/0002_challenge_docker_port.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "challenge/migrations/0003_alter_challenge_docker_image_alter_challenge_id_and_more.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "challenge/migrations/__init__.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "challenge/models.py",
+      "status": "reviewed",
+      "note": "全文通读；flag 以哈希存储。"
+    },
+    {
+      "path": "challenge/templates/chal-not-found.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "challenge/templates/challenge.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（21 行，csrf_token|safe 为框架惯例用法）。"
+    },
+    {
+      "path": "challenge/tests.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "challenge/urls.py",
+      "status": "reviewed",
+      "note": "全文通读。"
+    },
+    {
+      "path": "challenge/utility.py",
+      "status": "reviewed",
+      "note": "全文通读；端口探测函数，无安全影响。"
+    },
+    {
+      "path": "challenge/views.py",
+      "status": "reviewed",
+      "note": "全文通读；检查 docker 命令构造与授权检查。"
+    },
+    {
+      "path": "docker-compose.yml",
+      "status": "reviewed",
+      "note": "全文通读。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/Dockerfile",
+      "status": "partial",
+      "note": "全文通读。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/app.py",
+      "status": "reviewed",
+      "note": "全文通读（122 行）；会话、注册、重置口令逻辑。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/docker-compose.yml",
+      "status": "partial",
+      "note": "全文通读。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/requirements.txt",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/static/style.css",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/templates/base.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/templates/dashboard.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（12、15、17 行）。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/templates/index.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/templates/lab.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/templates/reset.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/.dockerignore",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/Dockerfile",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/docker-compose.yml",
+      "status": "partial",
+      "note": "全文通读。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/main.py",
+      "status": "reviewed",
+      "note": "全文通读（51 行）；pickle 反序列化。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/requirements.txt",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/static/style.css",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/templates/base.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/templates/index.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/templates/result.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/Dockerfile",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/__init__.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/forms.py",
+      "status": "partial",
+      "note": "仅浏览，未逐行审阅。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/migrations/0001_initial.py",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：api_key）；未逐行审阅该文件。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/migrations/__init__.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/models.py",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/urls.py",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/dataexposure/views.py",
+      "status": "reviewed",
+      "note": "全文通读（142 行）；敏感数据接口。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/docker-compose.yml",
+      "status": "partial",
+      "note": "全文通读；确认 8000 端口对外暴露与 runserver 0.0.0.0 启动方式。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/entrypoint.sh",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/manage.py",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/requirements.txt",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/sensitive_data_lab/__init__.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/sensitive_data_lab/settings.py",
+      "status": "reviewed",
+      "note": "通读前 101 行（配置项），确认 SECRET_KEY/DEBUG/ALLOWED_HOSTS；剩余约 5 行未读。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/sensitive_data_lab/urls.py",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/sensitive_data_lab/wsgi.py",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/about.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/base.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/index.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（73 行）。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/lesson.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（297 行）。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/login.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（59、64 行）。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/profile.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（81、95、103、128-130、218-222 行）；注意到页面内以明文输出完整信用卡号/SSN/API Key。"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/register.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "gh-md-toc",
+      "status": "partial",
+      "note": "仅浏览（第三方 Markdown 目录生成工具）。"
+    },
+    {
+      "path": "installer.sh",
+      "status": "partial",
+      "note": "仅浏览（安装脚本，含 apt/pip 调用）。"
+    },
+    {
+      "path": "introduction/__init__.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/admin.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/apis.py",
+      "status": "reviewed",
+      "note": "全文通读；重点检查 playground 相关接口的代码写入与 CSRF/认证缺失。"
+    },
+    {
+      "path": "introduction/apps.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/forms.py",
+      "status": "reviewed",
+      "note": "全文通读；注册表单使用 Django UserCreationForm，未发现安全问题。"
+    },
+    {
+      "path": "introduction/lab_code/test.py",
+      "status": "reviewed",
+      "note": "全文通读（实验片段）。"
+    },
+    {
+      "path": "introduction/migrations/0001_initial.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/migrations/0002_auto_20210414_1510.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/migrations/0003_password_user.py",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/migrations/0004_auto_20210415_1722.py",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/migrations/0005_auto_20210415_1748.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/migrations/0006_comments.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/migrations/0007_auto_20210418_0022.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/migrations/0008_otp.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/migrations/0009_auto_20210517_2047.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/migrations/0010_authlogin.py",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/migrations/0011_tickits.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/migrations/0012_alter_tickits_user.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/migrations/0013_alter_comments_id_alter_faang_id_alter_info_id_and_more.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/migrations/0014_sql_lab_table.py",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/migrations/0015_blogs.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/migrations/0016_alter_blogs_blog_id.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/migrations/0017_cf_user.py",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/migrations/0018_cf_user_password2.py",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/migrations/0019_af_admin.py",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/migrations/0020_af_session_id_alter_af_admin_lockout_cooldown.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/migrations/0021_csrf_user_tbl.py",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/migrations/__init__.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/mitre.py",
+      "status": "reviewed",
+      "note": "全文通读；重点检查 eval、shell 命令、JWT 密钥与转账接口。"
+    },
+    {
+      "path": "introduction/models.py",
+      "status": "reviewed",
+      "note": "全文通读；确认口令字段为明文 CharField、otp/tickits 等模型结构。"
+    },
+    {
+      "path": "introduction/playground/A6/soln.py",
+      "status": "reviewed",
+      "note": "全文通读。"
+    },
+    {
+      "path": "introduction/playground/A6/utility.py",
+      "status": "reviewed",
+      "note": "全文通读。"
+    },
+    {
+      "path": "introduction/playground/A9/api.py",
+      "status": "reviewed",
+      "note": "全文通读；含明文口令日志。"
+    },
+    {
+      "path": "introduction/playground/A9/archive.py",
+      "status": "reviewed",
+      "note": "全文通读；Log 写入 test.log。"
+    },
+    {
+      "path": "introduction/playground/A9/main.py",
+      "status": "reviewed",
+      "note": "全文通读。"
+    },
+    {
+      "path": "introduction/playground/__init__.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/playground/ssrf/__init__.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/playground/ssrf/main.py",
+      "status": "reviewed",
+      "note": "全文通读。"
+    },
+    {
+      "path": "introduction/playground/ssrf/secret.txt",
+      "status": "reviewed",
+      "note": "全文通读（占位文本）。"
+    },
+    {
+      "path": "introduction/playground/ssrf/templates/Lab/ssrf/blogs/blog1.txt",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/playground/ssrf/templates/Lab/ssrf/blogs/blog2.txt",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/playground/ssrf/templates/Lab/ssrf/blogs/blog3.txt",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/playground/ssrf/templates/Lab/ssrf/blogs/blog4.txt",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/playground/ssrf/test.py",
+      "status": "reviewed",
+      "note": "全文通读（注释形式的实验代码）。"
+    },
+    {
+      "path": "introduction/static/Lab/icons/pygoat-mini.svg",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/static/Lab/icons/pygoat-small.svg",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/static/Lab/icons/pygoat.svg",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/static/Lab/ssrf.css",
+      "status": "partial",
+      "note": "仅浏览（样式表）。"
+    },
+    {
+      "path": "introduction/static/Lab/ssrf.js",
+      "status": "partial",
+      "note": "仅关键字检索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/Lab/ssti.css",
+      "status": "partial",
+      "note": "仅浏览（样式表）。"
+    },
+    {
+      "path": "introduction/static/Lab/xss.js",
+      "status": "partial",
+      "note": "仅关键字检索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/css/common.css",
+      "status": "partial",
+      "note": "仅浏览（样式表）。"
+    },
+    {
+      "path": "introduction/static/css/dark-challenges.css",
+      "status": "partial",
+      "note": "仅浏览（样式表）。"
+    },
+    {
+      "path": "introduction/static/css/dark-theme.css",
+      "status": "partial",
+      "note": "仅浏览（样式表）。"
+    },
+    {
+      "path": "introduction/static/css/home.css",
+      "status": "partial",
+      "note": "仅浏览（样式表）。"
+    },
+    {
+      "path": "introduction/static/css/light.css",
+      "status": "partial",
+      "note": "仅浏览（样式表）。"
+    },
+    {
+      "path": "introduction/static/css/playground.css",
+      "status": "partial",
+      "note": "仅浏览（样式表）。"
+    },
+    {
+      "path": "introduction/static/css/style.css",
+      "status": "partial",
+      "note": "仅浏览（样式表）。"
+    },
+    {
+      "path": "introduction/static/fake.txt",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/static/js/a6.js",
+      "status": "partial",
+      "note": "仅关键字检索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/js/a7.js",
+      "status": "partial",
+      "note": "仅关键字检索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/js/a9.js",
+      "status": "partial",
+      "note": "仅关键字检索，未逐行阅读。"
+    },
+    {
+      "path": "introduction/static/real.txt",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/Lab/A10/a10.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/A10/a10_lab.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：Password, password, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/A10/a10_lab2.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：Password, password, request.META, request.POST, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/A10/debug.log",
+      "status": "reviewed",
+      "note": "查看前 320 行内容，确认其为示例服务器日志并由公开的 /debug 视图返回。"
+    },
+    {
+      "path": "introduction/templates/Lab/A11/a11.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/Lab/A11/a11_lab.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/A9/a9.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：subprocess）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/A9/a9_lab.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（20 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab/A9/a9_lab2.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（91 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab/AUTH/auth_home.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：Password, password, secret, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/AUTH/auth_lab.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/Lab/AUTH/auth_lab_login.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：Password, password, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/AUTH/auth_lab_signup.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：Password, password, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/AUTH/auth_success.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（10、14 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab/BrokenAccess/ba.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：Token, password, secret）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/BrokenAccess/ba_lab.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（23、27 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab/BrokenAuth/bau.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/BrokenAuth/bau_lab.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：Password, password, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/BrokenAuth/otp.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（26、30 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab/CMD/cmd.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：eval(, exec(, os.system）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/CMD/cmd_lab.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/Lab/CMD/cmd_lab2.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（19 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab/DataExp/data_exp.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：DEBUG=True, SECRET, TOKEN）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/DataExp/data_exp_lab.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/Lab/DataExp/robots.txt",
+      "status": "partial",
+      "note": "全文通读（3 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab/SQL/sql.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/SQL/sql_lab.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（24、30 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab/XSS/xss.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：document.write, innerhtml, |safe）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/XSS/xss_lab.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（27 行）与上下文；确认 {{query|safe}}。"
+    },
+    {
+      "path": "introduction/templates/Lab/XSS/xss_lab_2.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（20 行）；确认 {{ username|safe }}。"
+    },
+    {
+      "path": "introduction/templates/Lab/XSS/xss_lab_3.html",
+      "status": "reviewed",
+      "note": "全文通读；确认 {{code}} 同时出现在 <p> 与 <script> 中。"
+    },
+    {
+      "path": "introduction/templates/Lab/XXE/xxe.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/Lab/XXE/xxe_lab.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/Lab/insec_des/insec_des.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：pickle, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/insec_des/insec_des_lab.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/Lab/sec_mis/sec_mis.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：DEBUG=True, Secret, password, secret）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/sec_mis/sec_mis_lab.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（15 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab/sec_mis/sec_mis_lab3.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：SECRET, request.COOKIES）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/blogs/blog1.txt",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/blogs/blog2.txt",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/blogs/blog3.txt",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/blogs/blog4.txt",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/secret.txt",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/ssrf.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/ssrf_discussion.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：request.POST, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/ssrf_lab.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（35 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/ssrf_lab2.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（23 行）；确认 {{response | safe}}。"
+    },
+    {
+      "path": "introduction/templates/Lab/ssrf/ssrf_target.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：Secret）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A1_BrokenAccessControl/broken_access.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password, secret, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A1_BrokenAccessControl/broken_access_lab_1.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（23、27 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A1_BrokenAccessControl/broken_access_lab_2.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（23、27 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A1_BrokenAccessControl/broken_access_lab_3.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：Password, SECRET, password, secret, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A1_BrokenAccessControl/secret.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：SECRET）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A2_Crypto_failur/crypto_failure.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：Password, password, secret, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A2_Crypto_failur/crypto_failure_lab.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（10 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A2_Crypto_failur/crypto_failure_lab2.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（10 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A2_Crypto_failur/crypto_failure_lab3.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：Password, password, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/Blogs/0db9c0e7093d.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/Blogs/9d73d120683d.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/Blogs/a2538af1b5e4.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/injection.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/sql_lab.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（24、30 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/ssti.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A3_Injection/ssti_lab.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（13 行）。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A7_auth_failure/a7.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：Password, Secret, password, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A7_auth_failure/lab2.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：Password, password, request.POST, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A7_auth_failure/lab3.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：Password, csrf_exempt, password, request.COOKIES, request.POST, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A8_software_and_data_integrity_failure/desc.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：pickle, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A8_software_and_data_integrity_failure/lab2.html",
+      "status": "partial",
+      "note": "仅查看含 {{ }} 输出的行（11 行）；确认 {{username | safe}}。"
+    },
+    {
+      "path": "introduction/templates/Lab_2021/A8_software_and_data_integrity_failure/lab3.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/introduction/base.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/introduction/home.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/mitre/csrf_dashboard.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/mitre/csrf_lab_login.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_lab_17.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_lab_25.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top1.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top10.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top11.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top12.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top13.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top14.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：Secret, password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top15.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top16.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top17.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top18.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top19.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top2.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top20.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top21.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top22.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top23.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top24.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top25.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top3.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top4.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：password, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top5.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top6.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：exec(）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top7.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top8.html",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/templates/mitre/mitre_top9.html",
+      "status": "partial",
+      "note": "关键字级检索（正则扫描全文命中：pAsswOrd, password, token）；未逐行审阅该文件。"
+    },
+    {
+      "path": "introduction/templates/playground/A6/index.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/playground/A7/index.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/playground/A9/index.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/registration/login.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/registration/logout.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/templates/registration/register.html",
+      "status": "partial",
+      "note": "仅浏览。"
+    },
+    {
+      "path": "introduction/tests.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "introduction/urls.py",
+      "status": "reviewed",
+      "note": "全文通读；确认所有路由、装饰器（authentication_decorator / csrf_exempt）与视图的对应关系。"
+    },
+    {
+      "path": "introduction/utility.py",
+      "status": "reviewed",
+      "note": "全文通读；确认 filter_blog 为恒等函数、customHash 为无盐 SHA-256、ssrf_code_converter 会写入用户代码。"
+    },
+    {
+      "path": "introduction/views.py",
+      "status": "reviewed",
+      "note": "全文通读（1238 行），逐个视图检查输入来源、危险操作（raw SQL、subprocess、eval、pickle、yaml.load、文件读写、requests）与授权判断。"
+    },
+    {
+      "path": "introduction/xee_see.txt",
+      "status": "reviewed",
+      "note": "全文通读（实验片段）。"
+    },
+    {
+      "path": "manage.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "pygoat/__init__.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "pygoat/asgi.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "pygoat/settings.py",
+      "status": "reviewed",
+      "note": "全文通读；SECRET_KEY、DEBUG、ALLOWED_HOSTS、SECRET_COOKIE_KEY 等配置。"
+    },
+    {
+      "path": "pygoat/urls.py",
+      "status": "reviewed",
+      "note": "全文通读。"
+    },
+    {
+      "path": "pygoat/wsgi.py",
+      "status": "not_reviewed",
+      "note": "本次运行未打开该文件；仅在文件清单/关键字检索中出现，未做内容审查。"
+    },
+    {
+      "path": "requirements.txt",
+      "status": "reviewed",
+      "note": "全文通读；用于判断 Django/PyYAML/Pillow 等版本前提。"
+    },
+    {
+      "path": "setup.py",
+      "status": "reviewed",
+      "note": "全文通读。"
+    },
+    {
+      "path": "uninstaller.py",
+      "status": "reviewed",
+      "note": "通读前 70 行（安装包卸载逻辑，无网络输入面）；其余未读。"
+    },
+    {
+      "path": "uninstaller.sh",
+      "status": "partial",
+      "note": "仅浏览。"
+    }
+  ],
+  "excluded_binary_files": [
+    {
+      "path": "introduction/static/Lab/icons/pygoat-mini.png",
+      "note": "二进制/静态资源文件，未纳入文本审查范围。"
+    },
+    {
+      "path": "introduction/static/Lab/icons/pygoat-small.png",
+      "note": "二进制/静态资源文件，未纳入文本审查范围。"
+    },
+    {
+      "path": "introduction/static/Lab/icons/pygoat.png",
+      "note": "二进制/静态资源文件，未纳入文本审查范围。"
+    },
+    {
+      "path": "introduction/static/Lab/image/xxe.jpg",
+      "note": "二进制/静态资源文件，未纳入文本审查范围。"
+    },
+    {
+      "path": "introduction/static/google.jpg",
+      "note": "二进制/静态资源文件，未纳入文本审查范围。"
+    }
+  ]
+}

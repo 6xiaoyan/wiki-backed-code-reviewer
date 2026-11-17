@@ -1,0 +1,4317 @@
+{
+  "glm-5.3-flash/A": {
+    "reports": 48,
+    "evidence_valid": 41,
+    "confirmed_reports": 38,
+    "covered_labels": 43,
+    "positive_labels": 78,
+    "reference_precision": 0.7916666666666666,
+    "recall": 0.5512820512820513,
+    "f1": 0.6499602227525855,
+    "pending_pairs": 3,
+    "negative_label_matches": [],
+    "accepted_pairs": [
+      [
+        "finding-001",
+        "pygoat-001"
+      ],
+      [
+        "finding-002",
+        "pygoat-002"
+      ],
+      [
+        "finding-003",
+        "pygoat-006"
+      ],
+      [
+        "finding-004",
+        "pygoat-007"
+      ],
+      [
+        "finding-005",
+        "pygoat-008"
+      ],
+      [
+        "finding-006",
+        "pygoat-009"
+      ],
+      [
+        "finding-009",
+        "pygoat-005"
+      ],
+      [
+        "finding-012",
+        "pygoat-011"
+      ],
+      [
+        "finding-013",
+        "pygoat-012"
+      ],
+      [
+        "finding-013",
+        "pygoat-050"
+      ],
+      [
+        "finding-014",
+        "pygoat-013"
+      ],
+      [
+        "finding-015",
+        "pygoat-014"
+      ],
+      [
+        "finding-016",
+        "pygoat-034"
+      ],
+      [
+        "finding-017",
+        "pygoat-010"
+      ],
+      [
+        "finding-018",
+        "pygoat-018"
+      ],
+      [
+        "finding-019",
+        "pygoat-019"
+      ],
+      [
+        "finding-020",
+        "pygoat-015"
+      ],
+      [
+        "finding-021",
+        "pygoat-016"
+      ],
+      [
+        "finding-023",
+        "pygoat-030"
+      ],
+      [
+        "finding-024",
+        "pygoat-031"
+      ],
+      [
+        "finding-025",
+        "pygoat-033"
+      ],
+      [
+        "finding-027",
+        "pygoat-071"
+      ],
+      [
+        "finding-028",
+        "pygoat-051"
+      ],
+      [
+        "finding-030",
+        "pygoat-035"
+      ],
+      [
+        "finding-032",
+        "pygoat-036"
+      ],
+      [
+        "finding-033",
+        "pygoat-026"
+      ],
+      [
+        "finding-034",
+        "pygoat-027"
+      ],
+      [
+        "finding-034",
+        "pygoat-053"
+      ],
+      [
+        "finding-035",
+        "pygoat-028"
+      ],
+      [
+        "finding-036",
+        "pygoat-025"
+      ],
+      [
+        "finding-037",
+        "pygoat-029"
+      ],
+      [
+        "finding-038",
+        "pygoat-020"
+      ],
+      [
+        "finding-039",
+        "pygoat-021"
+      ],
+      [
+        "finding-040",
+        "pygoat-045"
+      ],
+      [
+        "finding-041",
+        "pygoat-057"
+      ],
+      [
+        "finding-042",
+        "pygoat-044"
+      ],
+      [
+        "finding-042",
+        "pygoat-056"
+      ],
+      [
+        "finding-043",
+        "pygoat-041"
+      ],
+      [
+        "finding-044",
+        "pygoat-040"
+      ],
+      [
+        "finding-045",
+        "pygoat-038"
+      ],
+      [
+        "finding-047",
+        "pygoat-047"
+      ],
+      [
+        "finding-047",
+        "pygoat-048"
+      ],
+      [
+        "finding-047",
+        "pygoat-049"
+      ]
+    ],
+    "covered_ids": [
+      "pygoat-001",
+      "pygoat-002",
+      "pygoat-005",
+      "pygoat-006",
+      "pygoat-007",
+      "pygoat-008",
+      "pygoat-009",
+      "pygoat-010",
+      "pygoat-011",
+      "pygoat-012",
+      "pygoat-013",
+      "pygoat-014",
+      "pygoat-015",
+      "pygoat-016",
+      "pygoat-018",
+      "pygoat-019",
+      "pygoat-020",
+      "pygoat-021",
+      "pygoat-025",
+      "pygoat-026",
+      "pygoat-027",
+      "pygoat-028",
+      "pygoat-029",
+      "pygoat-030",
+      "pygoat-031",
+      "pygoat-033",
+      "pygoat-034",
+      "pygoat-035",
+      "pygoat-036",
+      "pygoat-038",
+      "pygoat-040",
+      "pygoat-041",
+      "pygoat-044",
+      "pygoat-045",
+      "pygoat-047",
+      "pygoat-048",
+      "pygoat-049",
+      "pygoat-050",
+      "pygoat-051",
+      "pygoat-053",
+      "pygoat-056",
+      "pygoat-057",
+      "pygoat-071"
+    ],
+    "assessments": [
+      {
+        "finding_id": "finding-001",
+        "gt_id": "pygoat-001",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述与报告一致：introduction/views.py 第158行将 POST 取得的 name/password 直接拼入 SQL 字符串，第162行通过 login.objects.raw(sql_query) 执行；第150、152行取参且未参数化。第156行仅作存在性检查，不能消除 password 参数注入。根因和代码路径相同，源码支持。"
+      },
+      {
+        "finding_id": "finding-001",
+        "gt_id": "pygoat-fp-001",
+        "relation": "different",
+        "support": "supported",
+        "reason": "该候选讨论第156行 login.objects.filter(user=name) 的 ORM 查询并明确称其“不脆弱”，不是报告指出的第158-162行 SQL 字符串拼接与 raw() 执行问题；两者根因/路径不同。源码第156行确为 ORM filter，第158-162行才是 raw SQL 汇点，故该否定性描述就其所指位置而言有源码依据。"
+      },
+      {
+        "finding_id": "finding-002",
+        "gt_id": "pygoat-002",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第864行将 request.POST 的 name、pass 直接字符串拼接进 SQL（sql_query = \"SELECT * FROM introduction_sql_lab_table WHERE id='\"+name+\"'AND password='\"+password+\"'\"），第878行 sql_lab_table.objects.raw(sql_query) 执行该拼接语句，与候选描述的位置、根因（字符串拼接导致 SQL 注入）完全一致；视图仅在 request.user.is_authenticated 后执行，不影响注入路径成立。模型 message 中“篡改”表属夸大（raw 仅执行 SELECT 读取），但不改变根因判定。"
+      },
+      {
+        "finding_id": "finding-002",
+        "gt_id": "pygoat-fp-024",
+        "relation": "different",
+        "support": "unsupported",
+        "reason": "该候选指向第855行 injection_sql_lab 的 @csrf_exempt（第854行），根因为 CSRF/重复写库的资源问题，与 SQL 拼接注入（第864、878行）非同一根因、非同一代码路径。且描述文本被截断（“This is a”），未说明可被跨站触发的敏感状态变更：第866-873行插入固定主键行在二次请求即主键冲突失败，不构成可证的 CSRF 危害；CSRF 可利用性还依赖未展示的 Cookie/SameSite 配置，故不支持。"
+      },
+      {
+        "finding_id": "finding-003",
+        "gt_id": "pygoat-006",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第208行从客户端可控 Cookie 读取 token，第213行 base64.b64decode，第214行直接 pickle.loads(token)，与候选描述的用户可控 Cookie 经 base64 解码后不安全反序列化完全对应；第206行仅要求登录，不消除攻击面。报告明确指出的根因和代码路径与候选一致。"
+      },
+      {
+        "finding_id": "finding-004",
+        "gt_id": "pygoat-007",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选报告与给定发现均指向 introduction/views.py 的 xxe_parse：第258行创建解析器，第259行将 feature_external_ges 设为 True，第260行使用 parseString 解析 request.body。源码明确支持用户可控 XML 输入启用外部实体解析，因此其 XXE/文件读取/SSRF 根因描述与候选一致。"
+      },
+      {
+        "finding_id": "finding-005",
+        "gt_id": "pygoat-008",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与标签均指向同一根因和同一代码路径：cmd_lab 中 POST 参数 domain 在 418-420 行仅去除协议/www 前缀，421-426 行按 os 参数拼成 nslookup/dig 命令，430-434 行以 subprocess.Popen(command, shell=True) 执行。用户可控 domain 中的 ;、&& 等 shell 元字符未被过滤，可导致命令注入；源码证据充分。"
+      },
+      {
+        "finding_id": "finding-006",
+        "gt_id": "pygoat-009",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告指出 POST 参数 val 在 introduction/views.py:456 获取后，于第460行直接传入 eval(val)，并以 __import__('os').system(...) 为例说明任意代码执行；这与标签所述“用户可控 val 未净化进入 eval 导致任意代码执行”的根因和代码路径一致。源码第452-465行显示 cmd_lab2 是登录后处理 POST 的视图，第460行确为 eval(val)，第465行回显结果，支持该问题。"
+      },
+      {
+        "finding_id": "finding-006",
+        "gt_id": "pygoat-fp-021",
+        "relation": "different",
+        "support": "supported",
+        "reason": "标签主张的是 CSRF：第452行 @csrf_exempt 使 cmd_lab2 的 POST 端点缺少 CSRF 保护。模型报告只描述第456/460行 val 进入 eval 的任意代码执行，未明确写出跨站请求/CSRF 绕过这一独立根因；其仅在 preconditions 提到 @csrf_exempt 作为环境条件，不能视为报告了 CSRF 问题。源码第452-465行确实存在 @csrf_exempt 的登录后 POST 端点，因此标签所述 CSRF 条件有源码依据，但与模型报告描述的根因不同。"
+      },
+      {
+        "finding_id": "finding-009",
+        "gt_id": "pygoat-005",
+        "relation": "same",
+        "support": "supported",
+        "reason": "finding 明确指出 xss_lab_3.html 第22行在 <script>（第20-23行）内直接输出 {{code}}，与候选的脚本上下文 XSS 根因和代码路径一致；源码第22行确实位于 script 块中。给定摘录未含 views.py 的 re.sub 过滤实现，但模板第22行的脚本上下文输出已支持该漏洞核心；JSFuck 过滤细节不改变同一性。"
+      },
+      {
+        "finding_id": "finding-009",
+        "gt_id": "pygoat-fp-005",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选标记的是第19行 <p>{{code}}</p> 的 HTML 文本上下文不构成 XSS，并指出真正问题在第22行脚本上下文；finding 只报告第22行脚本上下文，未声称第19行 HTML 上下文可利用。源码第19行无 |safe，Django 自动转义在 HTML 上下文会阻止标签注入，因此该候选的否定判断有源码支持，但其代码路径是第19行，与 finding 的第22行不是同一路径。"
+      },
+      {
+        "finding_id": "finding-012",
+        "gt_id": "pygoat-011",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选与 finding 指向同一根因和同一代码路径：introduction/views.py 第347行 `if request.COOKIES.get('admin') == \"1\":` 直接依据客户端可伪造的 Cookie 判定管理员身份，第348-354行随即向该请求返回 \"0NLY_FOR_4DM1N5\" 与 username=admin，跳过第355行的口令校验分支；第363行还以明文无签名方式下发 `set_cookie('admin','1')`，佐证该值可被手动构造。根因（客户端 Cookie 授权）与位置（347-354，落于标签342-354区间）一致，源码证据充分。"
+      },
+      {
+        "finding_id": "finding-012",
+        "gt_id": "pygoat-fp-019",
+        "relation": "different",
+        "support": "unsupported",
+        "reason": "该候选描述的是 CSRF 漏洞（第342行 ba_lab 上的 @csrf_exempt，第363行在凭据校验后设置 admin Cookie），与 finding 的“客户端 Cookie 决定授权”根因不同；finding 的 message 也未提及 CSRF 或跨站请求伪造。且源码仅显示 @csrf_exempt（第335、341行）与响应 set_cookie（第363、373行），并未展示可被跨站伪造的、对受害者有意义的状态变更（设置 Cookie 只作用于攻击者伪造的请求响应，且第355行仍要求 admin 口令正确），会话 Cookie 的 SameSite 配置也未给出，因此 CSRF 结论缺乏源码支撑。仅术语/位置相邻不构成同一问题。"
+      },
+      {
+        "finding_id": "finding-013",
+        "gt_id": "pygoat-012",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 a1_broken_access_lab_1 中 request.COOKIES.get('admin') == \"1\" 即返回管理员数据，位置覆盖第758-765行；源码第758行读取客户端 Cookie，第759-765行返回管理员内容，且此前第748-751行仅校验登录，未校验管理员权限。根因与候选 pygoat-012 的客户端 Cookie 授权缺陷一致，源码支持。"
+      },
+      {
+        "finding_id": "finding-013",
+        "gt_id": "pygoat-050",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告 message 明确写到“该视图还硬编码 jack/jacktheripper 口令（第766行）”，与候选 pygoat-050 指出的硬编码凭据问题一致；源码第766行确实使用 name=='jack' and password=='jacktheripper' 进行硬编码凭据比较，源码支持。"
+      },
+      {
+        "finding_id": "finding-014",
+        "gt_id": "pygoat-013",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第791行从 request.META['HTTP_USER_AGENT'] 取得客户端可控的 User-Agent；第796-805行在 name 非空且 user_agent == \"pygoat_admin\" 时直接返回包含管理员机密 data 和 username=admin 的响应。候选描述与该根因和代码路径一致；第784-787行仅要求已登录，未阻止攻击者篡改 UA 绕过管理员校验。"
+      },
+      {
+        "finding_id": "finding-015",
+        "gt_id": "pygoat-014",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Finding 明确指出 a1_broken_access_lab3_secret 仅检查 request.user.is_authenticated（第837-839行），随后注释“# no checking applied here”（第840行）并直接渲染 secret.html（第841行），缺少管理员角色校验；这与候选描述的 secret 端点缺失授权检查、任意已登录用户可访问管理员机密内容一致。"
+      },
+      {
+        "finding_id": "finding-015",
+        "gt_id": "pygoat-051",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选描述的是硬编码凭据问题，源码第831行和第833行确实硬编码了 John/reaper 与 admin/admin_pass；但 Finding 主要报告第840-841行 secret 端点缺失授权检查，仅把 John/admin 作为上下文提及，没有明确指出硬编码凭据这一独立根因，故不属同一报告问题。"
+      },
+      {
+        "finding_id": "finding-016",
+        "gt_id": "pygoat-034",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告与候选标签均指向 introduction/views.py 的 secret() 视图（第535-540行）：第536行读取客户端可控的 X-Host 头，第537-538行仅以该头值等于 'admin.localhost:8000' 作为访问控制条件并返回 secret=S3CR37K3Y，第540行将未净化的 XHost 回显到响应中。报告明确覆盖了同一根因（用可伪造请求头做访问控制并泄露机密）和同一代码路径；源码片段直接支持该判断。关于 /secret 路由无认证装饰器，函数体内确实未见任何登录检查，与视图代码一致。"
+      },
+      {
+        "finding_id": "finding-017",
+        "gt_id": "pygoat-010",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出同一根因和代码路径：第496行用 randint(100,999) 生成3位OTP；第506行对非管理员把 otpN 明文放入响应；第514行 POST 仅用 filter(email,otp)/filter(id=2,otp) 校验，视图内未见尝试次数或过期限制。与候选的弱OTP、OTP回显、无速率限制一致；全局限流中间件未展示，但核心缺陷有源码直接支持。"
+      },
+      {
+        "finding_id": "finding-017",
+        "gt_id": "pygoat-fp-022",
+        "relation": "different",
+        "support": "supported",
+        "reason": "源码本身支持该标签：第492行有 @csrf_exempt，第494行 GET 分支在第499/505行更新 OTP、在第501/507行 set_cookie，属于 state-changing GET 且免 CSRF 保护。但模型报告主线是OTP认证绕过/弱OTP，仅提到 @csrf_exempt 和无登录要求，未明确指出 CSRF 或 state-changing GET 是独立根因，不能补写，故不是同一报告问题。"
+      },
+      {
+        "finding_id": "finding-018",
+        "gt_id": "pygoat-018",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均指出 introduction/views.py 的 a9_lab 中第560行使用 yaml.load(file, yaml.Loader) 解析用户上传 YAML，根因和代码路径一致。源码第552-560行显示需登录且从 request.FILES 取文件后直接传给 yaml.Loader；第571行还显示 pyyaml v5.1，支持该 Loader 可触发不安全对象构造的静态判断。"
+      },
+      {
+        "finding_id": "finding-019",
+        "gt_id": "pygoat-019",
+        "relation": "same",
+        "support": "supported",
+        "reason": "第583行从 request.POST.get(\"function\") 读取用户输入，第588行未做过滤/白名单直接传入 PIL.ImageMath.eval；候选 pygoat-019 描述的同一 a9_lab2 表达式注入根因、同一 sink 路径与源码一致。给定 Pillow 9.4.0 前提，ImageMath.eval 的表达式求值可被恶意表达式滥用。"
+      },
+      {
+        "finding_id": "finding-020",
+        "gt_id": "pygoat-015",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述与报告均指向 introduction/views.py 的 ssrf_lab 视图：第923行 file=request.POST[\"blog\"] 取得用户可控的路径，第926行 os.path.join(dirname, file) 未做规范化或白名单校验，第927-928行 open(filename,\"r\").read() 直接读取，第929行把内容回显。根因（用户可控路径未经校验进入 open）、代码路径（POST 处理分支→ssrf_lab）和影响（可读出应用进程可访问的任意文件）均一致。源码证据充分：os.path.join 遇到 ../ 序列不会限制在 dirname 内，且传入绝对路径时 dirname 会被丢弃，结合已展示的源码足以确认路径穿越/任意文件读取，无需补充外部实现。"
+      },
+      {
+        "finding_id": "finding-021",
+        "gt_id": "pygoat-016",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第961行从 POST 参数取 url，第963行直接传入 requests.get(url)，未做 scheme/host 白名单或内网地址过滤；第964行将响应内容回显。该代码路径与候选描述的 SSRF 根因和位置完全一致，且第955行认证装饰器不阻止登录用户利用。报告额外提到 XSS 源和 ssrf_target 绕过，但不影响与候选核心问题的一致性。"
+      },
+      {
+        "finding_id": "finding-022",
+        "gt_id": "pygoat-017",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "候选报告与 finding 指向同一 SSTI 路径：第981行读取 POST 的 blog，第984行经 filter_blog 后在第990行拼接模板标签，第995-996行写入 templates/.../Blogs/<id>.html，第1006行 render 该文件。这对应同一根因和同一代码路径。但候选声称 filter_blog 不做任何过滤，其实现未出现在给定源码摘录中；无法独立核验该关键环节，若 filter_blog 会过滤模板语法则漏洞前提不成立。因此需未展示的实现，标为 insufficient。"
+      },
+      {
+        "finding_id": "finding-023",
+        "gt_id": "pygoat-030",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选标签指出 introduction/views.py 第1026行使用 MD5 处理口令，与报告 finding 描述完全一致；源码摘录第1026行确实为 password = md5(password.encode()).hexdigest()，随后第1027行用该 MD5 值与 CF_user 表比对，说明登录校验使用弱哈希，支持“MD5 不适合口令存储/校验”的根因。"
+      },
+      {
+        "finding_id": "finding-024",
+        "gt_id": "pygoat-031",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告与候选标签均指向 crypto_failure_lab3 的明文 Cookie 权限提升：第1053行读取 cookie，第1055-1060行按 '|' 分割并仅比较第一段是否为 'admin'，第1074-1076行以 f\"{username}|{expire}\" 明文写入且 set_cookie 未签名/HMAC。将用户名部分改为 admin 并设置未来过期时间即可在第1061行进入 admin 分支。第1050行要求已认证，但这与标签的“权限提升”前提一致，不构成不匹配。"
+      },
+      {
+        "finding_id": "finding-025",
+        "gt_id": "pygoat-033",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选与报告指向同一根因和同一代码路径：introduction/views.py 第286行从 request.POST['pass'] 取明文口令，第287行 authLogin.objects.create(..., password=passwd) 直接落库，未经任何哈希/加盐函数，构成明文口令存储。第315行登录查询 filter(username=..., password=passwd) 进一步印证明文比对，支持报告所述“数据库或备份泄露即导致口令直接泄露”的风险。报告称该字段为普通 CharField 所依据的 introduction/models.py 未在源码摘录中展示，但该字段类型细节不影响明文存储根因的成立，故整体判定为 supported。"
+      },
+      {
+        "finding_id": "finding-026",
+        "gt_id": "pygoat-033",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选描述的是第287行 authLogin.objects.create(..., password=passwd) 将密码直接写入数据库的明文存储问题；而报告核心是第291、305、319行 set_cookie 缺少 HttpOnly/Secure 且 samesite=None 的会话 Cookie 安全问题。报告仅在风险描述中泛提“明文存储/弱会话设计”，未明确指出第287行密码未哈希存储的同一根因和代码路径，不能据此合并。源码第287行确有 password=passwd 直接赋值，候选问题本身有源码支持。"
+      },
+      {
+        "finding_id": "finding-027",
+        "gt_id": "pygoat-fp-004",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选点针对 introduction/views.py:628 的登录查询，模型报告并未描述该位置的任何缺陷；其实际主张是 636-639 行 debug 视图公开回传日志（及 642 行日志配置），与候选点“第 628 行 ORM 参数化查询不构成 SQL 注入”不是同一根因、也不是同一代码路径。就候选点自身内容而言，源码第 628 行 `login.objects.filter(user=user,password=password)` 确为 ORM 查询、未见 raw/extra 拼 SQL，因此“该行不存在 SQL 注入”这一否定性判断有源码支持，但它不构成本轮确认的安全问题命中。"
+      },
+      {
+        "finding_id": "finding-027",
+        "gt_id": "pygoat-071",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告与候选点描述的是同一根因与同一路径：introduction/views.py:636-639 的 debug 视图直接 `render(request,'Lab/A10/debug.log')` 并把 Content-Type 置为 text/plain 返回，且该函数没有像 614-618、619-634、644 行那样做 is_authenticated 检查或加 authentication_decorator，属于未认证即可读取日志文件的信息暴露；报告进一步说明日志中含带凭据的请求记录，与候选的“日志泄露凭据”一致。缺失条件：excerpts 未包含 introduction/urls.py，无法直接核验 /debug 路由注册；debug.log 的实际内容也未展示，故“日志内含明文口令”这一细节仅依据模型陈述。但视图层“无认证即回传日志文件”的暴露原语已由 636-639 行源码直接证实，足以支撑该候选的判定。"
+      },
+      {
+        "finding_id": "finding-028",
+        "gt_id": "pygoat-014",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选标签针对的是 a1_broken_access_lab3_secret（第837-841行）：该函数只检查 is_authenticated，第840行注释明确写有 'no checking applied here'，随后就直接渲染 secret.html，任何已登录用户都能访问，因此该候选问题本身由源码支持。然而模型报告（message、data_flow）描述的是第831-833行的硬编码凭据，并据此得出拿到源码者可以登录 lab，完全没有提到第837-841行缺少授权检查或 admin-only 的 secret 端点。尽管两者位置相邻、都位于同一 lab 文件，但这两条路径的根因不同：一条是凭据硬编码，另一条是授权缺失，因此不能仅凭位置邻近或术语相近就判定为同一问题。"
+      },
+      {
+        "finding_id": "finding-028",
+        "gt_id": "pygoat-051",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指出 a1_broken_access_lab_3 中 'John/reaper' 与 'admin/admin_pass' 明文硬编码，并明确给出第831-833行。这与源码完全对应：第831行 `if username == 'John' and password == 'reaper'`，第833行 `elif username == 'admin' and password == 'admin_pass'`，两处都把口令以字面量写入视图比较逻辑，根因就是硬编码凭据。报告另外列举的第766、1072、1119、1130-1135行不在本次给出的源码摘录中；不过该报告的核心主张已由第831-833行独立证实，因此不影响本候选的命中判定。"
+      },
+      {
+        "finding_id": "finding-029",
+        "gt_id": "pygoat-008",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告的根因是第414行 @csrf_exempt 导致的状态变更/敏感视图 CSRF 豁免，命令注入仅作为“攻击者可借受害者会话执行命令注入类 lab 请求”的 CSRF 后果被顺带提及，并未指出第418行 domain=request.POST.get('domain') 经第420行 re.sub 简单剥离协议后在第424/426行被 format 进 nslookup/dig 命令、第430-432行 subprocess.Popen(..., shell=True) 执行这一注入根因，也未说明 ; / && 分隔符绕过。源码本身（418-434行）确实支持该命令注入，但模型报告未把其作为独立问题表达，故与标签不同根因、不同问题。"
+      },
+      {
+        "finding_id": "finding-029",
+        "gt_id": "pygoat-fp-020",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "模型报告与标签指向同一处：cmd_lab 被第414行 @csrf_exempt 豁免、第415-447行处理认证后的 POST 并执行外部命令，描述基本对应。但源码证据不足：其一，摘录未包含 MIDDLEWARE/全局 CsrfViewMiddleware 配置，无法确认豁免是否真的移除了防护（无中间件时该装饰器无意义）；其二，该视图的可证实副作用仅是把执行结果渲染回发起请求者自身（第444-446行），未显示任何影响受害者账户或会话状态的持久变更，CSRF 的独立安全影响与已存在的命令注入（418-434行）重叠，缺少“跨站伪造可造成独立危害”的源码依据；其三，利用前提依赖受害者已登录的会话 Cookie 机制，摘录未展示会话配置。因此不能据现有静态证据确认该 CSRF 问题成立。"
+      },
+      {
+        "finding_id": "finding-030",
+        "gt_id": "pygoat-035",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第59-74行明确支持候选标签：log_function_checker 仅带 @csrf_exempt（第59行），认证装饰器已在第60行注释掉；第64-65行直接读取用户 POST 参数 log_code 和 api_code，第67-68行据此构造 playground/A9/main.py 与 api.py 路径，第69-74行以 'w' 模式将这两个值原样写入文件（open 加 write），没有做任何校验、过滤或路径限制。这与候选标签所称“用户可控参数直接写入 Python 源文件”的根因和代码路径完全一致，模型报告也正指向同一函数、同一写入点。模型报告额外声称写入内容会经导入并执行，但所给片段（第31-91行）只出现 main.ssrf_lab 的调用，未展示任何从 playground/A9/main.py 或 api.py 的导入语句，因此“后续导入执行”这一延伸环节在证据中不充分；不过“将任意内容写入 Python 源文件”这一根本缺陷本身已由源码充分支持，不影响确认该标签。"
+      },
+      {
+        "finding_id": "finding-032",
+        "gt_id": "pygoat-036",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选标签指出 A6_disscussion_api_2 将 POST 参数 code 未经净化直接写入 playground/A6/utility.py，属于任意文件写入。源码第130行 code = request.POST.get('code')、第132行 filename = os.path.join(dirname, \"playground/A6/utility.py\")、第133-135行 open(filename,\"w\") 后 f.write(code) 直接对应，与标签所述根因和代码位置一致。模型报告还额外声称该文件被导入链执行而构成 RCE，这一后续执行环节在给定摘录中未经 urls.py 导入链核实，但标签本身的任意文件写入问题已由第130-135行充分支持，不影响 same 判定。"
+      },
+      {
+        "finding_id": "finding-033",
+        "gt_id": "pygoat-025",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告只描述了 mitre_lab_25_api 在第218行对 expression 调用 eval 导致的任意代码执行，没有提及 csrf_transfer_monei_api 在191-208行通过 GET 请求修改余额的转账逻辑，因此根因和代码路径均不同。候选本身有源码支持：191-208行显示 GET 请求会读取认证 cookie 并直接更新双方余额，且未见 CSRF token 校验；但这不是模型报告所描述的问题。"
+      },
+      {
+        "finding_id": "finding-033",
+        "gt_id": "pygoat-026",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告与候选均指向同一漏洞：mitre_lab_25_api 在第217行从 POST 获取 expression，并在第218行直接 eval(expression)，可导致任意代码执行。源码还显示第213行认证装饰器被注释、第214行使用 @csrf_exempt，支持报告关于未认证可达的说明。"
+      },
+      {
+        "finding_id": "finding-034",
+        "gt_id": "pygoat-027",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 mitre_lab_17_api 将 POST 参数 ip 拼接为 \"nmap \" + ip（源码第240-241行），再传入 command_out()，其中 subprocess.Popen(command, shell=True, ...) 位于第233行并由第242行调用；第237行 @csrf_exempt 且该 API 无登录校验。报告与候选 027 描述同一命令注入根因、同一数据流和代码路径，源码证据充分。"
+      },
+      {
+        "finding_id": "finding-034",
+        "gt_id": "pygoat-053",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选 053 指向 command_out 第233行的 shell=True 执行任意命令，并说明由 mitre_lab_17_api 以用户输入调用。报告同样明确写出第241-242行拼接并调用 command_out，以及第232-233行 Popen(shell=True)，因此虽然候选侧重 sink 实现点，仍与报告描述的同一根因和同一调用路径对应，且由源码第233、240-242行支持。"
+      },
+      {
+        "finding_id": "finding-035",
+        "gt_id": "pygoat-024",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告仅指出第169/182/194行硬编码JWT密钥导致可自签令牌，未提及第177行 @csrf_exempt 或第191-207行GET转账API的CSRF问题。候选所述CSRF根因在源码中有依据，但报告未描述该问题，故不是同一根因。"
+      },
+      {
+        "finding_id": "finding-035",
+        "gt_id": "pygoat-028",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指出第169行 jwt.encode 使用硬编码密钥 'csrf_vulneribility'，并指出第182/194行 jwt.decode 复用同一密钥。这与候选028的硬编码JWT签名密钥根因和代码路径一致，源码直接支持。"
+      },
+      {
+        "finding_id": "finding-035",
+        "gt_id": "pygoat-029",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告只讨论JWT硬编码密钥，未提及第161行 md5(password.encode()).hexdigest() 的弱密码哈希问题。候选029在源码中有依据，但报告未描述该根因。"
+      },
+      {
+        "finding_id": "finding-035",
+        "gt_id": "pygoat-067",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告提到 auth_cookiee 的签发/校验，但未指出第171行 set_cookie('auth_cookiee', cookie) 未设置 HttpOnly。候选067的缺失HttpOnly问题在源码中有依据，但报告未明确报告该问题。"
+      },
+      {
+        "finding_id": "finding-036",
+        "gt_id": "pygoat-025",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均指向同一问题：csrf_transfer_monei_api 在 GET 分支（第191-192行）读取 auth_cookiee 后，于第199-207行直接修改收款人和当前用户余额并保存，属于通过 GET 执行状态变更；源码未在该视图内校验 CSRF token。虽然源码摘录未展示 urls.py 的具体路由，但视图级 GET 转账缺陷足以支持该根因判断。"
+      },
+      {
+        "finding_id": "finding-037",
+        "gt_id": "pygoat-028",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告仅描述第161行 MD5 口令哈希及数据库泄露后的破解风险，未提及 JWT 签名密钥；源码第169行确实使用硬编码字符串 'csrf_vulneribility' 作为 jwt.encode 的 HS256 密钥，因此该候选问题本身有源码支持，但与报告不是同一根因。"
+      },
+      {
+        "finding_id": "finding-037",
+        "gt_id": "pygoat-029",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出第161行 password = md5(password.encode()).hexdigest() 对登录口令做无盐 MD5 哈希，并在第162行用于 CSRF_user_tbl 查询；这与候选描述的弱口令哈希问题、代码位置和根因一致，源码直接支持。"
+      },
+      {
+        "finding_id": "finding-037",
+        "gt_id": "pygoat-067",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告只讨论第161行 MD5 口令哈希，未提及第171行 set_cookie('auth_cookiee', cookie) 的 JWT Cookie 属性；源码显示该调用未设置 HttpOnly，因此候选问题本身由源码支持，但不是报告描述的同一问题。"
+      },
+      {
+        "finding_id": "finding-038",
+        "gt_id": "pygoat-020",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选020与 Finding 均指向 settings.py 第25行硬编码 Django SECRET_KEY；源码第25行直接确证该密钥明文硬编码，且第37-43行启用 sessions/admin，Django 默认将该密钥用于签名类安全机制，核心根因成立。Finding 额外提到第171行 JWT 密钥未在摘录中展示，但候选020本身只对应第25行 Django SECRET_KEY，不依赖该扩展。"
+      },
+      {
+        "finding_id": "finding-038",
+        "gt_id": "pygoat-021",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选021描述的是第30行 DEBUG=True 导致调试错误页暴露，源码第30行直接确证 DEBUG 开启；但该问题与 Finding 的硬编码 SECRET_KEY/SECRET_COOKIE_KEY 根因和代码路径不同，故不是同一语义命中。生产部署细节未在摘录中展开，但不影响该独立调试配置问题存在。"
+      },
+      {
+        "finding_id": "finding-038",
+        "gt_id": "pygoat-022",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选022指向第27行 SENSITIVE_DATA = 'FLAGTHATNEEDSTOBEFOUND' 的明文敏感标志存储，源码第27行直接确证；但 Finding 关注的是第25行 SECRET_KEY 及额外所述 JWT 签名密钥被用于伪造认证，第27行既非同一数据也非同一认证/签名代码路径，不能仅因同为硬编码敏感数据而判为 same。"
+      },
+      {
+        "finding_id": "finding-039",
+        "gt_id": "pygoat-020",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选问题针对第25行硬编码 SECRET_KEY，源码第25行确实存在明文字面量；但报告只报告第30行 DEBUG=True 及调试页泄露，没有把硬编码 SECRET_KEY 作为独立根因或代码路径，二者不同。"
+      },
+      {
+        "finding_id": "finding-039",
+        "gt_id": "pygoat-021",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指向第30行 DEBUG=True，并以调试错误页泄露设置、栈回溯为核心，根因和代码路径与候选一致。源码第30行直接确认 DEBUG=True，第32行包含 Heroku 主机也支持生产暴露风险；docker-compose 未展示只影响部署细节，不影响该配置项本身。"
+      },
+      {
+        "finding_id": "finding-039",
+        "gt_id": "pygoat-022",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选问题针对第27行 SENSITIVE_DATA 明文存储，源码第27行确有该常量；但报告未将其作为独立问题，只讨论 DEBUG 页可能泄露设置/环境信息，根因和代码路径不同。"
+      },
+      {
+        "finding_id": "finding-040",
+        "gt_id": "pygoat-045",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选045指向 all_users_data_view（第112-132行）；该函数没有 @login_required 或权限检查，直接遍历 UserData.objects.all()（第120行），并返回 username、credit_card、ssn、api_key（第121-126、132行），与 finding 的未认证批量泄露全量敏感数据在根因和代码路径上一致。URL 路由虽未在摘录中展示，但视图级缺陷有直接源码支持。"
+      },
+      {
+        "finding_id": "finding-040",
+        "gt_id": "pygoat-046",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选046指向 api_data_view（第87-109行）；该路径有 @login_required（第86行），只通过 UserData.objects.get(user=request.user) 获取当前用户数据（第91行），并返回其完整敏感字段（第101-109行），属于已认证用户的单用户明文暴露。finding 则指向 all_users_data_view 在无认证条件下批量暴露所有用户（第112-132行），两者根因和代码路径不同。"
+      },
+      {
+        "finding_id": "finding-041",
+        "gt_id": "pygoat-057",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 generate_api_key 在第38-42行使用 random.choices（第9行导入 random），属于非密码学安全随机数生成 API key；第58行注册流程调用该函数。根因、代码路径与候选标签一致，源码证据充分。"
+      },
+      {
+        "finding_id": "finding-041",
+        "gt_id": "pygoat-066",
+        "relation": "different",
+        "support": "insufficient",
+        "reason": "报告关注的是 API key 使用 random.choices 的随机数强度问题以及明文存储敏感数据，未提及 login_view 第20-36行缺少速率限制或账户锁定。虽然后者在本视图内未见限流逻辑，但是否存在全局中间件、配置或调用链限制未被展示，不能仅凭该片段确认登录端点完全无限尝试，故该候选问题证据不足。"
+      },
+      {
+        "finding_id": "finding-042",
+        "gt_id": "pygoat-044",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选指出重置令牌通过 flash 响应直接回显；报告明确写到第91行 token 随 flash 消息回显，并指出第78-91行 /reset-password 无需认证、可对已知邮箱触发，源码第83-91行确认该路径。该问题独立成因，且与候选的“响应中暴露令牌”一致。"
+      },
+      {
+        "finding_id": "finding-042",
+        "gt_id": "pygoat-056",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选指出第86行使用 md5(email:datetime.now()) 生成可预测重置令牌；报告明确写到第86行以 md5(email:当前时间) 生成 token，并说明时间可枚举、令牌可预测。源码第86-87行确认该确定性生成与存储路径，属于同一根因和代码路径。"
+      },
+      {
+        "finding_id": "finding-043",
+        "gt_id": "pygoat-041",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选标签指出 login 生成的会话令牌是 base64('username:timestamp')、可解码伪造且无完整性保护；模型报告同样基于第45行构造该令牌及第49/51行写入 Cookie，描述未签名可伪造会话令牌，根因一致。第45行源码直接显示令牌仅做 base64 编码，未包含签名或服务端校验，因此该问题由源码支持；dashboard 第111行未在摘录中展示，但不影响对候选所述 login 令牌生成缺陷的确认。"
+      },
+      {
+        "finding_id": "finding-044",
+        "gt_id": "pygoat-039",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告只描述 users 字典明文/弱口令（第13、18行）及明文登录比较（第41行），未提及 app.secret_key（第8行）或会话签名可预测问题；这是独立根因。源码第8行确实存在硬编码 Flask secret key，因此该候选问题本身由源码支持，但不是同一安全问题。"
+      },
+      {
+        "finding_id": "finding-044",
+        "gt_id": "pygoat-040",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指出 users 字典硬编码 admin/admin123 与 user/password123 明文口令（第13、18行），登录时明文比较（第41行），与候选描述同一根因和代码路径；源码第11-22行直接显示明文凭据，故确认支持。"
+      },
+      {
+        "finding_id": "finding-045",
+        "gt_id": "pygoat-038",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告指出 /deserialize 将请求表单中的 serialized_data 经 base64 解码后直接传给 pickle.loads，位置覆盖第33-36行，与候选描述的 user-supplied base64-encoded data → pickle.loads 完全一致；第30-36行确认该路径无需认证且直接反序列化用户输入，可导致任意代码执行。"
+      },
+      {
+        "finding_id": "finding-047",
+        "gt_id": "pygoat-047",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确写出第8行硬编码可预测 SECRET_KEY，并指出其可伪造会话/CSRF 签名；候选标签正是同一行同一配置弱点，源码第8行直接确认。"
+      },
+      {
+        "finding_id": "finding-047",
+        "gt_id": "pygoat-048",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确写出第11行 DEBUG=True 并指出调试页泄露信息；候选标签对应同一配置弱点，源码第11行直接确认。"
+      },
+      {
+        "finding_id": "finding-047",
+        "gt_id": "pygoat-049",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确写出第13行 ALLOWED_HOSTS=['*'] 并指出任意 Host 头攻击风险；候选标签对应同一配置弱点，源码第13行直接确认。"
+      }
+    ],
+    "duplicate_label_reports": {},
+    "checks": {
+      "check_1_file_exists_and_matches": 47,
+      "check_2_reported_start_within_10_lines": 46,
+      "check_3_at_least_one_source_line_in_quote": 43,
+      "all_three": 41
+    },
+    "jobs": 41,
+    "completed": 41
+  },
+  "glm-5.3-flash/B": {
+    "reports": 41,
+    "evidence_valid": 36,
+    "confirmed_reports": 32,
+    "covered_labels": 35,
+    "positive_labels": 78,
+    "reference_precision": 0.7804878048780488,
+    "recall": 0.44871794871794873,
+    "f1": 0.5698295599084203,
+    "pending_pairs": 5,
+    "negative_label_matches": [],
+    "accepted_pairs": [
+      [
+        "finding-001",
+        "pygoat-001"
+      ],
+      [
+        "finding-002",
+        "pygoat-002"
+      ],
+      [
+        "finding-003",
+        "pygoat-006"
+      ],
+      [
+        "finding-004",
+        "pygoat-038"
+      ],
+      [
+        "finding-005",
+        "pygoat-007"
+      ],
+      [
+        "finding-006",
+        "pygoat-008"
+      ],
+      [
+        "finding-007",
+        "pygoat-009"
+      ],
+      [
+        "finding-008",
+        "pygoat-026"
+      ],
+      [
+        "finding-009",
+        "pygoat-027"
+      ],
+      [
+        "finding-009",
+        "pygoat-053"
+      ],
+      [
+        "finding-010",
+        "pygoat-018"
+      ],
+      [
+        "finding-011",
+        "pygoat-019"
+      ],
+      [
+        "finding-012",
+        "pygoat-036"
+      ],
+      [
+        "finding-013",
+        "pygoat-035"
+      ],
+      [
+        "finding-014",
+        "pygoat-003"
+      ],
+      [
+        "finding-016",
+        "pygoat-005"
+      ],
+      [
+        "finding-017",
+        "pygoat-055"
+      ],
+      [
+        "finding-019",
+        "pygoat-015"
+      ],
+      [
+        "finding-020",
+        "pygoat-016"
+      ],
+      [
+        "finding-021",
+        "pygoat-014"
+      ],
+      [
+        "finding-022",
+        "pygoat-011"
+      ],
+      [
+        "finding-023",
+        "pygoat-013"
+      ],
+      [
+        "finding-024",
+        "pygoat-034"
+      ],
+      [
+        "finding-025",
+        "pygoat-010"
+      ],
+      [
+        "finding-028",
+        "pygoat-025"
+      ],
+      [
+        "finding-031",
+        "pygoat-045"
+      ],
+      [
+        "finding-032",
+        "pygoat-057"
+      ],
+      [
+        "finding-033",
+        "pygoat-033"
+      ],
+      [
+        "finding-034",
+        "pygoat-030"
+      ],
+      [
+        "finding-035",
+        "pygoat-050"
+      ],
+      [
+        "finding-036",
+        "pygoat-068"
+      ],
+      [
+        "finding-038",
+        "pygoat-032"
+      ],
+      [
+        "finding-041",
+        "pygoat-047"
+      ],
+      [
+        "finding-041",
+        "pygoat-048"
+      ],
+      [
+        "finding-041",
+        "pygoat-049"
+      ]
+    ],
+    "covered_ids": [
+      "pygoat-001",
+      "pygoat-002",
+      "pygoat-003",
+      "pygoat-005",
+      "pygoat-006",
+      "pygoat-007",
+      "pygoat-008",
+      "pygoat-009",
+      "pygoat-010",
+      "pygoat-011",
+      "pygoat-013",
+      "pygoat-014",
+      "pygoat-015",
+      "pygoat-016",
+      "pygoat-018",
+      "pygoat-019",
+      "pygoat-025",
+      "pygoat-026",
+      "pygoat-027",
+      "pygoat-030",
+      "pygoat-032",
+      "pygoat-033",
+      "pygoat-034",
+      "pygoat-035",
+      "pygoat-036",
+      "pygoat-038",
+      "pygoat-045",
+      "pygoat-047",
+      "pygoat-048",
+      "pygoat-049",
+      "pygoat-050",
+      "pygoat-053",
+      "pygoat-055",
+      "pygoat-057",
+      "pygoat-068"
+    ],
+    "assessments": [
+      {
+        "finding_id": "finding-001",
+        "gt_id": "pygoat-001",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与标签指向同一根因和同一代码路径：第158行将用户可控的 name/password 直接拼接为 SQL 字符串，第162行通过 login.objects.raw(sql_query) 执行；数据流 150-152 行 request.POST 取值、158 行拼接、162 行 raw 执行均与标签描述一致，源码片段足以支撑 SQL 注入结论。"
+      },
+      {
+        "finding_id": "finding-001",
+        "gt_id": "pygoat-fp-001",
+        "relation": "different",
+        "support": "supported",
+        "reason": "标签描述的是第156行 login.objects.filter(user=name) 为参数化 ORM 查询、不构成注入（阴性结论），而模型报告仅描述第158-162行字符串拼接 + raw() 的注入点，并未把第156行认定为漏洞或写出该行为独立问题，故不属同一根因/同一问题；源码第156行确实为 ORM filter 调用，支持该标签的“非注入点”判断，但其与报告不是同一语义命中。"
+      },
+      {
+        "finding_id": "finding-002",
+        "gt_id": "pygoat-002",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确描述 injection_sql_lab 中 name/password 经字符串拼接进入 sql_query，并由 sql_lab_table.objects.raw(sql_query) 执行；源码第858-864、878行直接支持，属同一根因和同一代码路径。"
+      },
+      {
+        "finding_id": "finding-002",
+        "gt_id": "pygoat-fp-024",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选描述的是 @csrf_exempt 的 POST 状态变更/CSRF 问题；源码第854行确有 @csrf_exempt，第855-873行读取 POST 的 name 并保存记录，可支持该独立问题，但报告只讨论 SQL 注入，未描述 CSRF 或重复保存，故不是同一根因。"
+      },
+      {
+        "finding_id": "finding-003",
+        "gt_id": "pygoat-006",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述与报告指向同一根因和同一代码路径：第208行从客户端Cookie读取token，第213行进行base64.b64decode，第214行直接调用pickle.loads；第215行才检查admin属性，反序列化已先发生。源码明确显示用户可控Cookie进入pickle.loads，足以支持不安全反序列化及任意代码执行风险；认证前提不改变同一漏洞。"
+      },
+      {
+        "finding_id": "finding-004",
+        "gt_id": "pygoat-038",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第33-36行显示 deserialize_data 从 request.form 获取 serialized_data，经 base64.b64decode 后直接 pickle.loads；与候选描述的反序列化根因、代码路径（line 36）完全一致。第30行端点为 POST /deserialize，第13-15行定义了 __reduce__，可支持任意代码执行的表述，故为同一问题且被源码支持。"
+      },
+      {
+        "finding_id": "finding-005",
+        "gt_id": "pygoat-007",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选标签均指向 xxe_parse 中的同一根因：第258行 make_parser() 创建解析器，第259行显式 setFeature(feature_external_ges, True) 开启外部实体，第260行用 parseString(request.body.decode('utf-8'), parser=parser) 解析用户可控请求体，导致外部实体解析/文件读取风险。候选描述与源码行258-260一致；未展开 comments 写入和 /xxe_see 回显不影响同一 XXE 根因判定。"
+      },
+      {
+        "finding_id": "finding-006",
+        "gt_id": "pygoat-008",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与标签一致：第418行 domain=request.POST.get('domain') 用户可控，第420行仅用 re.sub 剥离协议/www 前缀，未过滤 ; && 反引号等 shell 元字符；第424/426行 format 进 'nslookup {}'/'dig {}'，第430-432行 subprocess.Popen(command, shell=True) 执行，构成同一 OS 命令注入根因与路径。模板第9-10行确认 domain 由 POST 提交。认证前置（第416行）不影响注入成立。"
+      },
+      {
+        "finding_id": "finding-006",
+        "gt_id": "pygoat-fp-020",
+        "relation": "different",
+        "support": "supported",
+        "reason": "标签的根因是 CSRF：第414行 @csrf_exempt 修饰第415行 cmd_lab，第417行处理 POST 并执行命令（第430-434行），模板第9行 form 无 csrf_token，源码确实支持该 CSRF 问题（需受害者已登录，第416行）。但模型报告 message 与 data_flow 仅描述 domain 到 Popen(shell=True) 的命令注入根因，完全未提及 @csrf_exempt、缺少 CSRF token 或跨站请求伪造，故与 CSRF 标签非同一根因，判 different。"
+      },
+      {
+        "finding_id": "finding-007",
+        "gt_id": "pygoat-009",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 cmd_lab2 中 POST 参数 val 在第456行被获取后，于第460行直接传入 eval(val)，与候选的 eval 任意代码执行根因、代码路径一致；源码可直接证明，无需额外配置。"
+      },
+      {
+        "finding_id": "finding-007",
+        "gt_id": "pygoat-fp-021",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选的核心问题是 CSRF：第452行 @csrf_exempt 关闭 CSRF 校验，第455-460行存在 authenticated POST 并将 val 传给 eval，跨站表单可触发该状态改变/代码执行操作。模型报告只描述 eval 未净化导致的任意代码执行，未指出 @csrf_exempt 或 CSRF 根因，因此不与候选的 CSRF 问题对应；但 CSRF 本身有源码依据。"
+      },
+      {
+        "finding_id": "finding-008",
+        "gt_id": "pygoat-025",
+        "relation": "different",
+        "support": "supported",
+        "reason": "报告仅描述 mitre_lab_25_api 的 eval 任意代码执行，未涉及 csrf_transfer_monei_api 的 GET 转账。源码 191-210 行确实在 GET 请求中直接修改余额且未校验 CSRF token，因此该候选问题有源码支持，但与报告不是同一根因/代码路径。"
+      },
+      {
+        "finding_id": "finding-008",
+        "gt_id": "pygoat-026",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告描述的正是 mitre_lab_25_api 中 POST 的 expression 参数直接传入 eval：源码 213 行认证装饰器被注释、214 行 @csrf_exempt、216-218 行从 request.POST 取值后 eval(expression)，与候选 026 的任意代码执行根因和代码路径一致。"
+      },
+      {
+        "finding_id": "finding-009",
+        "gt_id": "pygoat-027",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第240-242行显示 mitre_lab_17_api 取 POST 'ip'，拼接为 \"nmap \" + ip 后传入 command_out；第232-233行 command_out 用 subprocess.Popen(shell=True) 执行。候选027明确描述同一污点源（ip POST 参数）、同一拼接（'nmap '+ip）与同一 sink（Popen shell=True），且该 API 在第237行仅 @csrf_exempt、无认证装饰器（对比第224、228行），报告所述无认证/无校验前提有源码依据；位置 241-242 与标签一致，根因与路径均吻合。"
+      },
+      {
+        "finding_id": "finding-009",
+        "gt_id": "pygoat-053",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选053定位在实现点第233行 command_out 的 subprocess.Popen(command, shell=True)，并明确写明其被 mitre_lab_17_api 以用户输入调用。结合第240-242行 'nmap '+ip → command_out 的数据流，这属于同一命令注入根因在 sink 处的表述，仅调用点/实现点视角差异，属允许范围；shell=True 接受任意命令串的事实由第233行直接支持，用户输入可控由第240-241行支持。"
+      },
+      {
+        "finding_id": "finding-010",
+        "gt_id": "pygoat-018",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第558行从 request.FILES 取用户上传文件，第560行直接调用 yaml.load(file, yaml.Loader)，与候选描述的“用户上传 YAML 使用不安全 Loader 反序列化”根因和代码路径一致；yaml.Loader 允许构造 Python 对象，支持任意代码执行风险。第552行确认需登录。"
+      },
+      {
+        "finding_id": "finding-011",
+        "gt_id": "pygoat-019",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第583行从POST读取完全可控的 function_str，第588行未经校验直接传入 PIL.ImageMath.eval()；候选描述与该调用路径和根因一致，属于用户可控表达式进入表达式求值接口的代码注入问题。登录和上传图片前置条件不改变该注入路径。"
+      },
+      {
+        "finding_id": "finding-012",
+        "gt_id": "pygoat-036",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告与候选标签指向同一代码路径和根因：apis.py 第126–135行的 A6_disscussion_api_2 从 request.POST.get('code') 取值（130行），拼接 'playground/A6/utility.py' 路径（131–132行），以 'w' 模式 open 并 f.write(code)（133–135行），没有任何校验/白名单/转义。标签描述为“用户 POST code 直接写入 utility.py 源文件”，正是这组行；模型 message 也明确写出“将用户POST的 code 原样写入 introduction/playground/A6/utility.py”，因此属同一根因、同一路径。模型额外声称的“模块加载/重载时执行”依赖导入/重载部署条件（117行调用 check_vuln 仅旁证该文件会被导入），但该写入漏洞本身已被给定源码充分支持，故判 supported。"
+      },
+      {
+        "finding_id": "finding-013",
+        "gt_id": "pygoat-035",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Lines 59-74 of introduction/apis.py directly match the candidate: @csrf_exempt and the commented-out authentication decorator expose log_function_checker; POST parameters log_code/api_code (lines 64-65) are written verbatim to playground/A9/main.py and api.py (lines 67-74). This supports the arbitrary write-to-Python-source issue. The excerpt does not show the later import/instantiation of Log, so the runtime execution chain is not independently proven, but the arbitrary file write root cause is directly evidenced."
+      },
+      {
+        "finding_id": "finding-014",
+        "gt_id": "pygoat-003",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 xss_lab.html:27 的 {{query|safe}} 将 GET 参数 q 原样输出，与候选的反射型 XSS 根因和代码路径一致；源码第12、14行有 method=get/name=q 的搜索表单，第27行使用 |safe 关闭自动转义，支持该结论。"
+      },
+      {
+        "finding_id": "finding-014",
+        "gt_id": "pygoat-fp-002",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选针对第23-25行的 company/ceo/about 未使用 |safe，并说明自动转义保护；报告只讨论第27行 query|safe，未提出或依赖该位置的问题，根因/路径不同。源码第23-25行确无 |safe，默认自动转义下该候选的非漏洞判断成立。"
+      },
+      {
+        "finding_id": "finding-015",
+        "gt_id": "pygoat-004",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "模型报告与候选标签均指向 xss_lab_2.html 第20行 {{ username|safe }} 导致的反射型 XSS，并称服务端仅剥离小写 <script> 标签、可用 <img onerror> 绕过，根因和路径描述一致。源码片段第8-12行显示 POST 到 /xssL2 且存在 username 输入，第20行显示 safe 输出，支持存在不安全输出点；但片段未包含处理 /xssL2 的视图代码，未展示 POST username 如何传入模板上下文，也未展示 replace 过滤实现，故候选所依赖的反射流程及过滤绕过逻辑无法由当前源码独立核验，标为 insufficient。"
+      },
+      {
+        "finding_id": "finding-016",
+        "gt_id": "pygoat-005",
+        "relation": "same",
+        "support": "supported",
+        "reason": "第20-23行显示 {{code}} 直接位于 <script> 内，第8/12行表单将 username POST 到 /xssL3；这与报告所述脚本上下文注入的同一 sink 和根因对应。后端 re.sub 剔除字母数字的细节未在片段中展示，但候选核心的脚本上下文注入位置与路径有源码依据，该细节不影响同一根因判断。"
+      },
+      {
+        "finding_id": "finding-016",
+        "gt_id": "pygoat-fp-005",
+        "relation": "different",
+        "support": "supported",
+        "reason": "第19行 {{code}} 位于 <p> 文本上下文且无 |safe，Django 自动转义使 HTML 上下文注入不成立；真实脚本上下文在第22行。模型报告只指第22行脚本上下文漏洞，并未将第19行报告为漏洞，因此与 line19 的非漏洞候选不对应；源码支持该否定判断。"
+      },
+      {
+        "finding_id": "finding-017",
+        "gt_id": "pygoat-055",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均指向 introduction/templates/Lab_2021/A8_software_and_data_integrity_failure/lab2.html 第11行的 {{username | safe}}，并指出第16-17行 GET 表单以 name=username 提交用户输入。safe 过滤器会关闭 Django 自动转义，构成用户输入到非转义输出的同一反射型 XSS 根因和同一模板输出路径。"
+      },
+      {
+        "finding_id": "finding-018",
+        "gt_id": "pygoat-017",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "报告与候选均指向同一路径：ssti_lab 读取 request.POST['blog']（981），经 filter_blog（984）后拼接到模板标签中（990），写入 templates/Lab_2021/A3_Injection/Blogs/{id}.html（994-996），随后 ssti_view_blog 用 render() 加载该模板（1003-1006）。代码路径一致；但源码摘录未展示 filter_blog 的实现，而“无过滤/原样返回”是 SSTI 成立的必要条件，需 introduction/utility.py 才能独立核验，当前不能仅凭报告断言确认，故支持不足。"
+      },
+      {
+        "finding_id": "finding-019",
+        "gt_id": "pygoat-015",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码 918-933 行的 ssrf_lab 中，923 行 file=request.POST[\"blog\"] 完全可控，926 行 os.path.join(dirname, file) 直接拼接，927-928 行 open(filename,\"r\").read() 无路径规范化/根目录限制，929 行将内容回显；与候选描述的“POST blog 与 dirname 拼接后直接 open，可利用 ../ 读取任意文件”根因与代码路径一致。登录前置条件(919行)也已在源码中体现。"
+      },
+      {
+        "finding_id": "finding-020",
+        "gt_id": "pygoat-016",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第961行从 request.POST['url'] 取得完全可控 URL，第963行直接调用 requests.get(url)，未在第955-966行看到协议、主机或 IP 白名单校验，符合候选所述可向内部服务发起 SSRF 的根因和代码路径；候选描述的 SSRF 问题与报告主体一致。报告额外提到响应内容经模板输出导致 XSS，但这不是候选标签内容，不影响对 SSRF 同一性的判定。"
+      },
+      {
+        "finding_id": "finding-021",
+        "gt_id": "pygoat-014",
+        "relation": "same",
+        "support": "supported",
+        "reason": "finding 与候选标签都指向 introduction/views.py 第837-841行的 a1_broken_access_lab3_secret：该函数只做 is_authenticated 校验（838-839行），第840行注释 'no checking applied here' 明确说明未做任何授权检查，随后直接在第841行渲染 secret.html。这与候选所描述的“除基础认证外无授权检查、任意已登录用户可直接访问仅管理员可见的秘密内容”是同一根因、同一代码路径；源码足以支持，无需额外的导入或配置信息。"
+      },
+      {
+        "finding_id": "finding-021",
+        "gt_id": "pygoat-051",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选标签针对的是第831-834行 a1_broken_access_lab_3 中硬编码的凭据（'John'/'reaper'、'admin'/'admin_pass'），该问题确实由源码支持。但 finding 报告的是第837-841行 secret 端点缺少管理员授权校验，属于另一函数、另一根因（缺失访问控制 vs 硬编码凭据），二者并非同一安全问题，因此关系判为 different。"
+      },
+      {
+        "finding_id": "finding-022",
+        "gt_id": "pygoat-011",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与标签指向同一根因与同一代码路径：views.py:347 直接以 request.COOKIES.get('admin') == \"1\" 作为管理员判定，命中后 348-354 返回秘密 '0NLY_F0R_4DM1N5' 与 username='admin'。Cookie 由 363 行 html.set_cookie('admin','1',max_age=200) 在客户端侧设置，无签名保护，客户端可任意伪造，故『客户端可控 Cookie 决定授权』成立。前置条件亦被源码支持：343 行 if request.user.is_authenticated 保证需登录。报告额外提到的 views.py:756 同模式位置属附带说明，不影响主体匹配。"
+      },
+      {
+        "finding_id": "finding-022",
+        "gt_id": "pygoat-fp-019",
+        "relation": "different",
+        "support": "insufficient",
+        "reason": "模型报告只描述『基于客户端 Cookie 的授权判定』（347 行），全文未提及 CSRF、跨站请求伪造或 341 行 @csrf_exempt 装饰器，根因不同，不能视为对同一问题的合并报告。独立核验方面：341 行确有 @csrf_exempt 且视图处理 POST 并按凭证在 363/373 行设置 admin Cookie，但该状态变更分支需在 POST 中提交 admin 凭证（355 行 login.objects.filter(user='admin',password=password)），标签所述『改变认证状态』的实际危害（受害者会话被置为 admin、Cookie 作用域与 SameSite 行为）需运行时验证，源码摘录不足以静态确证可利用的 CSRF 影响，故标为 insufficient。"
+      },
+      {
+        "finding_id": "finding-023",
+        "gt_id": "pygoat-013",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述与报告一致：introduction/views.py:791 读取客户端可控的 HTTP_USER_AGENT，797 行直接将其与 'pygoat_admin' 比较，并在 798-805 行返回管理员秘密数据。源码 784-787 行表明需先登录，故更准确的利用前提是已认证用户伪造该头；但这不影响其与报告关于“以 User-Agent 作为管理员授权依据”的同一根因和同一代码路径判定。"
+      },
+      {
+        "finding_id": "finding-024",
+        "gt_id": "pygoat-034",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选与报告均指向 introduction/views.py 第535-540行的 secret 视图：第536行读取客户端可控的 X-Host，第537行仅以该头等于 admin.localhost:8000 做授权判断，第538行返回 S3CR37K3Y，第540行还在无权限分支反射 XHost。代码证据直接支持伪造 X-Host 绕过授权并泄露秘密的根因和路径。"
+      },
+      {
+        "finding_id": "finding-025",
+        "gt_id": "pygoat-010",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确覆盖候选的核心问题：OTP 为 3 位数字（introduction/views.py:496），非管理员分支把 otpN 直接渲染到响应（505-506），OTP 校验仅在 512-518 进行且视图内未见尝试次数限制。该问题与候选的 Broken Authentication/弱 OTP 根因及 Otp 视图路径一致，源码支持。",
+        "reason_short": "报告与候选弱OTP问题一致且源码支持。"
+      },
+      {
+        "finding_id": "finding-025",
+        "gt_id": "pygoat-fp-022",
+        "relation": "different",
+        "support": "unsupported",
+        "reason": "报告虽提到 GET 会修改 OTP 状态，但未指出 @csrf_exempt（492）或 CSRF 根因，整体仍是 OTP 认证设计缺陷，与候选的 CSRF/状态变更 GET 标签不是同一明确根因。源码确有 492 行 @csrf_exempt、499/505 行 GET 更新及 501/507 行 set_cookie，但该 Otp 视图未显示受登录保护的用户会话，状态为全局 OTP/email cookie，无法由给定源码确认受保护受害者的 CSRF 影响，故候选 CSRF 问题不支持。",
+        "reason_short": "报告未识别CSRF；@csrf_exempt和GET更新存在但无认证会话CSRF影响。"
+      },
+      {
+        "finding_id": "finding-028",
+        "gt_id": "pygoat-024",
+        "relation": "different",
+        "support": "unsupported",
+        "reason": "候选 pygoat-024 的核心依据是 introduction/mitre.py:177 的 @csrf_exempt 作用在 csrf_transfer_monei 上，并称该函数是资金转账端点；但源码中该函数仅在 178-187 读取余额并渲染 dashboard，不执行转账/扣款/保存。真正修改余额的是 csrf_transfer_monei_api（191-207），该函数并未标注 @csrf_exempt。模型报告也未把 @csrf_exempt 作为根因，而是强调 GET 状态变更和缺少 CSRF 令牌。因此二者代码路径和根因不同，候选所述“转账端点被 @csrf_exempt 禁用 CSRF 防护”不被给定源码支持。"
+      },
+      {
+        "finding_id": "finding-028",
+        "gt_id": "pygoat-025",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选 pygoat-025 与模型报告一致指向 csrf_transfer_monei_api：191-192 为 GET 入口，193-196 从 auth_cookiee 解码 JWT 取用户，199-207 在 GET 分支直接修改 recipent 和 User 余额并保存；源码片段中未见 CSRF token 或来源校验。模型报告明确描述 GET 修改资金状态且无 CSRF 防护，与候选的根因和代码路径一致，且由源码支持。"
+      },
+      {
+        "finding_id": "finding-031",
+        "gt_id": "pygoat-045",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指出 all_users_data_view 缺失认证/授权，匿名可访问，并返回全部用户的信用卡、SSN 和 API key；源码 112-132 行该视图没有 @login_required 或权限检查，120-126 行遍历 UserData.objects.all() 并明文返回敏感字段，113-117 行注释也确认任意未认证用户可看全部数据。根因和代码路径与候选标签一致。"
+      },
+      {
+        "finding_id": "finding-031",
+        "gt_id": "pygoat-046",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选描述的是 api_data_view（87-109 行）在已认证用户请求下返回其自身敏感字段且未脱敏；源码 86 行有 @login_required，91 行按 request.user 查询，101-109 行返回信用卡、SSN、API key 明文。该问题与 finding 的 all_users_data_view 缺失认证导致全量用户数据泄露属于不同函数、不同根因和不同代码路径，故为 different；其自身描述可由源码支持。"
+      },
+      {
+        "finding_id": "finding-032",
+        "gt_id": "pygoat-057",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选报告与 finding 指向同一根因和同一代码路径：generate_api_key 在第 38-42 行使用 random.choices 生成 16 位 API key；第 9 行导入 random，第 58 行将该结果写入 UserData.api_key。源码直接支持“使用非密码学随机数生成凭据”的问题，不需要额外动态证明。"
+      },
+      {
+        "finding_id": "finding-032",
+        "gt_id": "pygoat-066",
+        "relation": "different",
+        "support": "insufficient",
+        "reason": "候选报告关注 login_view 第 20-36 行缺少登录速率限制/账户锁定，与 finding 的弱随机 API key 根因及 generate_api_key 代码路径不同。给定源码仅显示该视图内没有限流逻辑，但无法排除未展示的 Django 中间件、URL 装饰器或配置提供限流/锁定，因此独立核验条件不足。"
+      },
+      {
+        "finding_id": "finding-033",
+        "gt_id": "pygoat-033",
+        "relation": "same",
+        "support": "supported",
+        "reason": "第286-287行将POST中的pass原样赋给passwd并直接传入authLogin.objects.create(password=passwd)；第315行登录时又以明文passwd进行filter比对。展示的代码路径中没有哈希或加盐转换，故与候选描述的明文口令存储属于同一根因、同一代码路径，源码支持该判断。"
+      },
+      {
+        "finding_id": "finding-034",
+        "gt_id": "pygoat-030",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 crypto_failure_lab 在 introduction/views.py:1026 使用单次无盐 MD5 存储/校验口令；源码第1026行确为 password = md5(password.encode()).hexdigest()，随后第1027行用该摘要查询 CF_user.password，与候选描述的弱口令哈希根因和代码路径一致。"
+      },
+      {
+        "finding_id": "finding-035",
+        "gt_id": "pygoat-012",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选标签描述的是基于客户端 Cookie 的越权访问：源码第758行 `if request.COOKIES.get('admin') == \"1\"` 根据用户可控 Cookie 直接返回管理员秘密（763行 \"0NLY_F0R_4DM1N5\"、764行 username=admin），该问题由源码支持。但模型报告（message）仅陈述硬编码凭据（'jack'/'jacktheripper' 等）用于口令比对，未提及 Cookie 信任、伪造 admin Cookie 或越权访问路径，二者根因不同（硬编码凭据 vs 客户端可控授权状态），故不构成同一问题。"
+      },
+      {
+        "finding_id": "finding-035",
+        "gt_id": "pygoat-050",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指出源码中硬编码口令 'jack'/'jacktheripper' 用于认证判定，并定位到 views.py:766；源码第766行 `elif (name=='jack' and password=='jacktheripper')` 正是以硬编码常量比对 POST 提交的 name/password（753-754行取值），随后据此返回该用户视图并设置 Cookie，与标签描述一致。报告中额外声称的 806 行、'John'/'reaper'、admin/admin_pass、注释口令及 playground/A9/api.py 等内容不在给定摘录内、缺乏证据，但不影响对本候选（jack/jacktheripper）的命中判定。"
+      },
+      {
+        "finding_id": "finding-036",
+        "gt_id": "pygoat-068",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均明确指出 a10_lab2 中来自 POST 的 user 和来自 X-Forwarded-For 的 ip 未经换行/分隔符规范化即写入 logging.warning/info/error，导致日志注入/伪造。源码第657行取得 user，第659-664行取得 ip，第668-672行用 f-string 拼接入日志，静态证据支持该根因与代码路径。报告额外提及第642行 DEBUG 日志配置，属附加问题，不影响本候选同一安全问题判定。"
+      },
+      {
+        "finding_id": "finding-037",
+        "gt_id": "pygoat-fp-004",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选描述的是 introduction/views.py:628 的 a10_lab ORM 查询并非 SQL 注入；该行确实使用 login.objects.filter(user=user,password=password)，未使用 raw SQL，因此该“非漏洞”判断有源码依据。但它与 finding 中 debug() 在第 636-639 行暴露日志文件的根因和代码路径不同。"
+      },
+      {
+        "finding_id": "finding-037",
+        "gt_id": "pygoat-071",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "候选与 finding 均指向 debug() 视图在第 636-639 行通过 render('Lab/A10/debug.log') 并以 text/plain 返回日志文件，根因一致；该函数本身也未见认证装饰器或权限检查。但源码摘录未包含 urls.py:53，无法确认 /debug 对匿名用户可达；也未展示 debug.log 内容，无法核验其中含凭据和 admin 记录。需补充 URL 配置与日志文件内容才能完整支持。"
+      },
+      {
+        "finding_id": "finding-038",
+        "gt_id": "pygoat-032",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述与报告均指向 auth_lab_login 的 GET 分支：views.py:302 直接以 request.COOKIES['userid'] 查询 authLogin，views.py:303-305 命中后即渲染登录成功并重设同一 userid cookie，未校验会话签名、密码或其他认证状态。因此篡改/枚举 cookie 中的 userid 可登录对应用户账号，与候选的 IDOR via userid cookie 根因和代码路径一致。摘录未展示模型定义，但直接信任客户端 userid 的核心缺陷已由 302-305 行源码支持。"
+      },
+      {
+        "finding_id": "finding-039",
+        "gt_id": "pygoat-068",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告描述的是 introduction/views.py:679-681 的 gentckt 使用 random.choices 生成可预测工单码，根因是弱随机数；候选 pygoat-068 描述的是 668/669/672 行将 POST 的 user 和 X-Forwarded-For 的 ip 直接拼入 logging 调用，未过滤换行，导致日志注入/伪造。二者代码路径和根因不同。源码 668、669、672 行确实直接记录用户可控输入且未清洗，支持候选所述日志注入问题。"
+      },
+      {
+        "finding_id": "finding-041",
+        "gt_id": "pygoat-047",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出第8行 SECRET_KEY 为硬编码占位值 'django-insecure-key-for-demonstration-only'，与候选描述的硬编码/可猜测 Django SECRET_KEY 是同一根因；源码第8行直接支持。"
+      },
+      {
+        "finding_id": "finding-041",
+        "gt_id": "pygoat-048",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确写到 DEBUG=True，并说明错误页会泄露源码与配置，与候选描述第11行开启调试模式导致详细错误页暴露是同一问题；源码第11行直接支持。"
+      },
+      {
+        "finding_id": "finding-041",
+        "gt_id": "pygoat-049",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确写到 ALLOWED_HOSTS=['*']，并指出任意 Host 头可命中站点，构成缓存污染/密码重置链接投毒先决条件，与候选描述的过度宽松 ALLOWED_HOSTS 及 Host 头攻击是同一根因；源码第13行直接支持。"
+      }
+    ],
+    "duplicate_label_reports": {},
+    "checks": {
+      "check_1_file_exists_and_matches": 41,
+      "check_2_reported_start_within_10_lines": 40,
+      "check_3_at_least_one_source_line_in_quote": 37,
+      "all_three": 36
+    },
+    "jobs": 36,
+    "completed": 36
+  },
+  "minimax-m3.1-flash/A": {
+    "reports": 47,
+    "evidence_valid": 43,
+    "confirmed_reports": 36,
+    "covered_labels": 37,
+    "positive_labels": 78,
+    "reference_precision": 0.7659574468085106,
+    "recall": 0.47435897435897434,
+    "f1": 0.5858808005278205,
+    "pending_pairs": 9,
+    "negative_label_matches": [],
+    "accepted_pairs": [
+      [
+        "finding-001",
+        "pygoat-001"
+      ],
+      [
+        "finding-002",
+        "pygoat-002"
+      ],
+      [
+        "finding-003",
+        "pygoat-008"
+      ],
+      [
+        "finding-004",
+        "pygoat-009"
+      ],
+      [
+        "finding-005",
+        "pygoat-026"
+      ],
+      [
+        "finding-006",
+        "pygoat-027"
+      ],
+      [
+        "finding-006",
+        "pygoat-053"
+      ],
+      [
+        "finding-007",
+        "pygoat-006"
+      ],
+      [
+        "finding-008",
+        "pygoat-018"
+      ],
+      [
+        "finding-009",
+        "pygoat-038"
+      ],
+      [
+        "finding-010",
+        "pygoat-015"
+      ],
+      [
+        "finding-011",
+        "pygoat-016"
+      ],
+      [
+        "finding-012",
+        "pygoat-019"
+      ],
+      [
+        "finding-015",
+        "pygoat-036"
+      ],
+      [
+        "finding-017",
+        "pygoat-007"
+      ],
+      [
+        "finding-018",
+        "pygoat-011"
+      ],
+      [
+        "finding-019",
+        "pygoat-012"
+      ],
+      [
+        "finding-020",
+        "pygoat-013"
+      ],
+      [
+        "finding-023",
+        "pygoat-055"
+      ],
+      [
+        "finding-024",
+        "pygoat-062"
+      ],
+      [
+        "finding-026",
+        "pygoat-028"
+      ],
+      [
+        "finding-027",
+        "pygoat-031"
+      ],
+      [
+        "finding-028",
+        "pygoat-030"
+      ],
+      [
+        "finding-030",
+        "pygoat-029"
+      ],
+      [
+        "finding-031",
+        "pygoat-033"
+      ],
+      [
+        "finding-033",
+        "pygoat-021"
+      ],
+      [
+        "finding-034",
+        "pygoat-020"
+      ],
+      [
+        "finding-035",
+        "pygoat-010"
+      ],
+      [
+        "finding-036",
+        "pygoat-010"
+      ],
+      [
+        "finding-037",
+        "pygoat-025"
+      ],
+      [
+        "finding-039",
+        "pygoat-045"
+      ],
+      [
+        "finding-040",
+        "pygoat-046"
+      ],
+      [
+        "finding-042",
+        "pygoat-044"
+      ],
+      [
+        "finding-042",
+        "pygoat-056"
+      ],
+      [
+        "finding-043",
+        "pygoat-039"
+      ],
+      [
+        "finding-044",
+        "pygoat-043"
+      ],
+      [
+        "finding-045",
+        "pygoat-059"
+      ],
+      [
+        "finding-046",
+        "pygoat-034"
+      ]
+    ],
+    "covered_ids": [
+      "pygoat-001",
+      "pygoat-002",
+      "pygoat-006",
+      "pygoat-007",
+      "pygoat-008",
+      "pygoat-009",
+      "pygoat-010",
+      "pygoat-011",
+      "pygoat-012",
+      "pygoat-013",
+      "pygoat-015",
+      "pygoat-016",
+      "pygoat-018",
+      "pygoat-019",
+      "pygoat-020",
+      "pygoat-021",
+      "pygoat-025",
+      "pygoat-026",
+      "pygoat-027",
+      "pygoat-028",
+      "pygoat-029",
+      "pygoat-030",
+      "pygoat-031",
+      "pygoat-033",
+      "pygoat-034",
+      "pygoat-036",
+      "pygoat-038",
+      "pygoat-039",
+      "pygoat-043",
+      "pygoat-044",
+      "pygoat-045",
+      "pygoat-046",
+      "pygoat-053",
+      "pygoat-055",
+      "pygoat-056",
+      "pygoat-059",
+      "pygoat-062"
+    ],
+    "assessments": [
+      {
+        "finding_id": "finding-001",
+        "gt_id": "pygoat-001",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指出 introduction/views.py 第158行将 request.POST 的 name/password 直接字符串拼接进原生 SQL，并在第162行通过 login.objects.raw(sql_query) 执行，导致SQL注入；这与候选描述同一根因和同一代码路径（158-162行），源码可直接支持。"
+      },
+      {
+        "finding_id": "finding-001",
+        "gt_id": "pygoat-fp-001",
+        "relation": "different",
+        "support": "supported",
+        "reason": "该候选描述的是第156行 login.objects.filter(user=name) 为安全的ORM参数化查询、不是漏洞点，属于对安全存在性检查的否定性说明；模型报告并未将第156行作为SQL注入根因，而是指向第158-162行的原生SQL拼接与raw执行，因此不是同一安全问题。源码第156行确有filter(user=name)，可支持该候选的安全路径陈述。"
+      },
+      {
+        "finding_id": "finding-002",
+        "gt_id": "pygoat-002",
+        "relation": "same",
+        "support": "supported",
+        "reason": "The candidate and the model report identify the same root cause on the same code path: untrusted request.POST values 'name'/'pass' (lines 858-859) are concatenated into a raw SQL string at line 864 and executed via sql_lab_table.objects.raw(sql_query) at line 878. The source directly supports this; the additional observation that sql_query is echoed in 'sql_error' (lines 883-889) only corroborates exploitability. No unshown configuration is needed."
+      },
+      {
+        "finding_id": "finding-002",
+        "gt_id": "pygoat-fp-024",
+        "relation": "different",
+        "support": "insufficient",
+        "reason": "The model report describes SQL injection at line 864/878 only; it never mentions CSRF or the repeated sql_lab_table.save() seeding at lines 866-873, so it does not address this candidate's root cause. Independently, the @csrf_exempt decorator at line 854 and the POST handling are visible, but whether that yields an exploitable CSRF issue depends on unshown session-cookie/CSRF configuration (e.g., SameSite setting, auth mechanism), and the repeated record creation is a side effect rather than a demonstrated vulnerability; the description itself is truncated. Hence the alleged issue cannot be confirmed from the excerpt."
+      },
+      {
+        "finding_id": "finding-003",
+        "gt_id": "pygoat-008",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与标签一致：源码 introduction/views.py:418 从 request.POST 取 domain，420 只做协议前缀剥离，424/426 用 .format() 拼入 'nslookup {}'/'dig {}'，430-432 以 subprocess.Popen(command, shell=True) 执行。标签指出的同一根因（未净化输入进入 shell 命令）与同一代码路径（cmd_lab 的 domain 处理到 Popen）完全对应；源码证据足以支持 shell 元字符（; && $()）导致的任意命令执行。"
+      },
+      {
+        "finding_id": "finding-003",
+        "gt_id": "pygoat-fp-020",
+        "relation": "different",
+        "support": "insufficient",
+        "reason": "该候选报告的根因是 CSRF（414 行 @csrf_exempt + 415/417 处理 POST），而 finding 只描述 OS 命令注入（418-434 的 domain 拼接与 shell=True），两者根因和安全类别不同，报告未以独立问题形式表达 CSRF 结论。源码中 @csrf_exempt 确实存在于 414 行、模板 9 行以 POST 提交，但仅凭'豁免 CSRF + POST 执行命令'不足以证明可被利用的 CSRF 影响（执行命令不是持久化状态变更），且缺少调用链/浏览器凭证条件，故 support 标为 insufficient。"
+      },
+      {
+        "finding_id": "finding-004",
+        "gt_id": "pygoat-009",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Line 456 reads request.POST.get('val'); line 460 passes it directly to eval(val) inside cmd_lab2, and the result is rendered at line 465. The model's message explicitly identifies unvalidated 'val' flowing into eval() as arbitrary code execution. Same root cause, same code path, source-confirmed (authentication gate at line 454 does not prevent the authenticated-user RCE)."
+      },
+      {
+        "finding_id": "finding-004",
+        "gt_id": "pygoat-fp-021",
+        "relation": "different",
+        "support": "insufficient",
+        "reason": "The candidate labels the root cause as CSRF tied to @csrf_exempt (line 452) on a POST endpoint. The model report never identifies CSRF/cross-site request forgery; it only cites @csrf_exempt as an incidental precondition (in its preconditions field) and frames the vulnerability solely as eval()-based code injection at line 460. Thus the report does not describe the labeled CSRF root cause. Independently, the source shows @csrf_exempt (452) and a state-changing POST (455-460), but no evidence about session cookie attributes, SameSite, or any cross-site request chain is provided, so a CSRF claim beyond the eval RCE cannot be confirmed from the shown source."
+      },
+      {
+        "finding_id": "finding-005",
+        "gt_id": "pygoat-025",
+        "relation": "different",
+        "support": "supported",
+        "reason": "The report describes eval() RCE in mitre_lab_25_api at lines 215-219, while the candidate concerns GET-based state-changing money transfer/CSRF in csrf_transfer_monei_api at lines 191-208. Different root cause and code path. The candidate itself is source-supported: lines 191-208 show a balance transfer occurring under GET without CSRF token logic."
+      },
+      {
+        "finding_id": "finding-005",
+        "gt_id": "pygoat-026",
+        "relation": "same",
+        "support": "supported",
+        "reason": "The report explicitly identifies eval() of the POST 'expression' parameter at introduction/mitre.py:218 in mitre_lab_25_api, matching the candidate. Source lines 213-219 show the commented-out authentication decorator, @csrf_exempt, request.POST.get('expression'), and direct eval(expression), supporting arbitrary code execution via unsanitized user input."
+      },
+      {
+        "finding_id": "finding-006",
+        "gt_id": "pygoat-027",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Candidate pygoat-027 identifies the same OS command injection at introduction/mitre.py:241-242: POST 'ip' is concatenated into 'nmap ' + ip and passed to command_out(), whose line 233 uses subprocess.Popen(..., shell=True). The source confirms the unsanitized flow and the exposed API view (lines 237-242)."
+      },
+      {
+        "finding_id": "finding-006",
+        "gt_id": "pygoat-053",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Candidate pygoat-053 points to the same sink at line 233: subprocess.Popen(command, shell=True), called from mitre_lab_17_api with user-controlled input. The model report explicitly ties this sink to the POST 'ip' concatenation at line 241 and call at line 242, so the root cause and code path are the same and source-supported."
+      },
+      {
+        "finding_id": "finding-007",
+        "gt_id": "pygoat-006",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Lines 208-214 show the request cookie 'token' is read, base64-decoded at line 213, and passed directly to pickle.loads(token) at line 214. The candidate identifies the same insecure deserialization root cause and code path on user-controlled cookie data, with arbitrary code execution via pickle. Line 206 confirms authentication is required, which the finding also states."
+      },
+      {
+        "finding_id": "finding-008",
+        "gt_id": "pygoat-018",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Candidate explicitly identifies unsafe YAML deserialization via yaml.load(file, yaml.Loader) at introduction/views.py:560, matching the finding's root cause and code path: uploaded request.FILES['file'] is parsed with the unsafe Loader and rendered at line 562. The excerpt confirms the vulnerable sink at line 560 and the upload flow at line 558; the authenticated/@csrf_exempt conditions are also consistent with lines 550-552. The only deployment-dependent detail is whether the PyYAML version permits gadget exploitation, which the finding correctly labels as deployment-dependent rather than certain from the excerpt."
+      },
+      {
+        "finding_id": "finding-009",
+        "gt_id": "pygoat-038",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Candidate describes the POST form 'serialized_data' being base64-decoded and passed to pickle.loads at dockerized_labs/insec_des_lab/main.py:36. Source shows /deserialize at lines 30-36, request.form.get at line 33, base64.b64decode at line 34, and pickle.loads(decoded_data) at line 36, matching the reported insecure deserialization root cause and code path. The arbitrary-code-execution implication follows from pickle.loads being applied to user-controlled data."
+      },
+      {
+        "finding_id": "finding-010",
+        "gt_id": "pygoat-015",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告与候选均指出 introduction/views.py 中同一根因：第923行读取 POST 参数 'blog'，第926行用 os.path.join 拼接应用目录，第927行直接 open 打开且未做规范化或目录限制，第928-929行将文件内容回显。该路径构成路径遍历/任意文件读取，候选描述与源码证据一致；第919行认证要求也被模型正确说明。"
+      },
+      {
+        "finding_id": "finding-011",
+        "gt_id": "pygoat-016",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码 960-964 行显示：POST 分支从 request.POST['url'] 读取用户输入（961 行），未经任何 scheme/host/私网地址校验直接传入 requests.get(url)（963 行），并把 response.content 回显到模板（964 行），与候选描述完全对应同一根因与同一代码路径。955 行的 @authentication_decorator 支持其“需登录会话”前提；内网可达性与元数据端点可达性属部署条件，报告已注明为部署依赖，未构成错误前提。"
+      },
+      {
+        "finding_id": "finding-012",
+        "gt_id": "pygoat-019",
+        "relation": "same",
+        "support": "supported",
+        "reason": "The candidate matches the reported root cause and code path: request.POST.get(\"function\") at introduction/views.py:583 is passed directly to ImageMath.eval at line 588 within a9_lab2. This is the same user-controlled expression-evaluation sink described by the finding. The view is @csrf_exempt at line 573 and requires authentication at line 575, consistent with the stated preconditions. Whether arbitrary code execution is possible depends on the Pillow version, but the unsafe eval-style data flow is directly shown in the source."
+      },
+      {
+        "finding_id": "finding-013",
+        "gt_id": "pygoat-017",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "报告与候选均指向 ssti_lab 中 request.POST['blog'] 经 filter_blog 后拼入模板并写入文件、再由 ssti_view_blog 渲染的同一 SSTI 路径（views.py:981-996,1003-1006）。但给定源码未展示 introduction/utility.py 的 filter_blog 实现，无法核验其确实为恒等/不做转义；缺少该关键实现，不能确认可注入 Django 模板标签，故支持不足。"
+      },
+      {
+        "finding_id": "finding-014",
+        "gt_id": "pygoat-035",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "模型报告与候选均指向 introduction/apis.py 的 log_function_checker：第64-65行读取 POST 参数 log_code/api_code，第67-74行将其写入 playground/A9/main.py 和 api.py；第59-60行支持 csrf_exempt 且认证装饰器被注释，因此“未认证任意写入应用源文件”的核心根因有源码依据。但候选和报告所称这些文件随后被 introduction/urls.py 导入并在重载/重启时执行，所给源码片段未展示导入关系、路由或重载配置，无法独立确认代码执行链；按指示需要未展示的调用链/配置时应标为 insufficient。"
+      },
+      {
+        "finding_id": "finding-015",
+        "gt_id": "pygoat-036",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Finding and candidate both identify the same sink and code path: introduction/apis.py:130 reads request.POST['code'], lines 131-133 build the fixed playground/A6/utility.py path and open it for writing, and line 134 writes the user-controlled value verbatim. The candidate's 'arbitrary file write' is the same root cause as the finding's 'arbitrary Python source injection'; the finding also notes the module is imported at lines 117/other import, but that only explains execution impact. The source excerpt supports the write without sanitization at lines 130-135. The unauthenticated/CSRF-free claim is not fully proven by URL configuration, but it is not necessary for the candidate's arbitrary-file-write finding."
+      },
+      {
+        "finding_id": "finding-016",
+        "gt_id": "pygoat-037",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "候选与模型报告指向同一问题：introduction/utility.py:33-37 将 code 变换后的 output_Code 写入固定路径 playground/ssrf/main.py，模型也描述该路径随后被导入执行。但给定源码摘录只包含 utility.py，未展示 introduction/apis.py:32 的 request.POST 到 ssrf_code_converter 调用、apis.py:38 的 main.ssrf_lab 调用或模块导入/重载配置，因此无法独立验证用户可控输入到达该写文件点以及文件被应用执行。写文件本身由 33-37 行支持，但完整攻击链/执行前提缺失，标为 insufficient。"
+      },
+      {
+        "finding_id": "finding-017",
+        "gt_id": "pygoat-007",
+        "relation": "same",
+        "support": "supported",
+        "reason": "The candidate identifies exactly the same root cause and code path as the report: at introduction/views.py:258 a parser is created, at line 259 external general entities are explicitly enabled via parser.setFeature(feature_external_ges, True), and at line 260 the user-controlled request body is parsed with parseString(..., parser=parser). The source excerpt directly confirms these lines inside xxe_parse, and the model report's data flow from request.body through entity expansion (line 263) to storage (line 268) and rendering (xxe_see at line 250) matches the reported XXE issue. The candidate's description of file-read/SSRF via external entity resolution is consistent with the enabled feature; no contradictory source evidence is present."
+      },
+      {
+        "finding_id": "finding-018",
+        "gt_id": "pygoat-011",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Line 347 uses request.COOKIES.get('admin') == \"1\" as the authorization decision, and lines 348-354 return the admin secret. The candidate describes exactly this client-side cookie admin bypass, so it matches the same root cause and code path and is supported by the source."
+      },
+      {
+        "finding_id": "finding-018",
+        "gt_id": "pygoat-fp-019",
+        "relation": "different",
+        "support": "unsupported",
+        "reason": "The candidate describes a CSRF issue based on @csrf_exempt at line 341 and set_cookie at line 363, whereas the finding is broken access control via client-controlled admin cookie at line 347. The source shows @csrf_exempt, but admin=1 is set only after admin credential validation at lines 355-364; no provided source evidence shows CSRF can change privileges without credentials. Thus this is a different root cause and the claimed CSRF vulnerability is not supported."
+      },
+      {
+        "finding_id": "finding-019",
+        "gt_id": "pygoat-012",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告定位 introduction/views.py:758 的 `request.COOKIES.get('admin') == \"1\"`，并说明该 cookie 为唯一授权判定、可被客户端伪造，从而在第 759-765 行渲染 `0NLY_F0R_4DM1N5` 管理员秘密。这与候选项描述的客户端 cookie 越权、可伪造 admin cookie 完全一致（同根因、同代码路径）。源码 748-751 行仅要求已认证用户，不影响\"仅凭 cookie 判权\"成立；无需额外未展示配置。"
+      },
+      {
+        "finding_id": "finding-019",
+        "gt_id": "pygoat-050",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选指第 766 行 `name=='jack' and password=='jacktheripper'` 的硬编码凭据问题，该问题在源码中确实存在。但模型报告（finding.message 及 data_flow）只描述 758 行 COOKIES['admin'] 客户端判权与 763 行秘密泄露，未提及硬编码口令或其作为独立根因，二者根因与代码路径不同，故不构成同一问题命中。"
+      },
+      {
+        "finding_id": "finding-020",
+        "gt_id": "pygoat-013",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述的是 broken access control，认证判定基于可伪造的 User-Agent：当 `user_agent == 'pygoat_admin'` 时就授予管理员权限。模型报告给出的是同一根因（可伪造的客户端请求头被当作授权判定），同一代码路径（`introduction/views.py`，`request.META['HTTP_USER_AGENT']` 于第 791 行读取，比较于第 797 行），且同一后果（第 798-805 行渲染管理员机密，其中包含 `data`、`username: admin`、`status: admin`）。源码确认先在第 784-787 行通过 `request.user.is_authenticated` 进行校验，因此任何已登录用户只要设置该请求头，就能到达管理员分支。模型定位在第 791 行，而候选范围标注为第 797-805 行，两者只是调用点或读取点与比较点的位置差异，属于合理差异，不影响同一性问题。"
+      },
+      {
+        "finding_id": "finding-021",
+        "gt_id": "pygoat-003",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "报告与候选均指向 xss_lab.html:27 的 {{query|safe}} 反射型 XSS，根因和代码位置一致；模板第 12-14 行有 GET 参数 q 的表单，第 26-27 行有 query 分支。但给定源码片段未包含 introduction/views.py:95-101，无法独立确认 q 被赋值给 query 并进入 |safe 上下文，缺少未展示的视图调用链，故支撑不足。"
+      },
+      {
+        "finding_id": "finding-021",
+        "gt_id": "pygoat-fp-002",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选 2 讨论第 23-25 行 company/ceo/about 未使用 |safe，属非漏洞判断；报告只描述第 27 行 query|safe，未提及该路径或根因。源码第 23-25 行确实无 |safe，Django 默认自动转义支持该负向判断，但报告与候选不对应，故为不同。"
+      },
+      {
+        "finding_id": "finding-022",
+        "gt_id": "pygoat-004",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "Candidate matches the finding's described root cause and code path: xss_lab_2.html:20 renders {{ username|safe }}, and lines 8-12 show a POST form with a 'username' field. However, the provided source excerpt does not include introduction/views.py:109-118, so the claimed POST-to-context flow and the <script>-tag blacklist bypass cannot be independently verified. Therefore the template evidence is insufficient to confirm the full reflected-XSS mechanism without the view implementation."
+      },
+      {
+        "finding_id": "finding-023",
+        "gt_id": "pygoat-055",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均指向 lab2.html:11 的 {{username | safe}} 关闭转义导致反射型 XSS；源码片段显示第 16-17 行表单以 GET 提交 name='username'，第 11 行直接将 username 以 |safe 输出，支持用户可控参数进入危险 sink。两者根因和代码位置一致。"
+      },
+      {
+        "finding_id": "finding-024",
+        "gt_id": "pygoat-062",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选与报告均指向同一根因和同一代码路径：ssrf_lab2.html:23 使用 {{response | safe}} 未转义渲染内容。模板内嵌视图代码第38-41行显示 request.POST['url'] 经 requests.get 获取后作为 response 传入模板，与候选描述的 SSRF 响应内容导致 XSS 一致。"
+      },
+      {
+        "finding_id": "finding-025",
+        "gt_id": "pygoat-023",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "Line 171 indeed defines SECRET_COOKIE_KEY = \"PYGOAT\" as a hard-coded literal, matching the model's stated root cause and location. However, the candidate's specific claim that it is used for signing JWT tokens in sec_misconfig_lab3 is not verifiable from the provided excerpts: introduction/views.py and the jwt.encode/jwt.decode calls at lines 1095/1107 are absent from the shown source. Thus the hardcoded constant is confirmed, but its JWT signing usage/code path is insufficiently supported."
+      },
+      {
+        "finding_id": "finding-026",
+        "gt_id": "pygoat-024",
+        "relation": "different",
+        "support": "supported",
+        "reason": "该候选的根因是 CSRF 防护缺失：第177行 @csrf_exempt 关闭 Django CSRF 校验，配合第191-207行 GET 方式转账接口可被跨站伪造。模型报告（finding.message/data_flow）只描述硬编码 JWT 密钥 'csrf_vulneribility'（第169/182/194行）导致令牌伪造，未提及 @csrf_exempt 或跨站请求伪造路径，根因与代码路径均不同。候选所述问题本身由源码第177、191-207行支持。"
+      },
+      {
+        "finding_id": "finding-026",
+        "gt_id": "pygoat-028",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指出第169行 jwt.encode(payload, 'csrf_vulneribility', algorithm='HS256') 使用硬编码常量密钥，并在 data_flow 中写出该密钥同时用于第182、194行的 jwt.decode，攻击者可伪造 auth_cookiee 令牌；这与候选 pygoat-028 所述“硬编码 JWT 密钥”为同一根因、同一代码位置。源码第169行直接可见该字面量密钥，supported。"
+      },
+      {
+        "finding_id": "finding-026",
+        "gt_id": "pygoat-029",
+        "relation": "different",
+        "support": "supported",
+        "reason": "该候选根因是第161行 md5(password.encode()).hexdigest() 用 MD5 存储口令，属弱口令哈希问题。模型报告全文仅围绕第169行硬编码 JWT 密钥及令牌伪造，未提及 MD5 或口令存储，根因与路径均不同。候选问题由源码第161行支持。"
+      },
+      {
+        "finding_id": "finding-026",
+        "gt_id": "pygoat-067",
+        "relation": "different",
+        "support": "supported",
+        "reason": "该候选根因为第171行 response.set_cookie('auth_cookiee', cookie) 未设置 HttpOnly，导致 cookie 可被 JavaScript 读取。模型报告只讲硬编码 JWT 密钥可伪造令牌，未提 HttpOnly 缺失或 XSS 窃取 cookie 路径，根因不同。候选所述由源码第171行（无 httponly 参数）支持。"
+      },
+      {
+        "finding_id": "finding-027",
+        "gt_id": "pygoat-031",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Candidate pygoat-031 describes the same plaintext cookie integrity/authorization issue shown at introduction/views.py:1053-1061: the GET handler reads request.COOKIES['cookie'], parses '<username>|<expiry>' at 1055-1056, and grants admin rendering solely when cookie.split('|')[0] == 'admin' at 1060. The source contains no signature, MAC, or server-side binding for this cookie, and the POST handler at 1074-1076 sets the same unsigned format. Although reaching this code also requires request.user.is_authenticated at line 1050, the candidate's stated privilege escalation by modifying the username part to 'admin' is directly supported."
+      },
+      {
+        "finding_id": "finding-028",
+        "gt_id": "pygoat-030",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述与报告均指向 introduction/views.py:1026 的 `md5(password.encode()).hexdigest()`，根因同为使用 MD5 这种已被攻破的快速哈希做密码处理。源码第 1023-1027 行确证：`request.POST['password']` 在 1026 行被 MD5 哈希，并在 1027 行直接与 `CF_user` 的 password 字段比对，证明口令以无盐 MD5 摘要形式参与校验，缺失的仅是未展示的写入端存储代码，不影响该比对路径下弱哈希问题的成立。报告中『rainbow table/identical passwords identical hashes』的后果表述与 MD5 无盐特性一致，不存在夸大或错误前提，故为 same + supported。"
+      },
+      {
+        "finding_id": "finding-030",
+        "gt_id": "pygoat-028",
+        "relation": "different",
+        "support": "supported",
+        "reason": "The report only describes unsalted MD5 password hashing at line 161, not the hardcoded JWT secret at line 169. The candidate issue itself is supported by line 169, where jwt.encode uses 'csrf_vulneribility' as the HS256 secret."
+      },
+      {
+        "finding_id": "finding-030",
+        "gt_id": "pygoat-029",
+        "relation": "same",
+        "support": "supported",
+        "reason": "The report explicitly identifies MD5 password hashing at line 161 and comparison against CSRF_user_tbl.password at line 162. This matches the candidate's weak MD5 password hashing issue and is directly supported by the source."
+      },
+      {
+        "finding_id": "finding-030",
+        "gt_id": "pygoat-067",
+        "relation": "different",
+        "support": "supported",
+        "reason": "The report does not mention the authentication cookie or HttpOnly. The candidate issue is supported by line 171, where response.set_cookie('auth_cookiee', cookie) omits httponly=True, making the JWT cookie accessible to JavaScript by default."
+      },
+      {
+        "finding_id": "finding-031",
+        "gt_id": "pygoat-033",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均指向 introduction/views.py:287 将 request.POST['pass'] 原样传入 authLogin.objects.create(..., password=passwd)，即明文密码存储。源码同段 313-315 行登录逻辑又直接用同一明文密码进行 filter 比较，进一步佐证未经过哈希处理；同一根因和同一代码路径明确。"
+      },
+      {
+        "finding_id": "finding-033",
+        "gt_id": "pygoat-020",
+        "relation": "different",
+        "support": "supported",
+        "reason": "报告聚焦于 settings.py:30 的 DEBUG=True 及其导致的错误页信息泄露；虽然报告提到错误页可能暴露 SECRET_KEY，但没有把 settings.py:25 硬编码 SECRET_KEY 作为独立根因或同一代码路径来报告。源码第25行确实支持候选标签所述的硬编码密钥问题，但与报告所述 DEBUG 问题不同。"
+      },
+      {
+        "finding_id": "finding-033",
+        "gt_id": "pygoat-021",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 pygoat/settings.py:30 的 DEBUG = True，并说明 Django 详细错误页会向客户端泄露堆栈、源码片段、局部变量和设置等信息，与候选标签所述的调试模式暴露问题根因和代码路径一致。源码第30行直接确认 DEBUG=True。"
+      },
+      {
+        "finding_id": "finding-033",
+        "gt_id": "pygoat-022",
+        "relation": "different",
+        "support": "supported",
+        "reason": "报告关注 settings.py:30 的 DEBUG=True 引发的信息泄露，未将 settings.py:27 的 SENSITIVE_DATA = 'FLAGTHATNEEDSTOBEFOUND' 作为独立问题或同一根因报告。源码第27行确认该明文敏感数据存在，但它与调试模式问题属于不同根因和代码路径。"
+      },
+      {
+        "finding_id": "finding-034",
+        "gt_id": "pygoat-020",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出第25行的 SECRET_KEY 是提交到仓库的固定硬编码字面量，并说明其用于签名/session；这与候选 pygoat-020 的根因和代码位置完全一致，源码第25行直接支持该问题。"
+      },
+      {
+        "finding_id": "finding-034",
+        "gt_id": "pygoat-021",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选涉及第30行 DEBUG = True 的调试模式暴露；模型报告仅讨论第25行硬编码 SECRET_KEY，未提及 DEBUG 或调试错误页问题，因此根因不同。源码第30行确实显示 DEBUG = True，但该问题未包含在模型报告中。"
+      },
+      {
+        "finding_id": "finding-034",
+        "gt_id": "pygoat-022",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选涉及第27行 SENSITIVE_DATA = 'FLAGTHATNEEDSTOBEFOUND' 的明文敏感数据；模型报告只描述第25行 SECRET_KEY，未提及 SENSITIVE_DATA，因此根因不同。源码第27行直接支持该硬编码明文值存在。"
+      },
+      {
+        "finding_id": "finding-035",
+        "gt_id": "pygoat-010",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选核心是 Otp 登录中的弱 OTP/无速率限制导致认证绕过；报告在 message 与 preconditions 中明确写出管理员 OTP 为三位数、可在数百次请求内猜中，且端点无速率限制，对应同一 Otp 处理路径（views.py:496 的 randint(100,999)、views.py:514 的校验、views.py:492 的 @csrf_exempt）。源码还支持候选提到的非管理员 OTP 直接回显（views.py:506）。报告额外指出 views.py:514 的 id=2 管理员记录校验不比对 email，这是同一认证绕过路径上的更具体补充根因；候选未提该分支，但不影响其弱 OTP/无速率限制问题与报告核心一致。"
+      },
+      {
+        "finding_id": "finding-036",
+        "gt_id": "pygoat-010",
+        "relation": "same",
+        "support": "supported",
+        "reason": "The report's root cause is a predictable 3-digit OTP and client-side exposure. Source confirms: line 496 `otpN=randint(100,999)` limits the OTP to 900 values; line 506 renders `{\"otp\":otpN}` directly to non-admin clients; lines 512-518 verify the POSTed OTP with no rate limiting or attempt counter, and there is no invalidation after success (line 514 only checks a DB match). The code path and root cause match the finding exactly."
+      },
+      {
+        "finding_id": "finding-036",
+        "gt_id": "pygoat-fp-022",
+        "relation": "different",
+        "support": "supported",
+        "reason": "The candidate describes a separate CSRF/state-changing-GET issue based on `@csrf_exempt` at line 492 and DB updates plus `set_cookie` in the GET branch (lines 499-507). The finding nowhere mentions CSRF exemption or state-changing GET as its root cause; it only addresses OTP predictability/disclosure (lines 496, 506, 514). The candidate's technical claim is supported by the source, but it is a different root cause and different weakness class from the reported finding."
+      },
+      {
+        "finding_id": "finding-037",
+        "gt_id": "pygoat-025",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述与报告核心一致：均指向 csrf_transfer_monei_api 在 GET 请求下执行资金转移且无 CSRF token 校验。源码 191-192 行为 GET 入口，193-194 行从 auth_cookiee 解码身份，204-207 行修改双方余额，函数内未见 CSRF token 验证，因此该 GET 状态变更型 CSRF 问题由源码支持。报告提到的注释装饰器位置在 213 行属于另一函数，但不影响候选所述核心问题成立。"
+      },
+      {
+        "finding_id": "finding-039",
+        "gt_id": "pygoat-045",
+        "relation": "same",
+        "support": "supported",
+        "reason": "The model report and candidate 045 both describe the same function all_users_data_view (lines 112-132) and the same root cause: no authentication/authorization, serializing UserData.objects.all() and returning username, credit_card, ssn, api_key to anyone. Source lines 112-132 confirm no decorator/login check and all-users enumeration; comments at 113-130 confirm intent. Same code path, same root cause."
+      },
+      {
+        "finding_id": "finding-039",
+        "gt_id": "pygoat-046",
+        "relation": "different",
+        "support": "supported",
+        "reason": "Candidate 046 points to api_data_view (lines 86-109), a distinct endpoint and different root cause: it requires @login_required (line 86) and only returns the requesting user's own data (lines 91-106), so the issue is plaintext/no masking rather than missing auth. The model report exclusively discusses missing authentication at all_users_data_view (lines 112-132) and never describes api_data_view. The unmasking issue at lines 101-109 is source-supported, but the model does not report this path/root cause, so relation is different."
+      },
+      {
+        "finding_id": "finding-040",
+        "gt_id": "pygoat-046",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告与候选均指向同一函数 api_data_view（源码第87-109行），且报告明确说明返回 credit_card、ssn、api_key 明文。源码第101-105行组装这些敏感字段，第109行通过 JsonResponse(data) 直接返回，因此敏感数据暴露根因和代码路径一致；候选中的具体 URL 路径未在摘录中展示，但不影响同一视图与同一问题的判定。"
+      },
+      {
+        "finding_id": "finding-042",
+        "gt_id": "pygoat-044",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指出 app.py:91 通过 flash 直接返回 /reset/<token>，攻击者可为已知邮箱请求重置并取得 token；这与 pygoat-044 的“响应中泄露重置 token”是同一代码路径和根因。源码 83-92 行显示匹配邮箱后生成并存储 token，91 行将其放入 flash；97-100 行接受该 token，69 行显示邮箱来自 users。实际改密提交路由未展示，但候选核心的响应泄露已由源码直接支持。"
+      },
+      {
+        "finding_id": "finding-042",
+        "gt_id": "pygoat-056",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告指出 app.py:86 的 token = hashlib.md5(f\"{email}:{datetime.now()}\") 由公开 email 和时间派生、无随机/secret，这与 pygoat-056 的可预测 token 生成一致。源码 86-87 行确认该公式及 token 到 username 的映射；虽然 datetime.now() 实际含微秒（模型“second precision”不精确），但无随机成分且请求时间可缩小枚举范围，可预测性根因成立。"
+      },
+      {
+        "finding_id": "finding-043",
+        "gt_id": "pygoat-039",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出第 8 行 `app.secret_key = 'your-secret-key-here'` 是硬编码的可猜测 Flask 会话签名密钥，并说明可据此伪造会话 cookie；这与候选描述在根因、代码位置和安全影响上一致，且第 8 行源码直接支持。"
+      },
+      {
+        "finding_id": "finding-043",
+        "gt_id": "pygoat-040",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选描述的是第 11-22 行 `admin/admin123`、`user/password123` 明文凭据问题，源码确实支持该问题；但模型报告聚焦第 8 行硬编码 Flask secret key，并未指出这些明文凭据，根因和代码路径不同。"
+      },
+      {
+        "finding_id": "finding-044",
+        "gt_id": "pygoat-043",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均指向同一根因与同一代码点：第123行 `app.run(host='0.0.0.0', port=5000, debug=True)` 在进程入口开启 Flask 调试模式，从而在异常时暴露 Werkzeug 交互式调试控制台，可被网络可达者利用执行任意代码。报告的消息与候选描述在根因（debug=True）、暴露路径（Werkzeug 调试控制台暴露于 0.0.0.0:5000）和后果（RCE）上逐项对应，源码片段第122-123行直接予以支持，无需外部实现即可确认调试模式被开启；至于 PIN 派生等属于部署细节，报告已恰当标注为部署依赖，不影响该静态问题的成立。"
+      },
+      {
+        "finding_id": "finding-045",
+        "gt_id": "pygoat-059",
+        "relation": "same",
+        "support": "supported",
+        "reason": "api.py:14-16 reads the submitted password and interpolates it directly into L.info(...), which is exactly the plaintext-credential logging described by the candidate. The concrete Log.info file sink is not included in the excerpt, but the same root cause—password passed to a logging call in plaintext—is directly supported by line 16; log-file exposure depends on deployment permissions."
+      },
+      {
+        "finding_id": "finding-045",
+        "gt_id": "pygoat-060",
+        "relation": "different",
+        "support": "supported",
+        "reason": "api.py:17 does contain a hardcoded admin/admin authentication check, so the candidate issue is source-supported. However, the model report only describes logging the password at line 16 and does not identify hardcoded credentials or line 17 as a separate root cause; therefore it is a different issue from the reported finding."
+      },
+      {
+        "finding_id": "finding-047",
+        "gt_id": "pygoat-033",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选标签指向 introduction/views.py:287：`authLogin.objects.create(name=name,username=user_name,password=passwd)` 直接将 POST 提交的 `passwd`（第286行）原样写入数据库，没有任何哈希或加密调用，根因是明文口令存储。模型报告则完全围绕第291、305、319行的 `response.set_cookie('userid', ..., secure=False, samesite=None)`，讨论的是身份 cookie 缺少 Secure 属性、可被明文传输/SSL 剥离重放，根因与代码路径（cookie 属性设置与后续 request.COOKIES['userid'] 认证）均与明文口令存储无关，二者不存在同一根因或同一代码路径的重叠。候选问题本身由源码第286–287行直接支持；模型的 cookie 结论虽也由第291行支持，但属于另一个独立问题，不能据此判定候选命中。"
+      },
+      {
+        "finding_id": "finding-046",
+        "gt_id": "pygoat-034",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码 536-538 行显示 secret 视图直接读取客户端可控的 X-Host，并仅当其为 admin.localhost:8000 时返回 S3CR37K3Y；模型报告准确指出该基于请求头的访问控制可被伪造绕过，与候选标签的核心根因和代码路径一致。候选还提到 XHost 回显未净化（540 行），但模型报告未展开该独立问题；不影响其已明确命中的客户端可控头鉴权绕过问题。"
+      }
+    ],
+    "duplicate_label_reports": {
+      "pygoat-010": [
+        "finding-035",
+        "finding-036"
+      ]
+    },
+    "checks": {
+      "check_1_file_exists_and_matches": 46,
+      "check_2_reported_start_within_10_lines": 43,
+      "check_3_at_least_one_source_line_in_quote": 47,
+      "all_three": 43
+    },
+    "jobs": 43,
+    "completed": 43
+  },
+  "minimax-m3.1-flash/B": {
+    "reports": 53,
+    "evidence_valid": 50,
+    "confirmed_reports": 43,
+    "covered_labels": 46,
+    "positive_labels": 78,
+    "reference_precision": 0.8113207547169812,
+    "recall": 0.5897435897435898,
+    "f1": 0.6830110497237568,
+    "pending_pairs": 7,
+    "negative_label_matches": [],
+    "accepted_pairs": [
+      [
+        "finding-001",
+        "pygoat-001"
+      ],
+      [
+        "finding-002",
+        "pygoat-002"
+      ],
+      [
+        "finding-003",
+        "pygoat-008"
+      ],
+      [
+        "finding-004",
+        "pygoat-009"
+      ],
+      [
+        "finding-005",
+        "pygoat-026"
+      ],
+      [
+        "finding-006",
+        "pygoat-027"
+      ],
+      [
+        "finding-006",
+        "pygoat-053"
+      ],
+      [
+        "finding-007",
+        "pygoat-006"
+      ],
+      [
+        "finding-008",
+        "pygoat-038"
+      ],
+      [
+        "finding-009",
+        "pygoat-018"
+      ],
+      [
+        "finding-010",
+        "pygoat-007"
+      ],
+      [
+        "finding-012",
+        "pygoat-015"
+      ],
+      [
+        "finding-013",
+        "pygoat-016"
+      ],
+      [
+        "finding-015",
+        "pygoat-004"
+      ],
+      [
+        "finding-016",
+        "pygoat-005"
+      ],
+      [
+        "finding-017",
+        "pygoat-055"
+      ],
+      [
+        "finding-018",
+        "pygoat-062"
+      ],
+      [
+        "finding-019",
+        "pygoat-011"
+      ],
+      [
+        "finding-020",
+        "pygoat-012"
+      ],
+      [
+        "finding-021",
+        "pygoat-034"
+      ],
+      [
+        "finding-022",
+        "pygoat-013"
+      ],
+      [
+        "finding-024",
+        "pygoat-033"
+      ],
+      [
+        "finding-025",
+        "pygoat-030"
+      ],
+      [
+        "finding-026",
+        "pygoat-029"
+      ],
+      [
+        "finding-028",
+        "pygoat-028"
+      ],
+      [
+        "finding-029",
+        "pygoat-025"
+      ],
+      [
+        "finding-030",
+        "pygoat-023"
+      ],
+      [
+        "finding-031",
+        "pygoat-020"
+      ],
+      [
+        "finding-032",
+        "pygoat-021"
+      ],
+      [
+        "finding-034",
+        "pygoat-010"
+      ],
+      [
+        "finding-035",
+        "pygoat-010"
+      ],
+      [
+        "finding-037",
+        "pygoat-057"
+      ],
+      [
+        "finding-038",
+        "pygoat-045"
+      ],
+      [
+        "finding-039",
+        "pygoat-046"
+      ],
+      [
+        "finding-040",
+        "pygoat-041"
+      ],
+      [
+        "finding-041",
+        "pygoat-039"
+      ],
+      [
+        "finding-042",
+        "pygoat-040"
+      ],
+      [
+        "finding-043",
+        "pygoat-044"
+      ],
+      [
+        "finding-043",
+        "pygoat-056"
+      ],
+      [
+        "finding-045",
+        "pygoat-036"
+      ],
+      [
+        "finding-048",
+        "pygoat-051"
+      ],
+      [
+        "finding-049",
+        "pygoat-014"
+      ],
+      [
+        "finding-051",
+        "pygoat-047"
+      ],
+      [
+        "finding-051",
+        "pygoat-048"
+      ],
+      [
+        "finding-051",
+        "pygoat-049"
+      ],
+      [
+        "finding-052",
+        "pygoat-031"
+      ],
+      [
+        "finding-053",
+        "pygoat-032"
+      ]
+    ],
+    "covered_ids": [
+      "pygoat-001",
+      "pygoat-002",
+      "pygoat-004",
+      "pygoat-005",
+      "pygoat-006",
+      "pygoat-007",
+      "pygoat-008",
+      "pygoat-009",
+      "pygoat-010",
+      "pygoat-011",
+      "pygoat-012",
+      "pygoat-013",
+      "pygoat-014",
+      "pygoat-015",
+      "pygoat-016",
+      "pygoat-018",
+      "pygoat-020",
+      "pygoat-021",
+      "pygoat-023",
+      "pygoat-025",
+      "pygoat-026",
+      "pygoat-027",
+      "pygoat-028",
+      "pygoat-029",
+      "pygoat-030",
+      "pygoat-031",
+      "pygoat-032",
+      "pygoat-033",
+      "pygoat-034",
+      "pygoat-036",
+      "pygoat-038",
+      "pygoat-039",
+      "pygoat-040",
+      "pygoat-041",
+      "pygoat-044",
+      "pygoat-045",
+      "pygoat-046",
+      "pygoat-047",
+      "pygoat-048",
+      "pygoat-049",
+      "pygoat-051",
+      "pygoat-053",
+      "pygoat-055",
+      "pygoat-056",
+      "pygoat-057",
+      "pygoat-062"
+    ],
+    "assessments": [
+      {
+        "finding_id": "finding-001",
+        "gt_id": "pygoat-001",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告定位在 introduction/views.py:158-162，与候选位置一致：第158行用字符串拼接把 request.POST 的 name/password 拼入 SQL 文本，第162行将该文本传给 login.objects.raw(sql_query) 执行；报告的根因（未使用参数化查询、用户输入被插入 SQL 文本）与候选描述完全相同，且源码 150/152 行确认输入来自 POST、148 行确认仅要求已登录。前置条件（已认证、参数可控）在源码中可见，属于同一代码路径的 SQL 注入。"
+      },
+      {
+        "finding_id": "finding-001",
+        "gt_id": "pygoat-fp-001",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选声明第156行 login.objects.filter(user=name) 不构成注入（ORM 参数化），而模型报告并未在任何地方对 156 行作出安全性或漏洞性判断，其报告的安全问题明确落在 158-162 行的 raw 拼接查询上，根因、代码路径均不同，不能视为同一问题。就候选自身的否定性论断而言，源码第156行确实使用 QuerySet.filter() 关键字参数（由 Django ORM 参数化），该“非漏洞”结论有源码/Django 语义依据支持。"
+      },
+      {
+        "finding_id": "finding-002",
+        "gt_id": "pygoat-002",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Lines 858-864 show request.POST['name'] and ['pass'] concatenated directly into sql_query; line 878 passes that string to sql_lab_table.objects.raw(). This exactly matches the candidate's SQL injection description and code path."
+      },
+      {
+        "finding_id": "finding-002",
+        "gt_id": "pygoat-fp-024",
+        "relation": "different",
+        "support": "supported",
+        "reason": "The candidate describes a CSRF/state-changing issue: line 854 has @csrf_exempt, line 856 requires authentication, line 863 checks 'name', and lines 866-873 perform repeated sql_lab_table.save() calls. That is distinct from the SQL injection root cause in lines 864/878 (string concatenation into raw()). The CSRF/missing-protection and write-side-effect claim is supported by the shown code, though it is not the same issue as the finding."
+      },
+      {
+        "finding_id": "finding-003",
+        "gt_id": "pygoat-008",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均指向 introduction/views.py 的 cmd_lab：第418行读取 request.POST['domain']，第420行仅剥离协议/www前缀，第424/426行格式化为 nslookup/dig 命令，第430-432行 subprocess.Popen(..., shell=True) 执行；未中和 ; && $() 等 shell 元字符，构成同一 OS 命令注入根因和代码路径。"
+      },
+      {
+        "finding_id": "finding-003",
+        "gt_id": "pygoat-fp-020",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告只陈述第424-434行 domain 拼接并 shell=True 导致的 OS 命令注入，未提及第414行 @csrf_exempt 或 CSRF token/浏览器伪造 POST 的根因；候选 pygoat-fp-020 的核心是 cmd_lab 的 CSRF 防护缺失（第414-417行 POST），与模型报告不是同一安全问题。源码确实显示 @csrf_exempt 和 POST 命令执行，可支持该候选所述 CSRF 防护缺失，但模型未报告该问题。"
+      },
+      {
+        "finding_id": "finding-004",
+        "gt_id": "pygoat-009",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告指出 introduction/views.py:460 的 cmd_lab2 中，request.POST.get('val')（456行）未经处理直接进入 eval(val)，根因与代码路径与标签完全一致；模板 cmd_lab2.html:9-10 确认 POST 字段名 val 提交到 /cmd_lab2，454 行确认需登录。源码直接支持，无需额外推断。"
+      },
+      {
+        "finding_id": "finding-004",
+        "gt_id": "pygoat-fp-021",
+        "relation": "different",
+        "support": "supported",
+        "reason": "该标签的根因是 452 行 @csrf_exempt 使 cmd_lab2 的 POST 缺少 CSRF 防护（455-456 行为会话认证下的状态变更请求），而模型报告通篇只描述 eval() 代码执行（456/460 行），未提及 csrf_exempt 或跨站请求伪造，两者根因与代码路径不同；虽然 eval 部分为真，但标签所指的 CSRF 问题未被报告表达，故不能合并为同一问题。CSRF 缺失本身有 452 行源码依据。"
+      },
+      {
+        "finding_id": "finding-005",
+        "gt_id": "pygoat-025",
+        "relation": "different",
+        "support": "supported",
+        "reason": "Candidate describes state-changing GET/CSRF in csrf_transfer_monei_api at lines 191-208, where GET requests mutate balances (199-207) using cookie auth (193-195) without visible CSRF token. This is a separate root cause and code path from the eval-based RCE at mitre_lab_25_api lines 215-218."
+      },
+      {
+        "finding_id": "finding-005",
+        "gt_id": "pygoat-026",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Candidate matches the finding: mitre_lab_25_api lines 215-218 has the authentication decorator commented out (line 213), is @csrf_exempt (214), reads POST 'expression' (217), and passes it directly to eval() (218). This supports the reported untrusted-input-to-code-execution issue on the same code path."
+      },
+      {
+        "finding_id": "finding-006",
+        "gt_id": "pygoat-027",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第240-242行：ip = request.POST.get('ip')，随后 command = \"nmap \" + ip，再调用 command_out(command)；第232-233行 command_out 内 subprocess.Popen(command, shell=True)。第237行 @csrf_exempt，无认证装饰器。报告明确描述 POST 'ip' 被拼入 'nmap ' 并由 shell=True 执行，构成 OS 命令注入，根因与代码路径与候选一致。"
+      },
+      {
+        "finding_id": "finding-006",
+        "gt_id": "pygoat-053",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选指向第233行 command_out 的 subprocess.Popen(command, shell=True)。报告明确写出'executed through command_out(), which uses subprocess.Popen(command, shell=True)'，并说明其数据来自第240-241行的 POST 'ip' 拼接，即污染源与 sink 均被点明。虽位置为实现点（sink）而非调用点，但描述明确给出调用来源，属同一根因同一代码路径，源码第233/240-242行支持。"
+      },
+      {
+        "finding_id": "finding-007",
+        "gt_id": "pygoat-006",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述与报告均指向 introduction/views.py:214 的 pickle.loads(token)。源码明确显示：208 行从 request.COOKIES 读取 token，213 行 base64 解码，214 行将结果传入 pickle.loads，215 行检查 admin；cookie 由客户端控制且认证检查不净化该值，因此该反序列化路径的任意代码执行根因成立。"
+      },
+      {
+        "finding_id": "finding-007",
+        "gt_id": "pygoat-fp-003",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选针对 202-203 行，说明 pickle.dumps(TestUser()) 序列化的是模块加载时创建的服务器端默认对象，不是用户输入，因此该处不是漏洞；源码 199-203 行确实支持这一点，实际不安全汇点在 214 行。模型报告只描述 214 行对客户端 cookie 的 pickle.loads 反序列化，没有针对 202-203 行提出同一安全问题，故不构成同一根因/同一代码路径命中。"
+      },
+      {
+        "finding_id": "finding-008",
+        "gt_id": "pygoat-038",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选与报告均指向同一代码路径：第33行从 POST 表单读取 serialized_data，第34行 base64 解码，第36行将结果传入 pickle.loads()。该未经信任的反序列化数据可触发 pickle 任意代码执行，与报告的根因和位置一致。"
+      },
+      {
+        "finding_id": "finding-009",
+        "gt_id": "pygoat-018",
+        "relation": "same",
+        "support": "supported",
+        "reason": "The report and the candidate describe the same root cause on the same code path: line 558 reads request.FILES[\"file\"], and line 560 calls yaml.load(file, yaml.Loader) inside the @csrf_exempt a9_lab view (lines 550-552 require authentication). Since PyYAML's full Loader resolves arbitrary Python objects, it enables code execution through uploaded-YAML gadgets - exactly what the candidate says. The finding's extra detail (PyYAML 5.1) is consistent with line 571 and is not essential; even without it, the use of yaml.Loader supports the vulnerability. No unsupported exaggeration."
+      },
+      {
+        "finding_id": "finding-010",
+        "gt_id": "pygoat-007",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Candidate and report both identify the XXE in xxe_parse at introduction/views.py lines 258-260: make_parser(), parser.setFeature(feature_external_ges, True), and parseString(request.body.decode('utf-8'), parser=parser). Source also shows entity expansion at lines 263-264 and storage/rendering at 268-270, matching the reported file-read/SSRF impact path. The function is @csrf_exempt at line 255 and lacks the login check seen in adjacent views, so the report’s unauthenticated-input premise is source-supported."
+      },
+      {
+        "finding_id": "finding-011",
+        "gt_id": "pygoat-017",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "候选与报告指向同一根因和路径：ssti_lab 中 request.POST['blog'] 经 filter_blog() 后在第990行拼入模板源，第995-996行写入模板文件，ssti_view_blog 第1006行再 render 该文件，支持“用户内容作为模板源”的 SSTI 路径。但关键前提“filter_blog 不做任何过滤/原样返回”未在给定源码中展示，filter_blog 的实现缺失；模板目录运行时是否可写、部署配置是否实际执行注入标签也未确认。因此不能仅凭现有片段确认候选所述完整可利用性。"
+      },
+      {
+        "finding_id": "finding-012",
+        "gt_id": "pygoat-015",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述与报告指向同一根因和代码路径：introduction/views.py 第923行从 request.POST['blog'] 取得用户可控路径，第926行用 os.path.join(dirname, file) 拼接，第927-928行直接 open(filename,'r').read() 并在第929行渲染回响应，全程没有路径包含或规范化校验。../ 或绝对路径可逃逸预期目录，因此路径穿越/任意文件读取由源码支持；实际可读文件范围仍受服务账号权限限制。"
+      },
+      {
+        "finding_id": "finding-013",
+        "gt_id": "pygoat-016",
+        "relation": "same",
+        "support": "supported",
+        "reason": "The report identifies the same SSRF root cause and code path as the candidate: line 961 reads user-controlled request.POST[\"url\"], line 963 passes it directly to requests.get(url) without validation/allowlist, and line 964 returns the fetched response body. The authenticated precondition is also supported by the @authentication_decorator at line 955. Although reachability of internal services depends on deployment, the source directly supports unrestricted server-side outbound requests to attacker-supplied URLs."
+      },
+      {
+        "finding_id": "finding-014",
+        "gt_id": "pygoat-003",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "报告与候选均指向第27行的 {{query|safe}}，根因（关闭自动转义）和模板位置一致。但给定源码仅展示模板；第12-14行虽有 name=q 的 GET 表单，未展示 views.py 中将 request.GET['q'] 赋给 query 并渲染该模板的调用链。因此候选所述的“用户可控 q 直接进入 query”缺少给定源码依据，不能仅凭模板推断。"
+      },
+      {
+        "finding_id": "finding-014",
+        "gt_id": "pygoat-fp-002",
+        "relation": "different",
+        "support": "supported",
+        "reason": "报告讨论第27行 query|safe 的 XSS，而候选讨论第23-25行 company/ceo/about 未使用 |safe 因此受 Django 自动转义保护，二者不是同一根因或代码路径。给定模板第23-25行确实没有 |safe，就输出转义而言支持其“非 XSS”结论；数据库来源未展示但不影响该转义判断。"
+      },
+      {
+        "finding_id": "finding-015",
+        "gt_id": "pygoat-004",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均指向同一反射型 XSS：模板第20行使用 {{ username|safe }} 关闭转义，第8/12行的 POST 表单字段名为 username，构成用户输入到未转义输出的同一代码路径；候选所述仅过滤 <script> 的黑名单可被 <img onerror=...> 等标签绕过，与报告根因一致。视图侧黑名单实现未在模板片段中展示，但第20行的 |safe 输出本身已足以支持该核心 XSS 判断，不依赖术语相似或仅位置相同。"
+      },
+      {
+        "finding_id": "finding-016",
+        "gt_id": "pygoat-005",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选项与报告均指向 xss_lab_3.html 第22行 <script> 内 {{code}} 的 JavaScript 上下文注入：模板第20-23行显示 {{code}} 直接位于 <script> 中，报告的代码证据显示服务端用 re.sub 仅移除字母数字字符，保留 []()!+ 等符号，因此同一根因和代码路径；Django 自动转义不处理这些 JS 符号，JSFuck 风格载荷可执行。"
+      },
+      {
+        "finding_id": "finding-016",
+        "gt_id": "pygoat-fp-005",
+        "relation": "different",
+        "support": "supported",
+        "reason": "该候选项针对第19行 <p>{{code}}</p> 的 HTML 上下文并明确判定此处不脆弱；报告只描述第22行 script 上下文注入，未提出第19行问题。第19行没有 |safe，标准 Django 自动转义会转义 HTML 特殊字符，故该负向判断有源码依据；但它与报告的第22行 script 注入不是同一根因或代码路径。"
+      },
+      {
+        "finding_id": "finding-017",
+        "gt_id": "pygoat-055",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与标签指向同一根因与同一代码路径：模板第11行 `<h1>Hey {{username | safe}},</h1>` 对上下文变量 username 使用 `|safe`，显式关闭 Django 自动转义；第16-17行表单 `method=\"get\"` 且 `name=\"username\"`，使该变量来源为同一页面的 GET 参数，从而构成反射型 XSS。报告的消息（request.GET['username'] → context → |safe → 原样 HTML）与标签描述（|safe 关闭转义、可注入 HTML/JS）一致，位置同为第11行。补充说明：视图函数中 `request.GET[\"username\"]` 的具体赋值未在本轮 source_excerpts 中展示（仅模板1-32行），但模板自身的 GET 表单与 `{% if success %}` 分支已足以支持“用户名经 GET 传入并以 safe 渲染”的判断，故不构成缺失条件；认证前置条件不影响该反射型 XSS 的成立。"
+      },
+      {
+        "finding_id": "finding-018",
+        "gt_id": "pygoat-062",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述与 finding 指向同一根因和同一代码路径：ssrf_lab2.html 第23行使用 {{response | safe}} 输出抓取内容而不转义；源码第38-41行显示 request.POST['url'] 传给 requests.get(url)，并将 response.content.decode() 传入模板。攻击者控制该 URL 的响应即可注入 HTML/JavaScript，构成 XSS。候选明确表达同一问题，源码支持。",
+        "evidence": "第23行 {{response | safe}}；第38-41行 url = request.POST['url'] -> requests.get(url) -> response.content.decode() -> render 模板。"
+      },
+      {
+        "finding_id": "finding-019",
+        "gt_id": "pygoat-011",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Lines 342-354 show ba_lab authorizing via request.COOKIES.get('admin') == '1' and returning the admin secret; line 363 shows the server sets admin=1 after admin credential validation. The candidate describes the same client-controlled-cookie authorization bypass on the same ba_lab path."
+      },
+      {
+        "finding_id": "finding-019",
+        "gt_id": "pygoat-fp-019",
+        "relation": "different",
+        "support": "insufficient",
+        "reason": "The candidate is about CSRF from @csrf_exempt and POST cookie-setting, while the report is about authorization bypass via a client-controlled admin cookie. The source does show @csrf_exempt at line 341 and html.set_cookie('admin','1') at line 363, but the candidate does not establish a meaningful CSRF state change without attacker-supplied credentials, and the stated location/function (line 342, admin) is inconsistent with the described ba_lab view."
+      },
+      {
+        "finding_id": "finding-020",
+        "gt_id": "pygoat-012",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 a1_broken_access_lab_1 在 request.COOKIES.get('admin') == \"1\" 时（第758行）直接返回管理员秘密 0NLY_F0R_4DM1N5（第763行），且未做服务端角色校验；这与候选标签的客户端 cookie 权限绕过根因和代码路径一致，源码也支持该问题。"
+      },
+      {
+        "finding_id": "finding-020",
+        "gt_id": "pygoat-050",
+        "relation": "different",
+        "support": "supported",
+        "reason": "源码第766行确有硬编码凭证 name=='jack' 且 password=='jacktheripper'，但模型报告只描述第758行 admin cookie 绕过并返回第763行秘密数据，未指出硬编码凭证问题；因此不是同一根因或同一代码路径。"
+      },
+      {
+        "finding_id": "finding-021",
+        "gt_id": "pygoat-034",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码 line 535 的 secret 视图没有认证检查，line 536 直接读取客户端可控的 X-Host，line 537-538 只要该头等于 admin.localhost:8000 就返回 secret S3CR37K3Y；模型报告准确指出以客户端头做授权决策并泄露密钥，与候选主问题同根因、同代码路径。候选额外提到 XHost 反射未净化，但模型未将其作为独立问题主张；不影响主问题匹配。"
+      },
+      {
+        "finding_id": "finding-022",
+        "gt_id": "pygoat-013",
+        "relation": "same",
+        "support": "supported",
+        "reason": "The candidate and the finding describe the same root cause and code path in a1_broken_access_lab_2: lines 791 and 797 read request.META['HTTP_USER_AGENT'] and compare it to 'pygoat_admin'; if the name is truthy (line 796), the view then returns the admin secret data '0NLY_F0R_4DM1N5' with username 'admin' and status 'admin' (lines 798-805). The User-Agent is a client-controlled request header; only an authenticated session is required for access (lines 784-787), so any authenticated user can impersonate an administrator by setting the header. The candidate's description, that admin access is granted when user_agent == 'pygoat_admin' and that an attacker can set the header, matches the finding's stated root cause exactly. Source evidence is sufficient; the minor omission of the required non-empty 'name' precondition does not change the identified issue."
+      },
+      {
+        "finding_id": "finding-024",
+        "gt_id": "pygoat-033",
+        "relation": "same",
+        "support": "supported",
+        "reason": "The report explicitly identifies plaintext password storage at introduction/views.py:287, where `authLogin.objects.create(name=name, username=user_name, password=passwd)` writes the raw request.POST['pass'] value directly into the password column without hashing, and notes the matching plaintext equality check at line 315 (`filter(username=user_name, password=passwd)`). This is the same root cause and code path as candidate pygoat-033, which points to the same line/function auth_lab_signup. The source excerpt confirms both the sink at line 287 and the comparison at line 315, so the static evidence is sufficient."
+      },
+      {
+        "finding_id": "finding-025",
+        "gt_id": "pygoat-030",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均指向 introduction/views.py 中 crypto_failure_lab 的同一根因：第1026行使用 md5(password.encode()).hexdigest() 对用户密码做单次快速哈希，并与第1027行 CF_user.password 比较；候选描述的 MD5 弱口令哈希与报告一致，源码摘录直接证明该调用存在，无需额外导入或配置即可确认。"
+      },
+      {
+        "finding_id": "finding-026",
+        "gt_id": "pygoat-028",
+        "relation": "different",
+        "support": "supported",
+        "reason": "Model report is about MD5 password hashing at lines 159-162 and does not mention the JWT signing secret at line 169. Candidate 028 concerns jwt.encode(payload, 'csrf_vulneribility', algorithm='HS256') at line 169, a hardcoded JWT secret, which is a separate root cause and code path. The candidate issue itself is supported by source line 169, with the same literal also used at lines 182 and 194, but it was not reported by the model."
+      },
+      {
+        "finding_id": "finding-026",
+        "gt_id": "pygoat-029",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Model report explicitly identifies unsalted single MD5 password hashing: request password from line 159 is md5-hexdigested at line 161 and compared with CSRF_user_tbl.password at line 162. This matches candidate 029's weak MD5 password storage issue in the same function and code path. Source supports the issue; deployment population is not required for the static weak-hashing finding."
+      },
+      {
+        "finding_id": "finding-028",
+        "gt_id": "pygoat-024",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告的核心根因是 introduction/mitre.py:169 的硬编码 JWT 签名密钥，以及 182/194 使用同一密钥验签；未提到 @csrf_exempt 或 GET 转账 CSRF。源码 177-178 确有 @csrf_exempt，191-207 为 GET 转账逻辑，候选问题由源码支持，但与报告不是同一根因。"
+      },
+      {
+        "finding_id": "finding-028",
+        "gt_id": "pygoat-028",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选 pygoat-028 指向 introduction/mitre.py:169 使用硬编码字面量密钥进行 jwt.encode；模型报告同样指出 169 行硬编码 JWT signing key，并关联 182/194 的 jwt.decode。源码 169 实际写的是 'csrf_vulneribility'，报告转写成 'csrf_vulnerability'，但函数、行号、编码/验签路径和根因一致，故为同一问题且源码支持。"
+      },
+      {
+        "finding_id": "finding-028",
+        "gt_id": "pygoat-029",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告讨论的是 169/182/194 的硬编码 JWT 密钥，未涉及密码哈希。源码 161 确实使用 md5(password.encode()).hexdigest() 做弱密码哈希，候选问题成立，但与报告根因不同。"
+      },
+      {
+        "finding_id": "finding-028",
+        "gt_id": "pygoat-067",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告未指出 auth_cookiee 缺少 HttpOnly；其 set_cookie 只是硬编码 JWT 密钥数据流的一步。源码 171 的 response.set_cookie('auth_cookiee', cookie) 未设置 HttpOnly，候选问题由源码支持，但根因与报告不同。"
+      },
+      {
+        "finding_id": "finding-029",
+        "gt_id": "pygoat-025",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告指出 csrf_transfer_monei_api（第191-208行）在 GET 请求下直接执行转账，且未做 CSRF 校验，第三方页面可诱导已登录受害者的浏览器携带 auth_cookiee 发起 GET /mitre/9/lab/api/<recipient>/<amount> 造成扣款，这与候选标签的根因（GET 改变状态、无 CSRF token 校验导致 CSRF）一致。源码第192行 `if request.method == \"GET\"`、第199-207行修改双方余额可直接佐证；第191行函数确实没有 @authentication_decorator 装饰器（对比第176行），只是内部解码 cookie，故模型“无鉴权”的措辞略有夸大，但不影响 CSRF 根因判定。路由注册未在摘录中展示，但 CSRF 缺陷本身由视图代码即可确认，不依赖该缺失信息。"
+      },
+      {
+        "finding_id": "finding-030",
+        "gt_id": "pygoat-023",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Line 171 shows SECRET_COOKIE_KEY = \"PYGOAT\", a hardcoded short literal cryptographic key. The candidate describes the same weak hardcoded JWT secret used in sec_misconfig_lab3, matching the finding's root cause and location; the finding additionally identifies its JWT verify usage, so the issue is supported by the provided evidence."
+      },
+      {
+        "finding_id": "finding-031",
+        "gt_id": "pygoat-020",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Finding 与 candidate 均针对 pygoat/settings.py 第25行硬编码的 SECRET_KEY 字面量，根因相同：固定密钥提交到源码并用于签名。源码摘录第24-25行直接确认该值及警告注释，支持该问题。"
+      },
+      {
+        "finding_id": "finding-031",
+        "gt_id": "pygoat-021",
+        "relation": "different",
+        "support": "supported",
+        "reason": "Candidate 指向第30行 DEBUG = True，属于调试模式暴露问题；源码第30行确认该设置。但 Finding 的根因是第25行硬编码 SECRET_KEY，代码路径和影响机制不同，故不是同一问题。"
+      },
+      {
+        "finding_id": "finding-031",
+        "gt_id": "pygoat-022",
+        "relation": "different",
+        "support": "supported",
+        "reason": "Candidate 指向第27行独立的 SENSITIVE_DATA 明文常量，源码第27行确认该字面量存在。但 Finding 仅针对第25行硬编码 SECRET_KEY，变量、根因和利用路径不同，故不是同一问题。"
+      },
+      {
+        "finding_id": "finding-032",
+        "gt_id": "pygoat-020",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告只讨论第30行 DEBUG=True 导致详细错误页信息泄露；候选020指向第25行硬编码 SECRET_KEY 及其签名/会话风险，根因和代码路径不同。源码第25行确实存在硬编码密钥，因此候选问题本身有源码支持，但不是该报告描述的问题。"
+      },
+      {
+        "finding_id": "finding-032",
+        "gt_id": "pygoat-021",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选021均明确指向第30行 DEBUG = True，以及该配置导致 Django 详细错误页向客户端泄露堆栈、设置和局部变量。第30行源码直接支持该调试配置问题；同根因、同代码位置。"
+      },
+      {
+        "finding_id": "finding-032",
+        "gt_id": "pygoat-022",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告未提及第27行的 SENSITIVE_DATA 明文常量；候选022描述的是硬编码敏感数据/flag 泄露，与报告中的 DEBUG 错误页信息泄露根因和路径不同。源码第27行确有该明文常量，故候选问题本身有源码支持，但非同一问题。"
+      },
+      {
+        "finding_id": "finding-033",
+        "gt_id": "pygoat-033",
+        "relation": "different",
+        "support": "supported",
+        "reason": "标签指出的是 introduction/views.py:287 明文存储密码：authLogin.objects.create(name=name, username=user_name, password=passwd)，口令未经哈希。模型报告的问题位于 introduction/views.py:291 的响应 Cookie 属性问题：response.set_cookie('userid', obj.userid, max_age=31449600, samesite=None, secure=False) 未设置 HttpOnly、Secure、SameSite。这两者根因不同：一个是对凭证的存储方式，另一个是会话凭证在传输和脚本可读性方面的属性配置；代码路径不同：一个是数据库写入，另一个是响应头下发。因此不能认定为同一问题。模型报告的 Cookie 问题本身有源码直接支持：第 291 行显式指定 secure=False、samesite=None，Django 默认 httponly=False，并且同一模式在第 305、319 行重复出现；但该报告完全没有提及第 287 行的明文密码存储，也未给出任何关于口令哈希的表述，因此不能改写为覆盖标签问题。标签问题由第 287 行的保真源码支持。两者是同一函数内相邻但彼此独立的两个缺陷。"
+      },
+      {
+        "finding_id": "finding-034",
+        "gt_id": "pygoat-010",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 GET 分支用 randint(100,999) 生成 3 位 OTP（496 行）、非 admin 分支将 otpN 直接渲染到响应模板（505-506 行），并提到弱随机数、仅 3 位、共享表行、未失效及无尝试计数；这与候选的弱 OTP、非管理员响应泄露、无速率限制/尝试计数属于同一根因和同一代码路径。源码 496-507、514 行支持这些判断。"
+      },
+      {
+        "finding_id": "finding-034",
+        "gt_id": "pygoat-fp-022",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告聚焦 OTP 在响应中泄露及弱 OTP 生成，未提及 @csrf_exempt（492 行）或 GET 请求执行数据库更新并设置 cookie（499、505、501、507 行）所构成的 CSRF/状态改变型 GET 问题，因此根因不同。源码确实显示 492 行 @csrf_exempt 以及 494-507 行 GET 分支的状态变更和设 cookie，故该候选问题本身有源码支持，但不是模型报告已表达的独立问题。"
+      },
+      {
+        "finding_id": "finding-035",
+        "gt_id": "pygoat-010",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选标签描述的是弱 OTP（3 位、可爆破）且验证无限速；报告明确指出同一 Otp 验证路径上 3 位码可爆破、无尝试限制，并提到可复用已泄露验证码，核心根因一致。源码第 496 行 randint(100,999) 证明码空间小；第 512-514 行 POST 校验无计数器/节流；第 505-506 行非管理员 OTP 直接回显到响应，支持候选中的回显问题。报告虽未逐字复述第 506 行，但已表达弱 OTP 与无尝试限制，并额外给出账号绑定问题，不改变同一代码路径上的语义命中。"
+      },
+      {
+        "finding_id": "finding-036",
+        "gt_id": "pygoat-068",
+        "relation": "different",
+        "support": "supported",
+        "reason": "报告关注的是 introduction/views.py:679-680 的 gentckt() 使用 random.choices 生成可预测票据码；候选描述的是 a10_lab2 在 introduction/views.py:668-672 将用户可控的 POST name（657）和 X-Forwarded-For（659-662）直接拼入日志，根因与代码路径均不同。源码显示这些日志调用未做换行符清理，候选所述的日志注入问题有静态源码依据。"
+      },
+      {
+        "finding_id": "finding-037",
+        "gt_id": "pygoat-057",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指出 generate_api_key() 在第 41-42 行使用 random.choices（第 9 行 import random）以及 36 个符号的字母表生成每用户 API key，导致 Mersenne Twister 可预测，并与候选标签的根因、代码路径和函数位置（第 38-42 行）一致。源码直接包含该调用和存储路径（第 58 行 api_key=generate_api_key()），第 40 行还有弱随机性注释，因此无需额外导入或配置证据即可判定为受支持。"
+      },
+      {
+        "finding_id": "finding-037",
+        "gt_id": "pygoat-066",
+        "relation": "different",
+        "support": "insufficient",
+        "reason": "候选标签关注第 20-36 行 login_view 缺少速率限制/账户锁定，从而可对登录进行暴力破解；模型报告只讨论第 38-42 行 API key 使用非密码学随机源，未提及登录限流、失败计数或暴力破解，根因和代码路径均不同。另就该项本身而言，第 20-36 行视图内未见限流逻辑，但全局中间件或配置未展示，无法仅凭该片段确证“无限尝试”，故为 insufficient。"
+      },
+      {
+        "finding_id": "finding-038",
+        "gt_id": "pygoat-045",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述的正是 all_users_data_view（源码行112-132）：无 @login_required/角色校验，遍历 UserData.objects.all() 并以 JsonResponse 返回所有用户的 username、完整 credit_card、ssn、api_key（行119-126、132），与 finding 的未鉴权批量泄露根因和代码路径完全一致，且源码注释（行113-130）直接佐证缺失鉴权检查。"
+      },
+      {
+        "finding_id": "finding-038",
+        "gt_id": "pygoat-046",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选定位在 api_data_view（行87-109），该函数带 @login_required（行86），仅返回当前登录用户 request.user 的数据，且返回明文敏感字段（行101-109）。这是'已鉴权用户自身数据未脱敏展示'的独立问题，与 finding 所指 all_users_data_view 的'未鉴权即可读取全体用户数据'根因和代码路径不同，故为 different；但其描述本身有源码支撑，故 support 为 supported。"
+      },
+      {
+        "finding_id": "finding-039",
+        "gt_id": "pygoat-046",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选报告与 finding 均指向 api_data_view：第 86 行仅有 @login_required，第 91 行按 request.user 获取 UserData，第 101-105 行直接组装完整 credit_card、ssn、api_key，第 109 行用 JsonResponse 返回，期间没有任何脱敏处理。因此源码直接支持“认证 API 明文泄露敏感字段”的同一根因和代码路径。URL 路由未在摘录中展示，但不影响对该视图返回未脱敏敏感数据这一核心问题的判断。"
+      },
+      {
+        "finding_id": "finding-040",
+        "gt_id": "pygoat-041",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指出 session cookie 仅为 base64(username:timestamp)，无签名/HMAC，并说明 dashboard 直接解码该值恢复身份（引用行45构造令牌、行51设置无完整性保护的 cookie），与候选标签描述的“会话令牌可解码伪造、无加密完整性保护”属同一根因和同一代码路径。源码第45行确认了 base64 编码且无签名，证据充分。"
+      },
+      {
+        "finding_id": "finding-041",
+        "gt_id": "pygoat-039",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指向 app.py 第8行 app.secret_key = 'your-secret-key-here'，并说明该硬编码 Flask 密钥可用于签名/伪造 session cookie；这与候选 pygoat-039 的“硬编码 Flask 会话签名密钥”根因和代码路径一致。源码摘录第8行直接支持该问题。"
+      },
+      {
+        "finding_id": "finding-041",
+        "gt_id": "pygoat-040",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告仅描述第8行的硬编码 Flask secret key 及其会话伪造影响，未提及第11-22行 users 字典中的 admin/admin123、user/password123 明文凭据，因此与 pygoat-040 的根因不同。源码摘录第11-22行确实支持该明文凭据问题，但模型未报告该独立问题。"
+      },
+      {
+        "finding_id": "finding-042",
+        "gt_id": "pygoat-039",
+        "relation": "different",
+        "support": "supported",
+        "reason": "源码第8行确实存在 app.secret_key = 'your-secret-key-here' 这一硬编码会话签名密钥问题；但模型报告的证据范围是第11-25行，根因是硬编码用户口令及明文口令存储/比较，并未指出或描述 Flask secret key 问题，因此与候选标签不是同一根因或代码路径。"
+      },
+      {
+        "finding_id": "finding-042",
+        "gt_id": "pygoat-040",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第11-22行明确包含 admin/admin123 与 user/password123 的硬编码明文口令表，第41行还显示明文口令比较；模型报告明确写到硬编码管理员凭据和明文口令存储，并定位到同一 users 表及登录路径，因此与候选标签对应且由源码支持。"
+      },
+      {
+        "finding_id": "finding-043",
+        "gt_id": "pygoat-044",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确写出第二个独立问题：‘the token is additionally printed back to the requester in the response (Password reset link: /reset/<token>)，so anybody who knows an account's e-mail address can obtain a valid reset token’。第90–91行 flash(f'Password reset link: /reset/{token}') 与第97–100行 /reset/<token> 接受该 token 直接印证 token 未走邮件而是回显给请求者，且 password_reset_tokens[token]=username 使该 token 可直接用于重置对应账号，与候选描述同一根因、同一代码路径。模型并未对该问题设置额外前提（部署容器仅是运行环境说明，不影响静态成立）。"
+      },
+      {
+        "finding_id": "finding-043",
+        "gt_id": "pygoat-056",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确写出：‘the reset token is md5(f\"{email}:{datetime.now()}\") - a fast, unsalted digest over predictable inputs’，与候选第86行 token = hashlib.md5(f\"{email}:{datetime.now()}\".encode()).hexdigest() 的弱/可预测令牌生成完全对应；第87行直接以该 token 作为 password_reset_tokens 键，说明确实用于重置流程。源码证据支持该生成方式缺乏密钥、无盐且输入可预知（邮箱已知、时间接近请求时刻）这一根因；候选‘brute-force’的可行性受 datetime.now() 微秒精度影响可讨论，但核验的生成弱点本身由第86行支持，且模型并未夸大该路径（其重点落在回显泄露），不影响 same 判定。"
+      },
+      {
+        "finding_id": "finding-044",
+        "gt_id": "pygoat-035",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "候选与报告均指向 log_function_checker：第64-65行从 POST 读取 log_code/api_code，第69-74行以 open(...,'w').write 写入 playground/A9/main.py 和 api.py；第59-61行有 @csrf_exempt 且认证装饰器被注释，因此未认证任意写源文件有源码依据。但候选所称这些文件随后被导入执行，摘录中未展示对 A9.main/A9.api 的导入或重启/重载链（第38行仅见 main.ssrf_lab，不能证明两个目标文件均被执行），故代码执行部分为 insufficient。"
+      },
+      {
+        "finding_id": "finding-045",
+        "gt_id": "pygoat-036",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均指向 A6_disscussion_api_2 的同一代码路径：第130行读取 request.POST['code']，第131-135行将代码拼接为 playground/A6/utility.py 并以 'w' 直接写入，未做净化；第125行显示 @csrf_exempt。候选所述 arbitrary file write 由这些行直接支持。报告还声称该模块在应用启动时被导入并执行，但所给摘录未展示相应 import 行，仅第117行有 check_vuln 调用，故该扩展执行链证据不足；这不影响其与候选同根因、同写入点的判断。"
+      },
+      {
+        "finding_id": "finding-046",
+        "gt_id": "pygoat-037",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "The report and candidate both describe the same core issue in ssrf_code_converter: code is transformed and written to introduction/playground/ssrf/main.py (utility.py lines 33-37), with the report additionally claiming that an imported module executes it. The provided excerpts confirm the file write and that the function receives `code`, but they do not show the request.POST['python_code'] caller or the import/invocation in introduction/apis.py. Therefore the attacker-controlled source and execution path needed to confirm the stated arbitrary-code-write/execution impact are not verifiable from the shown source alone."
+      },
+      {
+        "finding_id": "finding-047",
+        "gt_id": "pygoat-019",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "报告与候选都指向同一路径：introduction/views.py:583 读取 request.POST['function']，并在 588 行直接传入 ImageMath.eval。源码可确认不可信输入进入求值接口，但给定片段未包含 PIL ImageMath 的实现、Pillow 版本或沙箱逃逸行为，无法仅凭 588 行核验候选所称的“执行任意 Python 表达式”；finding 也承认具体逃逸依赖部署版本且未验证，因此同一根因成立但利用性支持不足。"
+      },
+      {
+        "finding_id": "finding-048",
+        "gt_id": "pygoat-014",
+        "relation": "different",
+        "support": "supported",
+        "reason": "该候选描述的是 a1_broken_access_lab3_secret（837-841 行）缺少管理员授权校验，任何已登录用户可直接访问 secret 页面；源码 838-840 行仅有 is_authenticated 判断且注释明确写“no checking applied here”，问题成立。但本次报告的根因是 831-834 行硬编码凭据，与缺失授权检查属不同根因、不同代码路径（登录校验视图 vs secret 渲染视图），故不同一问题。"
+      },
+      {
+        "finding_id": "finding-048",
+        "gt_id": "pygoat-051",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选定位 831-833 行，描述 'John'/'reaper' 与 'admin'/'admin_pass' 硬编码于视图中；源码 831、833 行确实以字面量比较用户名口令，并在 834 行据此返回 admin:True 上下文，与报告所指硬编码敏感凭据根因、代码路径完全一致，静态证据充分。"
+      },
+      {
+        "finding_id": "finding-049",
+        "gt_id": "pygoat-014",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述与报告均指向 introduction/views.py 的 a1_broken_access_lab3_secret：第 837-841 行仅执行 request.user.is_authenticated 检查，第 840 行注释明确写明“no checking applied here”，随后直接 render secret.html，未做角色/对象级授权检查。源码直接支持“缺少授权、任何已认证用户可访问 secret 页面”的根因。候选中的具体 URL 映射和“admin-only”标签未在摘录中展示，但不影响同一函数、同一根因的匹配。"
+      },
+      {
+        "finding_id": "finding-049",
+        "gt_id": "pygoat-051",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选描述的是 a1_broken_access_lab_3 中第 831 行和第 833 行硬编码 'John'/'reaper' 与 'admin'/'admin_pass' 凭据；源码确实支持该问题。但报告针对的是第 837-841 行 a1_broken_access_lab3_secret 的缺失授权检查，二者位于不同函数、不同代码路径，根因也不同，因此不是同一报告问题。"
+      },
+      {
+        "finding_id": "finding-051",
+        "gt_id": "pygoat-047",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Finding explicitly identifies line 8 hardcoded SECRET_KEY = 'django-insecure-key-for-demonstration-only' as insecure and notes it enables forging signed Django values. Source line 8 confirms the hardcoded weak secret. No missing implementation detail is needed for this static issue."
+      },
+      {
+        "finding_id": "finding-051",
+        "gt_id": "pygoat-048",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Finding explicitly identifies DEBUG = True at line 11 and states it enables detailed error pages/settings disclosure. Source line 11 confirms DEBUG is enabled. Deployment reachability affects exploitability but not the static insecure setting."
+      },
+      {
+        "finding_id": "finding-051",
+        "gt_id": "pygoat-049",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Finding explicitly identifies ALLOWED_HOSTS = ['*'] at line 13 and attributes Host header poisoning risk to it. Source line 13 confirms the wildcard ALLOWED_HOSTS setting."
+      },
+      {
+        "finding_id": "finding-052",
+        "gt_id": "pygoat-031",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Candidate describes the same plaintext unsigned cookie privilege-escalation issue: lines 1074-1076 issue cookie f\"{username}|{expire}\"; lines 1053-1060 read it and treat the pre-'|' value as identity, granting admin=True when it equals 'admin'. No signature/MAC is present. The only extra precondition is request.user.is_authenticated at line 1050 and a non-expired timestamp, but an attacker can supply a future ISO expiry, so this is still the same root cause and code path."
+      },
+      {
+        "finding_id": "finding-053",
+        "gt_id": "pygoat-032",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Model finding and candidate both target the same GET branch of auth_lab_login: line 302 selects the authLogin object using the client-controlled request.COOKIES['userid'], and line 303 renders that selected account as the logged-in identity without any password/session/signature validation. This directly supports the candidate's IDOR/account-takeover issue via a userid cookie. The excerpt does not itself prove AutoField/sequential IDs, but the direct object reference from an unvalidated cookie is supported by lines 302-305."
+      }
+    ],
+    "duplicate_label_reports": {
+      "pygoat-010": [
+        "finding-034",
+        "finding-035"
+      ]
+    },
+    "checks": {
+      "check_1_file_exists_and_matches": 53,
+      "check_2_reported_start_within_10_lines": 51,
+      "check_3_at_least_one_source_line_in_quote": 52,
+      "all_three": 50
+    },
+    "jobs": 50,
+    "completed": 50
+  },
+  "qwen-3.8-flash-next/A": {
+    "reports": 47,
+    "evidence_valid": 42,
+    "confirmed_reports": 39,
+    "covered_labels": 43,
+    "positive_labels": 78,
+    "reference_precision": 0.8297872340425532,
+    "recall": 0.5512820512820513,
+    "f1": 0.6624530910527355,
+    "pending_pairs": 6,
+    "negative_label_matches": [],
+    "accepted_pairs": [
+      [
+        "finding-001",
+        "pygoat-001"
+      ],
+      [
+        "finding-002",
+        "pygoat-002"
+      ],
+      [
+        "finding-003",
+        "pygoat-006"
+      ],
+      [
+        "finding-004",
+        "pygoat-007"
+      ],
+      [
+        "finding-005",
+        "pygoat-008"
+      ],
+      [
+        "finding-006",
+        "pygoat-009"
+      ],
+      [
+        "finding-007",
+        "pygoat-018"
+      ],
+      [
+        "finding-008",
+        "pygoat-019"
+      ],
+      [
+        "finding-009",
+        "pygoat-003"
+      ],
+      [
+        "finding-011",
+        "pygoat-005"
+      ],
+      [
+        "finding-012",
+        "pygoat-055"
+      ],
+      [
+        "finding-013",
+        "pygoat-017"
+      ],
+      [
+        "finding-015",
+        "pygoat-015"
+      ],
+      [
+        "finding-016",
+        "pygoat-016"
+      ],
+      [
+        "finding-018",
+        "pygoat-034"
+      ],
+      [
+        "finding-019",
+        "pygoat-011"
+      ],
+      [
+        "finding-020",
+        "pygoat-013"
+      ],
+      [
+        "finding-021",
+        "pygoat-014"
+      ],
+      [
+        "finding-022",
+        "pygoat-031"
+      ],
+      [
+        "finding-023",
+        "pygoat-032"
+      ],
+      [
+        "finding-024",
+        "pygoat-033"
+      ],
+      [
+        "finding-025",
+        "pygoat-030"
+      ],
+      [
+        "finding-026",
+        "pygoat-064"
+      ],
+      [
+        "finding-029",
+        "pygoat-028"
+      ],
+      [
+        "finding-030",
+        "pygoat-025"
+      ],
+      [
+        "finding-031",
+        "pygoat-029"
+      ],
+      [
+        "finding-032",
+        "pygoat-026"
+      ],
+      [
+        "finding-033",
+        "pygoat-027"
+      ],
+      [
+        "finding-033",
+        "pygoat-053"
+      ],
+      [
+        "finding-034",
+        "pygoat-035"
+      ],
+      [
+        "finding-035",
+        "pygoat-036"
+      ],
+      [
+        "finding-037",
+        "pygoat-071"
+      ],
+      [
+        "finding-038",
+        "pygoat-010"
+      ],
+      [
+        "finding-039",
+        "pygoat-020"
+      ],
+      [
+        "finding-039",
+        "pygoat-021"
+      ],
+      [
+        "finding-040",
+        "pygoat-038"
+      ],
+      [
+        "finding-041",
+        "pygoat-045"
+      ],
+      [
+        "finding-042",
+        "pygoat-057"
+      ],
+      [
+        "finding-044",
+        "pygoat-056"
+      ],
+      [
+        "finding-045",
+        "pygoat-039"
+      ],
+      [
+        "finding-045",
+        "pygoat-040"
+      ],
+      [
+        "finding-046",
+        "pygoat-047"
+      ],
+      [
+        "finding-046",
+        "pygoat-048"
+      ]
+    ],
+    "covered_ids": [
+      "pygoat-001",
+      "pygoat-002",
+      "pygoat-003",
+      "pygoat-005",
+      "pygoat-006",
+      "pygoat-007",
+      "pygoat-008",
+      "pygoat-009",
+      "pygoat-010",
+      "pygoat-011",
+      "pygoat-013",
+      "pygoat-014",
+      "pygoat-015",
+      "pygoat-016",
+      "pygoat-017",
+      "pygoat-018",
+      "pygoat-019",
+      "pygoat-020",
+      "pygoat-021",
+      "pygoat-025",
+      "pygoat-026",
+      "pygoat-027",
+      "pygoat-028",
+      "pygoat-029",
+      "pygoat-030",
+      "pygoat-031",
+      "pygoat-032",
+      "pygoat-033",
+      "pygoat-034",
+      "pygoat-035",
+      "pygoat-036",
+      "pygoat-038",
+      "pygoat-039",
+      "pygoat-040",
+      "pygoat-045",
+      "pygoat-047",
+      "pygoat-048",
+      "pygoat-053",
+      "pygoat-055",
+      "pygoat-056",
+      "pygoat-057",
+      "pygoat-064",
+      "pygoat-071"
+    ],
+    "assessments": [
+      {
+        "finding_id": "finding-001",
+        "gt_id": "pygoat-001",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 introduction/views.py:158 将 POST 参数 name/password 字符串拼接进原生 SQL，并在 :162 传给 login.objects.raw() 执行；:170/:182 还会回显拼接后的 SQL。该描述与候选指出的同一行、同一根因（不可信输入拼接原生 SQL）一致，源码直接支持。"
+      },
+      {
+        "finding_id": "finding-001",
+        "gt_id": "pygoat-fp-001",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选针对 :156 的 login.objects.filter(user=name)，认为 ORM 参数化安全、该行不构成 SQL 注入。源码 :156 确实使用 ORM filter，而报告把漏洞归因于 :158 的字符串拼接及 :162 的 raw 执行，并未声称 :156 本身存在注入；因此报告不与这个“非漏洞”候选对应同一问题。"
+      },
+      {
+        "finding_id": "finding-002",
+        "gt_id": "pygoat-002",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告的根因与候选标签一致：第864行用字符串拼接构造 sql_query = \"SELECT * FROM introduction_sql_lab_table WHERE id='\"+name+\"'AND password='\"+password+\"'\",其中 name 和 password 来自第858-859行的 request.POST.get；第878行把该查询交给 sql_lab_table.objects.raw(sql_query) 执行，第882-889行的异常分支还把 sql_query 回显到 sql_error。源码完全支持“拼接进入 raw() 导致 SQL 注入”这一根因与代码路径，位置(864/878)与标签(864-878,injection_sql_lab)吻合。模型额外提到的硬编码口令(866-873行)只是同路径的附加观察,不影响主判断。"
+      },
+      {
+        "finding_id": "finding-002",
+        "gt_id": "pygoat-fp-024",
+        "relation": "different",
+        "support": "insufficient",
+        "reason": "模型报告通篇只描述 SQL 注入(拼接 864、raw() 878、异常回显 SQL),没有提到 @csrf_exempt(854行)或 CSRF,也没有把“每次带 name 请求都执行 save()”当作独立问题表达,因此与候选标签的根因不同。源码确实支持部分事实:854行有 @csrf_exempt,855-859行处理 POST 并读取 name,863-873行在 if name 分支反复 save() 固定记录(admin/jack/slinky/bloke),但候选描述在“This is a”处截断,且这些 save() 写入的是固定演示数据而非攻击者可控状态变化,所以仅凭所给源码无法确认构成有实际影响的 CSRF 漏洞；同时静态无法判定绕过 CSRF 后的安全后果,需要更多上下文,故标为 insufficient。"
+      },
+      {
+        "finding_id": "finding-003",
+        "gt_id": "pygoat-006",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 Cookie 中的 token 在 208 行读取、213 行 base64 解码、214 行直接传入 pickle.loads；206 行仅要求已登录。该路径与标签描述的客户端可控 pickle 反序列化根因和代码位置一致，源码足以支持任意代码执行风险。"
+      },
+      {
+        "finding_id": "finding-003",
+        "gt_id": "pygoat-fp-003",
+        "relation": "different",
+        "support": "supported",
+        "reason": "标签针对 202-203 行的模块级 pickle.dumps(TestUser())/base64 编码，并说明该处使用服务端默认对象、不是用户输入；报告针对 208-214 行的 Cookie 反序列化。二者代码路径和根因不同；源码确实显示 202-203 行是服务端默认序列化，而漏洞点在 214 行，故不支持将两者视为同一问题。"
+      },
+      {
+        "finding_id": "finding-004",
+        "gt_id": "pygoat-007",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告的根因和代码路径与候选标签一致：源码 introduction/views.py:258-260 显示 xxe_parse 先调用 make_parser()，再用 parser.setFeature(feature_external_ges, True) 显式开启外部通用实体解析，随后直接 parseString(request.body.decode('utf-8'), parser=parser) 解析用户请求体；:262-264 对 'text' 节点调用 expandNode/toxml，触发了实体展开；:268 把展开内容写入 comments 表，:240-250 的 /xxe_see 再把这些内容回显出来。攻击者构造 SYSTEM/外部实体即可读取本地文件并发起 SSRF，构成 XXE。候选标签描述的外部实体解析、文件读取和 SSRF 与报告一致，且源码可支持。报告额外提到的未授权可达问题，依据是 :255-256 的 @csrf_exempt、xxe_parse 无 is_authenticated 判断，也有源码依据。尽管实际能否读取文件还取决于运行时 xml.sax 对 entity 和 file 协议的支持，但静态证据已足以确认‘开启外部实体并解析用户输入’这一根因成立，不影响本次语义命中。"
+      },
+      {
+        "finding_id": "finding-005",
+        "gt_id": "pygoat-008",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 cmd_lab 中 POST 的 domain 仅经 re.sub 去除协议/www 前缀（introduction/views.py:418-420），随后拼入 nslookup/dig 命令（424/426），并以 shell=True 传给 subprocess.Popen（430-434），stdout/stderr 回显到页面（435-436,440,446）。这正是候选描述的 OS command injection 同一根因和同一代码路径；正则不过滤 ;、&& 等 shell 元字符，源码支持。"
+      },
+      {
+        "finding_id": "finding-005",
+        "gt_id": "pygoat-fp-020",
+        "relation": "different",
+        "support": "insufficient",
+        "reason": "候选声称的独立问题是 CSRF，根因指向 @csrf_exempt（introduction/views.py:414）和 POST 处理（417）。模型报告的主问题及明确根因是不可信 domain 拼入 shell 命令（418-434），仅在 preconditions 提到 @csrf_exempt/跨站表单作为命令注入利用前提，并未把 CSRF 作为独立根因报告。源码片段虽可见 @csrf_exempt 与 POST，但未展示 CSRF 中间件配置、路由及独立状态变更证据；命令执行属于命令注入证据，不能直接补足 CSRF 成立条件。"
+      },
+      {
+        "finding_id": "finding-006",
+        "gt_id": "pygoat-009",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选 009 明确指出 POST 参数 val 被直接传给 eval()，导致任意代码执行；源码 456 行从 request.POST 获取 val，460 行执行 eval(val)，454-455 行仅要求已登录且为 POST，未做清洗。这与 finding 的根因和代码路径一致，静态证据充分。"
+      },
+      {
+        "finding_id": "finding-006",
+        "gt_id": "pygoat-fp-021",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选 021 主要报告的是 CSRF 缺失问题：452 行 @csrf_exempt、455 行处理 POST；而 finding 的根因是 456 行取参后 460 行 eval(val) 导致任意代码执行，finding 仅把 csrf_exempt 列为前置条件，未将 CSRF 作为独立根因报告。源码确实支持该 view 缺少 CSRF 保护这一独立问题，但不构成与 finding 同一根因的语义命中。"
+      },
+      {
+        "finding_id": "finding-007",
+        "gt_id": "pygoat-018",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第558行从 request.FILES[\"file\"] 直接读取用户上传文件，第560行以 yaml.load(file, yaml.Loader) 解析；yaml.Loader 属于不安全加载器，可触发 Python 对象构造/调用，符合“用户上传 YAML 经不安全加载器反序列化”的同一根因和同一代码路径。第552行仅要求已认证用户，不改变可利用性。报告与候选描述一致。"
+      },
+      {
+        "finding_id": "finding-008",
+        "gt_id": "pygoat-019",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第583行从 request.POST.get('function') 取得用户输入，第588行直接传给 ImageMath.eval(...)，且该函数仅要求登录（第575行）并 @csrf_exempt（第573行）。候选报告指出的“a9_lab2 中用户可控 function 传入 PIL ImageMath.eval 导致代码注入”与根因、代码路径和位置一致。源码已明确展示不安全动态求值入口；利用具体对象链执行系统命令依赖 ImageMath.eval 实现细节，但不影响该不安全表达式求值问题的成立。"
+      },
+      {
+        "finding_id": "finding-009",
+        "gt_id": "pygoat-003",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指认 xss_lab.html:27 的 {{query|safe}} 为反射型 XSS 的未转义 HTML 输出；源码第 12-14 行显示 GET 表单参数 q，第 26-27 行在 query 分支使用 |safe 输出，符合同一根因和同一模板代码路径。"
+      },
+      {
+        "finding_id": "finding-009",
+        "gt_id": "pygoat-fp-002",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告只讨论第 27 行 query 的 XSS，不讨论第 23-25 行的 company/ceo/about，故不是同一问题；源码第 23-25 行未使用 |safe，Django 默认自动转义，支持该候选所称这些字段不构成 XSS 的判断。"
+      },
+      {
+        "finding_id": "finding-010",
+        "gt_id": "pygoat-004",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "候选与报告均指向 xss_lab_2.html:20 的 {{ username|safe }} 反射型 XSS，且都提到服务端仅做 <script> 黑名单过滤可被其他标签绕过，根因和代码路径描述一致。但给定源码片段仅展示模板：第 8/12 行有 POST 表单字段 username，第 20 行有 |safe 输出；未展示 views.py:112-116 的过滤实现、context 赋值，以及 urls.py:11 的路由注册。因此无法仅凭现有片段核实 username 是否确由 POST 输入传入模板、过滤逻辑是否如报告所述，以及 /xssL2 是否已注册。核心风险有强迹象，但验证 POST 到 |safe 的完整链路需要未展示的视图/路由代码，故标为 insufficient。"
+      },
+      {
+        "finding_id": "finding-011",
+        "gt_id": "pygoat-005",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告与标签指向同一代码路径与根因：模板第 22 行 <script> 内的 {{code}} 被直接输出到 JavaScript 代码区（源码行 20-23 可见 <script> 与 {{code}}），报告明确指出未按输出上下文转义导致脚本上下文注入，并说明其可利用条件为 JSFuck 风格的正则过滤残留特殊字符。第 19 行 <p>{{code}}</p> 的 HTML 上下文自动转义不能覆盖 script 原始文本元素上下文，因此该判断与源码一致。过滤细节（views.py:131-135）未在摘录中展示，但第 22 行直接把用户数据写入脚本区已足以独立支持该注入结论，故判 supported。"
+      },
+      {
+        "finding_id": "finding-011",
+        "gt_id": "pygoat-fp-005",
+        "relation": "different",
+        "support": "supported",
+        "reason": "该候选陈述的是第 19 行 <p>{{code}}</p> 在 HTML 上下文因 Django 自动转义而不可注入的否定性结论；模型报告只讨论第 22 行 script 上下文注入，未提及第 19 行、未做 HTML 上下文转义分析，也未把它作为独立问题陈述，故二者描述的不是同一问题。候选自身的否定结论与源码一致：第 19 行确有 <p>{{code}}</p> 且无 |safe，默认自动转义会转义 < > \" ' &，HTML 上下文难以注入；但该点不在模型报告中，不构成 same。"
+      },
+      {
+        "finding_id": "finding-012",
+        "gt_id": "pygoat-055",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告与候选均指出同一根因：模板 lab2.html 第11行对 {{username | safe}} 使用 safe 关闭 Django 自动转义，且第16-17行表单以 method=\"get\"、name=\"username\" 提交用户可控输入，构成反射型 XSS。报告明确写出 GET username -> context -> safe 输出的同一代码路径，源码片段第11行和第16-17行支持该判断；视图细节未展示但不影响模板层安全缺陷的成立。"
+      },
+      {
+        "finding_id": "finding-013",
+        "gt_id": "pygoat-017",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告与候选标签指向同一根因和同一代码路径：introduction/views.py 的 ssti_lab 中，request.POST['blog']（981 行）经 filter_blog（984 行）后与固定模板前缀拼接（990 行），写入 templates/Lab_2021/A3_Injection/Blogs/<id>.html（993-997 行），随后 redirect 到 ssti_view_blog（998 行），由 1006 行 render(request, f\"...Blogs/{blog_id}.html\") 将该文件当作 Django 模板编译，从而执行用户提交的 {% %} 标签——这正是候选描述的‘用户内容直接写入模板文件后被渲染’。模型额外引用的 utility.py:55-57（filter_blog 为恒等函数）未包含在所给源码摘录中，仅是过滤是否生效的旁证；即便不计该点，984→990→995-996→1006 的拼接写入并渲染链路本身已构成模板注入的代码依据，故不构成夸大，判 supported。行号差异（模型 982-996 vs 标签 990-997）属允许的实现点偏移。"
+      },
+      {
+        "finding_id": "finding-014",
+        "gt_id": "pygoat-017",
+        "relation": "different",
+        "support": "insufficient",
+        "reason": "模型报告只针对 ssti_view_blog（1003-1006）中 blog_id 拼入模板路径及缺失对象级授权，未指出 ssti_lab 中 POST 参数 blog 在 981/990/996 被写入模板文件并后续渲染这一代码路径，根因也不同。候选所述 SSTI 依赖 filter_blog 不净化并原样返回，但源码仅见 984 的调用，缺少其实现，无法据此确认注入可用。"
+      },
+      {
+        "finding_id": "finding-015",
+        "gt_id": "pygoat-015",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均指出 ssrf_lab 中 POST 参数 blog 被直接用于路径拼接并打开读取：源码第923行 `file=request.POST[\"blog\"]`，第925-926行与 `os.path.dirname(__file__)` 做 `os.path.join`，第927-928行 `open(filename,\"r\").read()` 并第929行回显。用户可控路径未经规范化/前缀校验，`../` 或绝对路径可导致目录穿越任意文件读取，根因和代码路径一致；认证检查见第918-919行，不影响该结论。"
+      },
+      {
+        "finding_id": "finding-016",
+        "gt_id": "pygoat-016",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第960-964行显示 POST 参数 request.POST[\"url\"] 在第961行取得后直接传给第963行 requests.get(url)，并将 response.content.decode() 在第964行回显；未出现协议白名单、内网/回环地址过滤或重定向限制。与该候选所述“用户可控 url 直接进入 requests.get 且无校验/白名单导致 SSRF”属同一根因、同一代码路径，源码足以支持。"
+      },
+      {
+        "finding_id": "finding-018",
+        "gt_id": "pygoat-034",
+        "relation": "same",
+        "support": "supported",
+        "reason": "Finding与候选均指向 introduction/views.py 的 secret 视图：第536行读取客户端可控的 X-Host，第537-538行以该值等于 'admin.localhost:8000' 判定并返回 secret=S3CR37K3Y，第540行将 XHost 拼入回显。根因、路径和影响一致；源码直接支持该访问控制绕过与机密泄露判断。"
+      },
+      {
+        "finding_id": "finding-019",
+        "gt_id": "pygoat-011",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告与候选均指向 ba_lab 中同一授权根因：第347行直接信任 request.COOKIES.get('admin') == \"1\"，命中后第348-354行返回 0NLY_F0R_4DM1N5；第363行还显示该 admin Cookie 由视图自行 set_cookie 写出。源码足以支持“客户端可控 Cookie 参与服务端管理员授权判定”的结论。"
+      },
+      {
+        "finding_id": "finding-019",
+        "gt_id": "pygoat-fp-019",
+        "relation": "different",
+        "support": "insufficient",
+        "reason": "候选描述的是 @csrf_exempt 导致的 CSRF 问题（第341行，配合第344-345行 POST 和第363行 set_cookie），而模型报告的核心根因是第347行信任客户端 admin Cookie 绕过授权，二者不是同一根因。源码虽能证明 @csrf_exempt 和 cookie 写入存在，但认定 CSRF 仍需未展示的 Django CSRF/session 中间件、Cookie SameSite 配置及跨站状态变更影响；且第355-364行显示设置 admin=1 前还有 admin 凭据校验，不能仅凭 @csrf_exempt 断定 CSRF 成立。"
+      },
+      {
+        "finding_id": "finding-020",
+        "gt_id": "pygoat-013",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码 lines 783-805 定义 a1_broken_access_lab_2；line 791 从客户端可控的 HTTP_USER_AGENT 取值，line 797 仅以 user_agent == \"pygoat_admin\" 判定管理员并返回 0NLY_F0R_4DM1N5（lines 798-805）。line 784 只要求任意已认证用户，未阻止伪造 User-Agent，故候选描述的通过设置 User-Agent 获得管理员权限与 finding / 源码根因一致。"
+      },
+      {
+        "finding_id": "finding-021",
+        "gt_id": "pygoat-014",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告描述的 a1_broken_access_lab3_secret（837-841 行）与候选标签指向同一函数、同一缺失授权根因：838-839 行仅做 request.user.is_authenticated 判断，840 行注释“no checking applied here”，841 行直接渲染 secret 模板，确实没有任何角色/管理员校验，任何登录用户可直接访问，与标签「缺授权检查、任意认证用户可访问 admin-only 机密」一致。secret.html 是否含特定机密正文未在摘录中展示，但该端点缺失授权这一核心问题已由源码充分支持，属合理实现点表述。"
+      },
+      {
+        "finding_id": "finding-021",
+        "gt_id": "pygoat-051",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选标签指向 a1_broken_access_lab_3（831-834 行）硬编码凭据 'John'/'reaper' 与 'admin'/'admin_pass'，源码确有此问题（831、833 行明文比较）；但模型报告只描述 a1_broken_access_lab3_secret（837-841 行）缺失授权，完全未提及硬编码凭据这一独立根因，二者代码路径与问题类型均不同，故为 different。"
+      },
+      {
+        "finding_id": "finding-022",
+        "gt_id": "pygoat-031",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选与报告均指出 crypto_failure_lab3 使用明文 `username|expiry` Cookie 且无完整性保护；源码 1053-1061 读取 `request.COOKIES['cookie']`、按 `|` 分割并仅检查 `cookie.split('|')[0] == 'admin'` 即进入 admin 分支，1074-1076 又以 `f\"{username}|{expire}\"` 写入未签名 Cookie。将用户名改为 admin 并设置未过期时间即可触发 1060-1061，根因与代码路径一致。"
+      },
+      {
+        "finding_id": "finding-023",
+        "gt_id": "pygoat-032",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选报告与 finding 指向同一根因和同一代码路径：auth_lab_login 的 GET 分支在 views.py:302 直接以 request.COOKIES['userid'] 查询 authLogin，未做会话/授权校验，因而可由客户端指定 userid 选择任意用户；views.py:291/305 还显示该 userid Cookie 由服务端写入，进一步支持该标识被当作登录凭据。候选所说的顺序枚举依赖 finding 中 models.py 的 AutoField 前提，但核心 IDOR 已由第 302 行源码直接支持。"
+      },
+      {
+        "finding_id": "finding-024",
+        "gt_id": "pygoat-033",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 auth_lab_signup 在 views.py:287 将 request.POST['pass'] 赋给 passwd 后直接写入 authLogin.objects.create(password=passwd)，未进行哈希处理；这与候选标签的“明文口令存储”根因和代码路径一致。源码摘录同时显示 views.py:315 登录时以明文等值查询，进一步支持该问题。字段模型未展示不影响对存储逻辑的判断。"
+      },
+      {
+        "finding_id": "finding-025",
+        "gt_id": "pygoat-030",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告与候选标签均指向 introduction/views.py 第1026行密码摘要问题：源码第1026行 `password = md5(password.encode()).hexdigest()` 对用户提交口令做无盐MD5摘要，第1027行将摘要与 CF_user.password 等值比对。报告的根因（使用不安全摘要算法MD5保护认证凭据、可比对/可离线爆破）与标签“Weak password hashing using MD5 ... unsuitable for password storage”为同一根因、同一代码路径，未引入标签外独立问题。"
+      },
+      {
+        "finding_id": "finding-026",
+        "gt_id": "pygoat-064",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第58-59行明确显示 customHash(password) 返回 hashlib.sha256(password.encode()).hexdigest()[::-1]，即无盐、无迭代（无密钥拉伸）的 SHA-256 摘要再整体反转；字符串反转不改变摘要熵与可爆破性，与标签“弱口令哈希”根因一致，函数与行号也对应。模型报告还提到 views.py:1046-1047 调用点，该调用链未在给定片段中出现，但对“该函数本身口令派生不充分”这一由 58-59 行直接支持的静态结论不构成影响，故判 supported。"
+      },
+      {
+        "finding_id": "finding-027",
+        "gt_id": "pygoat-068",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告针对 introduction/views.py:679-680 的 gentckt 使用非密码学 random 生成门票码（A11 不安全随机数），未提及 a10_lab2 的日志调用或日志注入。候选标签指向 introduction/views.py:657-672：user 来自 POST、ip 来自 X-Forwarded-For/REMOTE_ADDR，并直接进入 logging.warning/info/error 的格式化消息，确有换行未过滤导致日志伪造的源码依据。二者根因与代码路径均不同。"
+      },
+      {
+        "finding_id": "finding-029",
+        "gt_id": "pygoat-024",
+        "relation": "different",
+        "support": "supported",
+        "reason": "模型报告的根因是第169行硬编码 JWT 密钥，导致第182/194行的令牌可伪造；候选024的根因是 CSRF，涉及第177行 @csrf_exempt 以及第191-207行的 GET 转账接口。二者不是同一根因，也不是同一认证令牌伪造路径。源码第199-207行显示 GET 请求会修改余额，因此候选的 CSRF 风险有源码依据；但候选表述把 @csrf_exempt 与转账接口的对应关系说得不够准确。"
+      },
+      {
+        "finding_id": "finding-029",
+        "gt_id": "pygoat-028",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选028直接对应第169行：jwt.encode 使用硬编码字符串 'csrf_vulneribility' 作为 HS256 签名密钥；第182/194行 jwt.decode 又复用同一密钥，因此支持模型报告的根因和代码路径。"
+      },
+      {
+        "finding_id": "finding-029",
+        "gt_id": "pygoat-029",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选029是第161行使用 MD5 对密码做哈希，源码已确认；模型报告关注第169行硬编码 JWT 签名密钥以及第182/194行令牌校验，二者根因不同。"
+      },
+      {
+        "finding_id": "finding-029",
+        "gt_id": "pygoat-067",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选067是第171行 response.set_cookie('auth_cookiee', cookie) 未设置 HttpOnly，源码已确认；模型报告的核心是第169行硬编码 JWT 密钥导致令牌可伪造，二者根因不同。"
+      },
+      {
+        "finding_id": "finding-030",
+        "gt_id": "pygoat-025",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码 191-210 行的 csrf_transfer_monei_api 未加任何装饰器，仅接受 GET（192 行判断 request.method == \"GET\"），从 auth_cookiee 解出 username（193-195 行），随后在 199-207 行对 CSRF_user_tbl 双方 balance 做加减并 save()，即真实状态变更由 GET 完成。整个函数没有任何 CSRF token、Referer/Origin 或二次确认校验，与候选标签“State-changing operation via GET … No CSRF token validation”描述同一根因、同一代码路径。Django CsrfViewMiddleware 默认只校验非安全方法，故 GET 不会被拦截，报告论证成立。唯一未展示的是 urls.py 路由与 Cookie 的 SameSite 配置（171 行 set_cookie 未显式传 samesite，且 Django 新版默认 Lax 会限制跨站子资源携带 Cookie），但这只影响利用细节，不影响“GET 触发状态变更且缺 CSRF 防护”这一静态结论，故判 supported。"
+      },
+      {
+        "finding_id": "finding-031",
+        "gt_id": "pygoat-029",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出根因是“不安全口令摘要”：第161行 password = md5(password.encode()).hexdigest() 对用户输入的密码做无盐 MD5 摘要，第162行再用它和 CSRF_user_tbl.password 比对。这与候选标签“Weak password hashing using MD5”在根因和代码路径上都一致（同一函数 csrf_lab_login、同一行）。源码可支持：确实使用 MD5，没有盐值或慢哈希。注意报告有夸大成分：“长期身份令牌”不准确，因为第166行 exp 只有300秒；但这条不影响 MD5 弱口令摘要这一核心根因的成立，所以仍判 supported。"
+      },
+      {
+        "finding_id": "finding-032",
+        "gt_id": "pygoat-025",
+        "relation": "different",
+        "support": "supported",
+        "reason": "报告描述的是 mitre_lab_25_api 中 POST expression 传入 eval() 的问题（213-219 行），未提及 csrf_transfer_monei_api（191-208 行）通过 GET 修改余额的 CSRF 问题，根因与代码路径均不同。给定源码本身显示 191-208 行在 GET 请求下直接读取 JWT cookie 并修改双方余额（204-207 行），函数内未见 CSRF token 校验，候选问题有源码依据；但报告没有表达该问题。"
+      },
+      {
+        "finding_id": "finding-032",
+        "gt_id": "pygoat-026",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 mitre_lab_25_api 第 217 行从 POST 参数获取 expression，并在第 218 行直接 eval(expression)，与候选的 eval 任意代码执行属同一函数、同一根因和同一代码路径；报告还指出 213 行认证装饰器被注释、214 行仅保留 csrf_exempt，源码行号支持未认证动态求值。"
+      },
+      {
+        "finding_id": "finding-033",
+        "gt_id": "pygoat-027",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第237行仅有 @csrf_exempt，第240行读取 POST ip，第241行将 \"nmap \" + ip 拼接，第242行传给 command_out，第232-233行以 shell=True 执行；与报告所述未认证命令注入的根因和代码路径一致。"
+      },
+      {
+        "finding_id": "finding-033",
+        "gt_id": "pygoat-053",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第233行确认 command_out 使用 subprocess.Popen(..., shell=True)；第242行确认该 sink 由 mitre_lab_17_api 调用，且第240-241行显示命令包含用户输入。候选明确写出由该 API 传入用户输入的 shell=True 执行 sink，属于同一命令注入根因，差异仅为 sink/调用点表述。"
+      },
+      {
+        "finding_id": "finding-034",
+        "gt_id": "pygoat-035",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均指向 introduction/apis.py 的 log_function_checker 中同一根因：第 64-65 行读取用户可控的 log_code/api_code，第 69-74 行将二者原样写入 playground/A9/main.py 与 playground/A9/api.py。第 59-60 行显示仅 @csrf_exempt 生效、认证装饰器被注释，支持未认证写入。对这些 Python 源码文件的任意写入由摘录直接支持；至于随后导入/自动重载执行，报告已给出 urls.py 调用链断言，但摘录未展示，不过不影响任意文件写入这一核心问题与候选对应。"
+      },
+      {
+        "finding_id": "finding-035",
+        "gt_id": "pygoat-036",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述 A6_disscussion_api_2 中 POST 参数 code 被直接写入 playground/A6/utility.py；模型报告同样指出 introduction/apis.py:126-135 的该函数将 POST code 写入该 Python 文件，并说明未校验，属于同一根因和同一代码路径。源码 130 行 request.POST.get('code')、132 行固定目标 utility.py、133-135 行 open(...,'w')/write/close 直接支持该写入问题；模型报告额外提到的模块重载/执行链是同一根因的后续影响，不影响本候选的任意内容写入成立。"
+      },
+      {
+        "finding_id": "finding-037",
+        "gt_id": "pygoat-fp-004",
+        "relation": "different",
+        "support": "supported",
+        "reason": "索引位置 views.py:628 属于 a10_lab，代码中 login.objects.filter(user=user, password=password) 使用 Django ORM，确实是参数化的，因此该候选关于“ORM 非原始 SQL，不是注入”的判断与源码一致；但报告针对的是 636-639 行 debug 视图将 debug.log 作为公开资源返回的信息泄露，与 628 行的 SQL 注入或误报论点不共享同一根因、同一代码路径，所以判为 different。"
+      },
+      {
+        "finding_id": "finding-037",
+        "gt_id": "pygoat-071",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码 636-639 行明确显示 def debug(request) 没有任何认证装饰器或 is_authenticated 检查，直接 render 'Lab/A10/debug.log' 并以 text/plain 返回，与报告“未认证 debug 日志暴露、信息泄露”的根因和代码路径完全对应；日志具体内容（如含 username/password 的 URL 记录）在给定片段中未展示，属额外细节，但核心“公开端点泄露调试日志”已由 636-639 行支撑，故判 same+supported。"
+      },
+      {
+        "finding_id": "finding-038",
+        "gt_id": "pygoat-010",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告与候选均指向 Otp 二次认证的弱 OTP/认证绕过：源码 496 行 randint(100,999) 证明 OTP 空间仅 100-999，506 行非管理员分支将 otpN 直接渲染回显，514 行用 email+otp 或 id=2+otp 校验，518 行无尝试次数限制。报告明确写出弱 OTP、明文回显、无速率限制及跨账户接受，属同一根因和同一 Otp 认证路径。"
+      },
+      {
+        "finding_id": "finding-038",
+        "gt_id": "pygoat-fp-022",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选描述的是 @csrf_exempt 与 GET 请求修改数据库/Set-Cookie 的 CSRF/状态变更问题；源码 492 行确有 @csrf_exempt，494-507 行 GET 分支执行 otp.update(...) 并 set_cookie，因此该候选问题本身有静态依据。但模型报告 message 与 data_flow 主体是 OTP 泄露、跨账户校验和爆破绕过，未明确把 CSRF 或状态变更 GET 作为根因报告，仅在 preconditions 提到 @csrf_exempt，故与候选不对应。"
+      },
+      {
+        "finding_id": "finding-039",
+        "gt_id": "pygoat-020",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告的 message 明确指出 SECRET_KEY 被直接硬编码进 settings 且未从环境变量读取，并引用 settings.py:25；源码第25行确为该硬编码 SECRET_KEY。报告与候选描述同一根因和代码路径，故为 same；源码直接支持。"
+      },
+      {
+        "finding_id": "finding-039",
+        "gt_id": "pygoat-021",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确写到 DEBUG = True 且会通过异常页泄露堆栈/settings 内容；源码 settings.py:30 确为 DEBUG = True。与候选同一配置问题。报告提到的 Heroku 可能改写 DEBUG 属部署影响条件，但候选所指的调试模式配置已由给定源码支持。"
+      },
+      {
+        "finding_id": "finding-039",
+        "gt_id": "pygoat-022",
+        "relation": "different",
+        "support": "supported",
+        "reason": "源码 settings.py:27 确有 SENSITIVE_DATA = 'FLAGTHATNEEDSTOBEFOUND'，候选问题本身有静态依据；但报告 message 和根因只围绕 SECRET_KEY 硬编码与 DEBUG=True，未明确把明文敏感数据/flag 作为独立问题报告。代码摘录出现该行不等同于报告识别该问题，故 relation 为 different，support 为 supported。"
+      },
+      {
+        "finding_id": "finding-040",
+        "gt_id": "pygoat-038",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选报告明确指出 /deserialize 路由把 POST 表单 serialized_data（main.py:33）经 base64 解码（:34）后传入 pickle.loads（:36），与 finding 的根因和代码路径一致；源码显示该路由无认证，符合对不可信输入反序列化可导致任意代码执行的问题。"
+      },
+      {
+        "finding_id": "finding-041",
+        "gt_id": "pygoat-045",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选 pygoat-045 定位到 all_users_data_view（112-132），与报告完全一致：该函数没有 @login_required，也没有任何权限判断（112-117），遍历 UserData.objects.all()（120），并把 username、完整 credit_card、完整 ssn、api_key 放入 JSON 全量返回（121-126、132）。这与报告所述“缺失认证与授权、未认证用户可获取全部用户 PII、缺少脱敏”的根因和代码路径相同，源码直接支持。"
+      },
+      {
+        "finding_id": "finding-041",
+        "gt_id": "pygoat-046",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选 pygoat-046 指向 api_data_view（87-109），该函数带有 @login_required（86），只查询当前 request.user 的 UserData（91），返回当前用户自己的 credit_card、ssn、api_key（101-105、109）。报告则针对未加认证/授权装饰器、且遍历全部用户的 all_users_data_view（112-132）。两者虽同属敏感数据暴露，但端点、访问控制前提、数据范围（当前用户 vs 全部用户）和根因/代码路径不同，不能视为同一问题。就候选自身描述而言，源码支持 api_data_view 将完整敏感字段以明文 JSON 返回（101-105、109）。"
+      },
+      {
+        "finding_id": "finding-042",
+        "gt_id": "pygoat-057",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指出 generate_api_key 使用 random.choices 生成 API Key（views.py:38-42），并指出 import random（第9行）、随后注册流程写入 UserData.api_key（第54-58行）。这与候选 pygoat-057 的“非密码学安全随机源生成 API Key”在根因和代码路径上一致；源码直接支持使用 random.choices 和 36 字符集生成 16 位 key。"
+      },
+      {
+        "finding_id": "finding-042",
+        "gt_id": "pygoat-066",
+        "relation": "different",
+        "support": "insufficient",
+        "reason": "模型报告只讨论 generate_api_key 的不安全随机源（views.py:38-42），未提及 login_view 缺少限速或账户锁定；候选 pygoat-066 指向 login_view（views.py:20-36）的暴力破解风险，根因和代码路径不同。源码片段中 login_view 函数内未见限速逻辑，但要确认登录端点没有全局速率限制/锁定，还需未展示的 middleware、settings 或认证配置，因此该独立问题证据不足。"
+      },
+      {
+        "finding_id": "finding-044",
+        "gt_id": "pygoat-042",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选 pygoat-042 指的是 register() 中第67-68行把密码明文存入 users 字典（'password': password）。模型报告针对的是 /reset-password 中第86-91行的令牌生成与泄露，以及 /reset/<token> 无校验，并未提及明文存储或该代码路径。两者根因不同：一个是存储缺陷，一个是重置令牌可预测并泄露。明文存储在源码第68行确有依据，故该候选问题本身 supported，但与模型报告不是同一问题。"
+      },
+      {
+        "finding_id": "finding-044",
+        "gt_id": "pygoat-056",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告主根因之一即第86行 token = md5(f\"{email}:{datetime.now()}\") 生成可预测（无密钥、时间戳可枚举）的重置令牌，与候选 pygoat-056 描述完全对应同一行、同一根因。源码第86-87行确认令牌由邮箱与当前时间拼接后用 MD5 生成并写入 password_reset_tokens；第91行还把令牌回显，第97-101行令牌可直接访问重置页。候选仅提暴力破解，模型报告多说了响应泄露用户枚举，但这属于同一根因的补充路径，不构成不同问题。"
+      },
+      {
+        "finding_id": "finding-045",
+        "gt_id": "pygoat-039",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 app.secret_key = 'your-secret-key-here' 为硬编码密钥，并说明可导致会话/Flash 伪造；源码第 8 行直接确认该硬编码 secret key，与候选描述同一根因、同一代码位置。"
+      },
+      {
+        "finding_id": "finding-045",
+        "gt_id": "pygoat-040",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确写到 users 字典内置 admin/admin123、user/password123 明文口令；源码第 11-22 行直接显示这些硬编码明文凭据，与候选描述同一根因和代码区域。"
+      },
+      {
+        "finding_id": "finding-046",
+        "gt_id": "pygoat-047",
+        "relation": "same",
+        "support": "supported",
+        "reason": "第8行明确硬编码 SECRET_KEY；finding 消息也明确列出该硬编码密钥并可伪造 django_session，文件、行号与根因一致。"
+      },
+      {
+        "finding_id": "finding-046",
+        "gt_id": "pygoat-048",
+        "relation": "same",
+        "support": "supported",
+        "reason": "第11行 DEBUG = True；finding 明确说明 DEBUG 开启导致异常页泄露 settings 与 SQL，文件、行号与根因一致。"
+      },
+      {
+        "finding_id": "finding-046",
+        "gt_id": "pygoat-049",
+        "relation": "different",
+        "support": "supported",
+        "reason": "第13行确为 ALLOWED_HOSTS = ['*']，源码支持宽松 Host 校验；但 finding 只是列举该配置，根因结论仅写硬编码密钥和 DEBUG，未把 ALLOWED_HOSTS/Host 头攻击作为独立安全问题报告，不能算同一根因。"
+      }
+    ],
+    "duplicate_label_reports": {},
+    "checks": {
+      "check_1_file_exists_and_matches": 47,
+      "check_2_reported_start_within_10_lines": 42,
+      "check_3_at_least_one_source_line_in_quote": 47,
+      "all_three": 42
+    },
+    "jobs": 42,
+    "completed": 42
+  },
+  "qwen-3.8-flash-next/B": {
+    "reports": 59,
+    "evidence_valid": 50,
+    "confirmed_reports": 43,
+    "covered_labels": 48,
+    "positive_labels": 78,
+    "reference_precision": 0.7288135593220338,
+    "recall": 0.6153846153846154,
+    "f1": 0.6673132880698351,
+    "pending_pairs": 7,
+    "negative_label_matches": [],
+    "accepted_pairs": [
+      [
+        "finding-001",
+        "pygoat-001"
+      ],
+      [
+        "finding-002",
+        "pygoat-002"
+      ],
+      [
+        "finding-003",
+        "pygoat-006"
+      ],
+      [
+        "finding-004",
+        "pygoat-007"
+      ],
+      [
+        "finding-005",
+        "pygoat-008"
+      ],
+      [
+        "finding-006",
+        "pygoat-009"
+      ],
+      [
+        "finding-007",
+        "pygoat-016"
+      ],
+      [
+        "finding-008",
+        "pygoat-015"
+      ],
+      [
+        "finding-009",
+        "pygoat-018"
+      ],
+      [
+        "finding-012",
+        "pygoat-003"
+      ],
+      [
+        "finding-013",
+        "pygoat-004"
+      ],
+      [
+        "finding-014",
+        "pygoat-055"
+      ],
+      [
+        "finding-015",
+        "pygoat-062"
+      ],
+      [
+        "finding-017",
+        "pygoat-035"
+      ],
+      [
+        "finding-018",
+        "pygoat-036"
+      ],
+      [
+        "finding-020",
+        "pygoat-026"
+      ],
+      [
+        "finding-021",
+        "pygoat-027"
+      ],
+      [
+        "finding-021",
+        "pygoat-053"
+      ],
+      [
+        "finding-022",
+        "pygoat-025"
+      ],
+      [
+        "finding-023",
+        "pygoat-028"
+      ],
+      [
+        "finding-024",
+        "pygoat-029"
+      ],
+      [
+        "finding-026",
+        "pygoat-020"
+      ],
+      [
+        "finding-026",
+        "pygoat-022"
+      ],
+      [
+        "finding-027",
+        "pygoat-021"
+      ],
+      [
+        "finding-029",
+        "pygoat-031"
+      ],
+      [
+        "finding-030",
+        "pygoat-030"
+      ],
+      [
+        "finding-034",
+        "pygoat-033"
+      ],
+      [
+        "finding-035",
+        "pygoat-032"
+      ],
+      [
+        "finding-036",
+        "pygoat-011"
+      ],
+      [
+        "finding-037",
+        "pygoat-013"
+      ],
+      [
+        "finding-038",
+        "pygoat-014"
+      ],
+      [
+        "finding-039",
+        "pygoat-010"
+      ],
+      [
+        "finding-040",
+        "pygoat-010"
+      ],
+      [
+        "finding-041",
+        "pygoat-034"
+      ],
+      [
+        "finding-043",
+        "pygoat-068"
+      ],
+      [
+        "finding-048",
+        "pygoat-041"
+      ],
+      [
+        "finding-049",
+        "pygoat-044"
+      ],
+      [
+        "finding-049",
+        "pygoat-056"
+      ],
+      [
+        "finding-050",
+        "pygoat-040"
+      ],
+      [
+        "finding-051",
+        "pygoat-039"
+      ],
+      [
+        "finding-052",
+        "pygoat-038"
+      ],
+      [
+        "finding-053",
+        "pygoat-045"
+      ],
+      [
+        "finding-054",
+        "pygoat-052"
+      ],
+      [
+        "finding-056",
+        "pygoat-047"
+      ],
+      [
+        "finding-056",
+        "pygoat-048"
+      ],
+      [
+        "finding-056",
+        "pygoat-049"
+      ],
+      [
+        "finding-057",
+        "pygoat-059"
+      ],
+      [
+        "finding-057",
+        "pygoat-060"
+      ],
+      [
+        "finding-058",
+        "pygoat-058"
+      ]
+    ],
+    "covered_ids": [
+      "pygoat-001",
+      "pygoat-002",
+      "pygoat-003",
+      "pygoat-004",
+      "pygoat-006",
+      "pygoat-007",
+      "pygoat-008",
+      "pygoat-009",
+      "pygoat-010",
+      "pygoat-011",
+      "pygoat-013",
+      "pygoat-014",
+      "pygoat-015",
+      "pygoat-016",
+      "pygoat-018",
+      "pygoat-020",
+      "pygoat-021",
+      "pygoat-022",
+      "pygoat-025",
+      "pygoat-026",
+      "pygoat-027",
+      "pygoat-028",
+      "pygoat-029",
+      "pygoat-030",
+      "pygoat-031",
+      "pygoat-032",
+      "pygoat-033",
+      "pygoat-034",
+      "pygoat-035",
+      "pygoat-036",
+      "pygoat-038",
+      "pygoat-039",
+      "pygoat-040",
+      "pygoat-041",
+      "pygoat-044",
+      "pygoat-045",
+      "pygoat-047",
+      "pygoat-048",
+      "pygoat-049",
+      "pygoat-052",
+      "pygoat-053",
+      "pygoat-055",
+      "pygoat-056",
+      "pygoat-058",
+      "pygoat-059",
+      "pygoat-060",
+      "pygoat-062",
+      "pygoat-068"
+    ],
+    "assessments": [
+      {
+        "finding_id": "finding-001",
+        "gt_id": "pygoat-001",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指出第158行将POST参数name/pass直接拼接进SQL字符串，并在第162行交给login.objects.raw(sql_query)执行，且可注入元字符改变查询语义；这与候选描述的SQL拼接注入根因和代码路径一致。源码第150-152、158、162行支持该结论。"
+      },
+      {
+        "finding_id": "finding-001",
+        "gt_id": "pygoat-fp-001",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选是“NOT vulnerable”的排除性标签，针对第156行login.objects.filter(user=name)；模型报告没有把该ORM过滤判定为漏洞，而是只报告第158-162行的原始SQL拼接执行。源码第156行确实显示存在性检查使用ORM filter，随后第158/162行才是拼接并raw执行，因此候选的排除性描述与源码一致，但不属于模型报告所指的同一漏洞。"
+      },
+      {
+        "finding_id": "finding-002",
+        "gt_id": "pygoat-002",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告的 message 与 data_flow 明确指向同一处：第 858-859 行从 POST 取 name/pass，第 864 行把它拼进 SELECT 语句，第 878 行交给 sql_lab_table.objects.raw(sql_query) 执行，属于典型的未参数化字符串拼接 SQL 注入；报告标注的路径与行号(864-878) 与标签完全一致，源码摘录可直接支撑该根因与代码路径。"
+      },
+      {
+        "finding_id": "finding-002",
+        "gt_id": "pygoat-fp-024",
+        "relation": "different",
+        "support": "unsupported",
+        "reason": "标签描述的是 @csrf_exempt 导致的 CSRF 缺陷（第 854 行）以及每次请求重复 save 记录的行为；模型 message 只把“每次请求先把一批含明文口令的账号写库”作为 SQL 注入报告中的附带观察，并未把缺少 CSRF 防护（@csrf_exempt + POST 状态变更）识别为独立安全问题，也未给出跨站请求伪造的根因或代码路径，因此与标签不是同一问题。此外，源码第 846/854 行虽确见 @csrf_exempt，但模型未表达该缺陷，故该标签在本报告下不能确认。"
+      },
+      {
+        "finding_id": "finding-003",
+        "gt_id": "pygoat-006",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选描述一致：源码第208行从用户可控的 token Cookie 读取数据，第213行 base64 解码后，第214行直接调用 pickle.loads(token)，未做签名或完整性校验；第215行才进行 admin 属性判断。该危险反序列化路径可导致任意代码执行，与候选所指的同一根因和代码路径相符。"
+      },
+      {
+        "finding_id": "finding-004",
+        "gt_id": "pygoat-007",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第258-260行显示 xxe_parse 中调用 make_parser()，显式设置 feature_external_ges=True，并将 request.body.decode('utf-8') 传给 parseString，与候选描述的外部实体解析 XXE 根因和代码路径一致。第263-268行进一步展开节点并将结果写入 comments，说明可读取/回显内容；第239/255行 @csrf_exempt 与报告中的跨站触发前提相符。候选虽未展开写库回显链路，但已明确同一 XXE 根因和同一用户输入解析路径，故判定 same 且 supported。"
+      },
+      {
+        "finding_id": "finding-005",
+        "gt_id": "pygoat-008",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述与报告一致：request.POST 的 domain 在 418 行获取，420 行仅用 re.sub 去除协议/www 前缀，未过滤 shell 元字符；424/426 行将其 format 进 nslookup/dig 命令，430-432 行通过 subprocess.Popen(..., shell=True) 执行。因此 ;、&& 等命令分隔符仍可注入，根因和代码路径相同，源码证据充分。"
+      },
+      {
+        "finding_id": "finding-006",
+        "gt_id": "pygoat-009",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码行 456 `val=request.POST.get('val')` 和行 460 `output = eval(val)` 直接显示 POST 参数未经任何过滤/白名单进入 Python 内置 eval()，catch 块(461-463)只吞异常不校验；行 464-465 将结果渲染回 cmd_lab2.html，模板行 19 `{{output}}` 回显；行 454 也确认需登录。该描述与模型报告一致：根因是未净化输入直通 eval，代码路径为 cmd_lab2 的 POST->eval->渲染，故为 same 且由源码支持。"
+      },
+      {
+        "finding_id": "finding-006",
+        "gt_id": "pygoat-fp-021",
+        "relation": "different",
+        "support": "unsupported",
+        "reason": "标签根因是缺少 CSRF 防护（行 452 @csrf_exempt + 行 455/456 POST 处理），其声称的“任意 Python 代码执行”实际来自行 460 的 eval(val)，而非 csrf_exempt；CSRF 豁免并不能让“已认证用户”获得额外的代码执行能力（直接 POST 即可），因此该标签把 eval 的 RCE 影响错误归因到 CSRF 上，属错误前提/夸大。模型报告通篇只描述 eval 未净化输入导致 RCE（行 456、460），未提及 @csrf_exempt 或 CSRF，两者根因与代码路径判定不同，故 relation=different、support=unsupported。"
+      },
+      {
+        "finding_id": "finding-007",
+        "gt_id": "pygoat-016",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第961行从 request.POST['url'] 读取用户可控 URL，第963行直接传入 requests.get(url)，未见协议、主机/IP 白名单或重定向限制，第964行回显响应内容。这与候选描述的 SSRF 根因和代码路径一致，属于同一安全问题。"
+      },
+      {
+        "finding_id": "finding-008",
+        "gt_id": "pygoat-015",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与标签均指向 ssrf_lab 中同一路径穿越根因：923 行从 POST 参数 blog 取用户输入，926 行直接 os.path.join(dirname, file)，927-928 行未校验即 open().read()，929 行将读取内容回显。../ 未被 os.path.join 规范化或剥离，因此可穿越读取任意可读文件；919 行仅要求已认证，不改变该路径穿越问题。"
+      },
+      {
+        "finding_id": "finding-009",
+        "gt_id": "pygoat-018",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第558行取用户上传文件 request.FILES['file']，第560行 `data = yaml.load(file,yaml.Loader)` 明确使用非安全的 yaml.Loader 解析不可信 YAML，第562行将解析结果渲染回页面。这与候选标签描述的“用户上传 YAML 用 yaml.Loader 不安全反序列化、可导致任意 Python 代码执行”为同一根因、同一代码路径（a9_lab 第560行），行号与函数完全对应。注释第571行亦标注 PyYAML v5.1，与载荷所述非安全 Loader 行为一致。只有动态可利用 gadget 的具体证明依赖运行环境，但静态证据已足以支持该不安全反序列化问题，故判 supported。"
+      },
+      {
+        "finding_id": "finding-010",
+        "gt_id": "pygoat-019",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "行583从POST获取未经校验的function，行588直接传入ImageMath.eval，代码路径和根因与候选描述一致。但源码摘录未展示Pillow版本及ImageMath.eval实现，无法静态确认其会执行任意Python表达式；模型报告也注明需运行时确认，故该漏洞利用性证据不足。"
+      },
+      {
+        "finding_id": "finding-011",
+        "gt_id": "pygoat-017",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "报告与候选均描述同一根因和路径：views.py:981 读取 POST blog，views.py:984 调用 filter_blog，views.py:990 拼接模板内容，views.py:994-997 写入 Blogs/<id>.html，views.py:1006 通过 render 动态渲染该模板文件，构成用户内容进入 Django 模板求值的 SSTI 风险。但给定 source_excerpts 未展示 filter_blog 的实现（报告声称位于 introduction/utility.py:55-56 且为空过滤），也未展示模板搜索路径/APP_DIRS 配置，无法独立确认 984 行未执行有效过滤以及写入文件确实处于模板加载路径，因此对该 SSTI 结论证据不足，应标 insufficient。"
+      },
+      {
+        "finding_id": "finding-012",
+        "gt_id": "pygoat-003",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与标签指向同一根因和同一代码路径：模板 xss_lab.html:27 使用 {{query|safe}}，关闭了 Django 自动转义；上下文中的 query 来自 views.py:96 的 request.GET.get('q','')（见 finding 的 preconditions 与 data_flow），构成可控 GET 参数 q 直达 HTML 的反射型 XSS。源码摘录第 27 行确实为 {{query|safe}}，且第 12-14 行的 GET 表单把 q 提交到该视图，支持该问题成立。"
+      },
+      {
+        "finding_id": "finding-012",
+        "gt_id": "pygoat-fp-002",
+        "relation": "different",
+        "support": "supported",
+        "reason": "该标签描述的是第 23-25 行 {{company}}/{{ceo}}/{{about}} 未使用 |safe、因此受 Django 自动转义保护、属于“非漏洞”的否定性结论；模型报告只讨论第 27 行的 {{query|safe}}，完全未提及第 23-25 行或这一非漏洞判断，二者根因与代码位置均不同，故不是同一问题。独立核验：源码第 23-25 行确实无 |safe 过滤器，在默认 autoescape 下会转义输出，标签的“NOT vulnerable”结论有源码依据（但仍需视图/配置确认这些变量未被 mark_safe，未展示部分不足以扩展为更广结论）。"
+      },
+      {
+        "finding_id": "finding-013",
+        "gt_id": "pygoat-004",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选与报告均指向同一路径：模板第20行将用户可控的 username 以 {{ username|safe }} 原样输出，第8、12行显示 username 由 POST 表单提交到 /xssL2，构成反射型 XSS 的明确静态证据。服务端仅替换 <script> 的细节未在摘录中展示，但这不影响 |safe 不安全输出这一根因的成立。"
+      },
+      {
+        "finding_id": "finding-014",
+        "gt_id": "pygoat-055",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均指同一反射型XSS：模板第11行对 username 使用 {{username | safe}}，关闭Django自动转义；第16-17行表单以 method=\"get\" 提交 name=\"username\"，与报告所述 views.py:1220-1226 将 GET username 传入上下文一致。根因和代码路径相同，未见其他独立问题。"
+      },
+      {
+        "finding_id": "finding-015",
+        "gt_id": "pygoat-062",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选与 finding 指向同一根因和同一代码位置：ssrf_lab2.html 第23行的 {{response | safe}} 对服务端抓取内容未转义直接渲染。源码展示的后端逻辑（第38-41行）把 POST 的 url 传给 requests.get(url)，并将 response.content.decode() 作为 response 传入模板，支持攻击者通过控制远端响应内容实施同源 XSS 的判断。"
+      },
+      {
+        "finding_id": "finding-016",
+        "gt_id": "pygoat-061",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "报告与候选均指向 a9.js 第40行 `li.innerHTML = data.logs[i]`，同属将接口返回的 logs 逐条写入 DOM 的 DOM 型 XSS 代码路径，根因一致。源码第38-41行确认了 innerHTML 接收响应数据，第22-23行也显示请求体包含用户输入的 log_code/api_code；但给定摘录未包含 api.py 或后端日志实现，无法确认这些输入会被写入并返回 logs，因此“日志条目包含用户可控内容”这一关键污点来源缺少源码依据，需补充后端实现或调用链。"
+      },
+      {
+        "finding_id": "finding-017",
+        "gt_id": "pygoat-035",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码摘录直接支持该根因：introduction/apis.py:64-65 从未认证的请求中取出 log_code 和 api_code，随后在 69-74 行通过 open(log_filename,'w').write(log_code) 和 open(api_filename,'w').write(api_code) 把它们原样写入 playground/A9/main.py、playground/A9/api.py 这两个 .py 源文件，路径由 67-68 行的 os.path.join(dirname,...) 固定指向应用源码目录；这与候选描述的“用户 POST 参数直写 Python 源文件”完全一致。候选还称这些文件会被 import 后执行；摘录中的 37-38 行 `main.ssrf_lab(inputs)` 显示 playground 模块确实被应用导入，佐证了代码路径成立。至于“被 import/reload 后执行”是否在运行时真正触发，则属于部署条件；finding 的 preconditions 也已限定为静态分析，但它不影响文件写入漏洞本身由源码完全支持，因此不构成夸大前提。"
+      },
+      {
+        "finding_id": "finding-018",
+        "gt_id": "pygoat-036",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选标签描述的是：A6_disscussion_api_2 将 POST 参数 code 未经净化直接写入 playground/A6/utility.py，其行号 131-135 与源码完全对应：130 行读取 request.POST.get('code')，131 行取得 dirname，132 行拼接 \"playground/A6/utility.py\"，133-135 行 open(...,'w').write(code)。该视图仅检查 request.method（127 行），没有认证检查，并且带有 @csrf_exempt（125 行），因此构成同一路径的任意文件写入根因。报告额外声称的导入后 RCE 不改变核心根因，且写入本身由源码直接支持；标签不需要未展示的导入信息。"
+      },
+      {
+        "finding_id": "finding-019",
+        "gt_id": "pygoat-037",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "源码第9-38行确实显示 ssrf_code_converter() 接收 code、转换后在第33-37行写入固定的 playground/ssrf/main.py，这支持“用户内容被写入应用源码文件”的核心路径。但给定摘录未展示 apis.py 中 request.POST 到该函数的调用链，也未展示该文件随后被 import/执行；且文件名为固定路径而非任意目标。因此完整利用条件与“被导入并执行”的前提需要缺失的调用链证据，不能直接确认。"
+      },
+      {
+        "finding_id": "finding-020",
+        "gt_id": "pygoat-025",
+        "relation": "different",
+        "support": "supported",
+        "reason": "报告描述的是 introduction/mitre.py:215-219 的 mitre_lab_25_api() 中 POST expression 传入 eval() 的代码执行问题；候选 pygoat-025 描述的是 191-208 的 csrf_transfer_monei_api() 通过 GET 执行转账、缺少 CSRF token 的问题。二者函数、根因和代码路径均不同。源码 191-208 确实显示 GET 请求读取 auth_cookiee 后直接修改余额，且无 CSRF token 校验，故候选问题本身有源码支持，但不是模型报告所指问题。"
+      },
+      {
+        "finding_id": "finding-020",
+        "gt_id": "pygoat-026",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均指向 introduction/mitre.py:215-219 的 mitre_lab_25_api()：217 行从 POST 取 expression，218 行直接 eval(expression)，219 行返回 JsonResponse。源码同时显示 213 行认证装饰器被注释、214 行仅有 csrf_exempt，支持未认证任意表达式执行/eval 注入这一同根因、同代码路径问题。"
+      },
+      {
+        "finding_id": "finding-021",
+        "gt_id": "pygoat-027",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码 introduction/mitre.py:240-242 显示 POST 参数 ip 被拼入 \"nmap \" + ip，随后调用 command_out；introduction/mitre.py:232-233 的 command_out 使用 subprocess.Popen(command, shell=True)。该候选明确描述同一未认证命令注入路径和根因，源码证据充分。"
+      },
+      {
+        "finding_id": "finding-021",
+        "gt_id": "pygoat-053",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码 introduction/mitre.py:233 确认 command_out 使用 subprocess.Popen(command, shell=True)，且 introduction/mitre.py:241-242 显示该命令来自 mitre_lab_17_api 中用户控制的 ip 拼接。该候选定位同一命令注入的 sink 与调用路径，虽未展开拼接细节，但明确写出 shell=True 执行来自用户输入的任意命令，属于同一根因。"
+      },
+      {
+        "finding_id": "finding-022",
+        "gt_id": "pygoat-025",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述与报告一致：csrf_transfer_monei_api() 在 GET 分支中（mitre.py:191-208，尤其 192、199-207）直接根据 URL 参数 recipent/amount 修改双方余额并 save()，属于状态变更操作；函数内未见 CSRF token 校验，且可由受害者浏览器携带 auth_cookiee 触发，因此支持 GET 型 CSRF 的根因判断。"
+      },
+      {
+        "finding_id": "finding-023",
+        "gt_id": "pygoat-024",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选描述的是 @csrf_exempt 与 GET 转账造成的 CSRF（mitre.py:177-178、191-207），根因是缺少 CSRF 防护，不是 finding 的硬编码 JWT 密钥。源码确有 csrf_exempt 和有状态 GET 转账逻辑；但 @csrf_exempt 实际在 csrf_transfer_monei 而非 csrf_transfer_monei_api，候选表述有位置偏差。"
+      },
+      {
+        "finding_id": "finding-023",
+        "gt_id": "pygoat-028",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选指出 mitre.py:169 使用硬编码字符串 'csrf_vulneribility' 签发 JWT，与 finding 的硬编码 JWT 密钥根因一致；182/194 又在校验时复用同一密钥，支持攻击者可离线伪造令牌的判断。"
+      },
+      {
+        "finding_id": "finding-023",
+        "gt_id": "pygoat-029",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选问题是 mitre.py:161 使用 MD5 处理密码，根因是弱密码哈希；源码行明确显示 md5(password.encode()).hexdigest()，但与 JWT 硬编码密钥问题不同。"
+      },
+      {
+        "finding_id": "finding-023",
+        "gt_id": "pygoat-067",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选问题是 mitre.py:171 的 set_cookie('auth_cookiee', cookie) 未显式设置 HttpOnly，根因是 Cookie 安全属性缺失；源码该行确实未出现 HttpOnly 参数，但与硬编码 JWT 密钥问题不同。"
+      },
+      {
+        "finding_id": "finding-024",
+        "gt_id": "pygoat-028",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选描述的是第169行 jwt.encode(payload, 'csrf_vulneribility', algorithm='HS256') 使用硬编码弱 JWT 密钥，根因是 JWT 签名密钥硬编码。finding 的根因是第161行 md5(password) 单次无盐口令摘要（及无尝试次数限制），二者尽管同在 csrf_lab_login 且相邻行，但根因与安全机制完全不同（JWT 签名 vs 口令存储）；源码确实支持第169行硬编码密钥，但与 finding 所述问题不同一。"
+      },
+      {
+        "finding_id": "finding-024",
+        "gt_id": "pygoat-029",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选指出第161行 password = md5(password.encode()).hexdigest() 使用 MD5 弱口令哈希，与 finding 的根因（MD5 单次无盐摘要后于第162行 filter 比对）完全一致，代码路径同为 POST 登录口令摘要→数据库比对。源码第161-162行直接支持该问题，判定 same 且 supported。"
+      },
+      {
+        "finding_id": "finding-024",
+        "gt_id": "pygoat-067",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选描述第171行 response.set_cookie('auth_cookiee', cookie) 未设置 HttpOnly，根因是 JWT 令牌可被 JS 访问导致 XSS 窃取。finding 的根因是无盐 MD5 口令存储与无速率限制，二者机制和攻击面不同；源码确实显示 set_cookie 无 httponly 参数，但与 finding 的问题不同一。"
+      },
+      {
+        "finding_id": "finding-025",
+        "gt_id": "pygoat-023",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "settings.py:171 确实显示 SECRET_COOKIE_KEY = \"PYGOAT\"，与候选的硬编码弱密钥位置和取值一致。但候选明确称该密钥用于 sec_misconfig_lab3 的 JWT 签发/校验；给定源码摘要未展示 introduction/views.py:1088、1090-1109 的导入及 jwt.encode/decode 调用链，因此无法独立核验其 JWT 用途和 admin 伪造路径。"
+      },
+      {
+        "finding_id": "finding-026",
+        "gt_id": "pygoat-020",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告消息明确讨论 settings.py:25 的 SECRET_KEY 明文硬编码，并说明其可用于签名/session；候选描述同为该行密钥硬编码。源码第25行直接可见 SECRET_KEY 字面量，根因与代码位置对应。"
+      },
+      {
+        "finding_id": "finding-026",
+        "gt_id": "pygoat-021",
+        "relation": "different",
+        "support": "supported",
+        "reason": "报告只讨论第25行 SECRET_KEY 与第27行 SENSITIVE_DATA，未提及第30行 DEBUG=True；根因不同。独立看源码第30行确有 DEBUG = True，故该候选描述的问题由源码支持，但不属于本报告。"
+      },
+      {
+        "finding_id": "finding-026",
+        "gt_id": "pygoat-022",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告消息明确写出 SENSITIVE_DATA（'FLAGTHATNEEDSTOBEFOUND'）以明文硬编码，对应 settings.py:27；候选描述同一行、同一敏感数据硬编码问题。源码第27行直接支持该判断。"
+      },
+      {
+        "finding_id": "finding-027",
+        "gt_id": "pygoat-020",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选指 settings.py:25 硬编码 SECRET_KEY（用于签名/会话）。报告 message 与 code_evidence 仅围绕 settings.py:30 DEBUG=True 与 :32 ALLOWED_HOSTS，未提及 SECRET_KEY 或会话伪造风险，根因与代码位置均不同，故不能视为同一问题（尽管 :25 的硬编码密钥本身由源码支持）。"
+      },
+      {
+        "finding_id": "finding-027",
+        "gt_id": "pygoat-021",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述 settings.py:30 开启 DEBUG 导致详细错误页/堆栈与配置、环境信息泄露。报告 message 明确称“DEBUG = True 交付”“DEBUG 开启时未处理异常会向客户端输出完整 traceback（含本地绝对路径、settings 与请求数据）”，code_evidence 含第 30 行 DEBUG = True，根因（生产外环境开启调试模式造成信息泄露）与代码路径（settings.py:30）一致。报告另含 ALLOWED_HOSTS（:32）为附加问题，不影响对 DEBUG 这一独立问题的命中。部署是否对外需部署确认，但静态证据已足以支持配置缺陷本身。"
+      },
+      {
+        "finding_id": "finding-027",
+        "gt_id": "pygoat-022",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选指 settings.py:27 SENSITIVE_DATA = 'FLAGTHATNEEDSTOBEFOUND' 明文存储敏感标志。报告未提及该常量或任何明文敏感数据泄露点，仅讨论 DEBUG 与 ALLOWED_HOSTS，根因与位置不同，故非同一问题（:27 明文硬编码本身由源码支持）。"
+      },
+      {
+        "finding_id": "finding-029",
+        "gt_id": "pygoat-031",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与候选均指出同一问题：cookie 明文格式为 username|expiry，缺少签名/完整性保护，篡改 username 为 admin 即可获得管理员视图。源码 1053-1061 直接读取 cookie，按 '|' 分割，仅校验过期时间后执行 cookie.split('|')[0] == 'admin' 授权；1074-1076 生成并设置未签名的明文 cookie。登录用户获得 'User|未来时间' 后可改为 'admin|未来时间'，符合所述越权路径。"
+      },
+      {
+        "finding_id": "finding-030",
+        "gt_id": "pygoat-030",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告（message/数据流）与候选标签一致，均指认 introduction/views.py 的 crypto_failure_lab 在第1026行执行 password = md5(password.encode()).hexdigest()，随后在1027行以该未加盐、单次摘要与 CF_user.password 比对，属于弱口令哈希（MD5）存储/校验凭据。源码摘录1026-1027行直接显示该 MD5 调用并直接用于认证查询，根因和代码路径与标签相符；报告中附带的“无登录失败限速”为额外评论，不影响核心判定。md5 的导入未在摘录范围内展示（报告声明 views.py:15 有 from hashlib import md5），但1026行调用名本身已足以支持 MD5 使用这一静态事实，故判 supported。"
+      },
+      {
+        "finding_id": "finding-032",
+        "gt_id": "pygoat-fp-006",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选 pygoat-fp-006 的结论是‘并非真实凭据泄露’（值已 SHA-256 哈希、属刻意演示数据），而模型报告（message/data_flow，行1163-1168）的结论是‘硬编码凭据构成漏洞’，二者对同一代码位置的判定相反，故报告并未描述候选所主张的‘无问题’根因，relation=different。独立核验：源码 1163-1168 确实硬编码了 USER_A7_LAB3 四个账号的 64 位十六进制口令摘要（非明文），且 1162 注释为演示用；结合 data_flow 所述 sha256(password) 比对分支（源码片段 1189-1193 之后的比较逻辑未在摘录中展示），硬编码认证常量这一事实成立，因此‘硬编码凭据’问题在源码层面可支持。但需注意两点夸大：(1) 值为无盐 SHA-256 摘要而非明文，模型‘知道常量即可直接通过认证’需先求得口令原像，前提偏强；(2) 1162 已注明演示用途，严重性应下调。尽管如此，硬编码认证材料本身仍属可支持的安全弱点，故 support=supported。"
+      },
+      {
+        "finding_id": "finding-034",
+        "gt_id": "pygoat-033",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码第286行从 request.POST 取得明文 passwd，第287行 authLogin.objects.create(... password=passwd) 直接原样存储，未调用哈希函数；第315行登录还用 filter(username=..., password=passwd) 明文比对，进一步印证明文口令存储与使用。候选描述与 finding 的根因和代码路径一致。"
+      },
+      {
+        "finding_id": "finding-035",
+        "gt_id": "pygoat-032",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与标签均指向 auth_lab_login 的 GET 分支：源码第302行直接以 request.COOKIES['userid'] 查询 authLogin，并在第303-307行渲染该用户成功页、续签 Cookie，未校验口令或会话。由于 Cookie 由攻击者控制，替换 userid 即可命中其他用户，符合标签所述通过遍历 userid 访问他人账户的 IDOR 根因和代码路径。标签中的连续整数条件未在本段源码展示，但报告核心与现有第302行证据一致。"
+      },
+      {
+        "finding_id": "finding-036",
+        "gt_id": "pygoat-011",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选明确指向 introduction/views.py:347 的 `request.COOKIES.get('admin') == \"1\"` 权限判定，以及 348-354 返回 `0NLY_F0R_4DM1N5` 管理员数据，和报告描述的客户端 Cookie 可信授权绕过根因、代码路径一致。源码同时显示该 Cookie 在 363 行由应用下发且无签名/服务端绑定，支持该问题；实际利用需满足 343 行已认证且 346 行提交 name 等前置条件，但不改变同一根因判定。"
+      },
+      {
+        "finding_id": "finding-036",
+        "gt_id": "pygoat-fp-019",
+        "relation": "different",
+        "support": "insufficient",
+        "reason": "候选标题和描述的核心是 @csrf_exempt 导致的 CSRF，而报告核心是信任客户端 `admin` Cookie 做权限判定，二者根因不同。源码确实在 341-342 行对 ba_lab 使用 @csrf_exempt，并在 363 行设置 `admin` Cookie，但 355-363 行显示设置管理员 Cookie 前需要 admin 口令校验；仅凭当前片段无法确认存在可被跨站利用的 CSRF 状态变更，且候选文本截断，缺少完整攻击前提，故其 CSRF 结论不能由展示源码充分支持。"
+      },
+      {
+        "finding_id": "finding-037",
+        "gt_id": "pygoat-013",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与标签描述同一根因与代码路径：views.py:791 取 request.META['HTTP_USER_AGENT']，views.py:796-805 在 name 非空时直接比较 user_agent == \"pygoat_admin\"，命中即返回 data=\"0NLY_F0R_4DM1N5\" 与 status=\"admin\"。源码第797-805行证实 User-Agent 完全由客户端控制，任何已登录用户设置该头即可取得管理员机密，符合标签的越权（broken access control）语义。报告额外提到的缺失 UA 触发 KeyError 属同一行取值方式的附加缺陷，不影响主根因匹配。"
+      },
+      {
+        "finding_id": "finding-038",
+        "gt_id": "pygoat-014",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选与 finding 均指向 introduction/views.py:837-841 的 a1_broken_access_lab3_secret：第838-839行仅检查 is_authenticated，第840行注释 no checking applied，第841行直接渲染 secret.html；缺少角色/管理员授权检查的根因和代码路径一致。模板内容未在摘录中展开，但源码已足以支持认证后无授权即可访问 secret 端点。"
+      },
+      {
+        "finding_id": "finding-038",
+        "gt_id": "pygoat-051",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选描述的是第831-833行 a1_broken_access_lab_3 中硬编码 John/reaper 和 admin/admin_pass 凭据，属硬编码凭据问题；finding 是第837-841行 secret 端点缺少授权检查。虽同文件邻近，根因和代码路径不同。硬编码凭据本身由摘录第831、833行直接支持。"
+      },
+      {
+        "finding_id": "finding-039",
+        "gt_id": "pygoat-010",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指出非 admin 分支把 randint(100,999) 生成的 OTP 通过 render(..., {\"otp\":otpN}) 直接返回给请求者（506 行），并说明后续 POST 可用该数字通过校验（512-516 行），与候选所述“非 admin 用户 OTP 直接出现在响应中”为同一根因和同一代码路径。候选提到的 3 位 OTP 由 496 行支持，未限速可从 492-518 行除 POST 校验外无速率限制逻辑得到支持。email 来自 GET 参数并由 Cookie 带入 POST 校验（495、505、507、513-514 行）也由源码支持。"
+      },
+      {
+        "finding_id": "finding-040",
+        "gt_id": "pygoat-010",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码 views.py:496 为 `otpN=randint(100,999)`，只有 900 种取值；views.py:492 使用 `@csrf_exempt`，且 views.py:512-518 的校验流程没有失败次数、锁定或过期控制，这与标签所说“3 位 OTP 可被暴力枚举、且 OTP 验证没有限速”对应，核心根因相同、代码路径相同。模型在同一报告里另外指出：views.py:505-506 会把非管理员 OTP 直接返回给用户，但模型没有明确描述这一点；这属于同一函数的另一独立缺陷。只有 views.py:514 的 `filter(id=2,otp=otpR)` 分支才是模型新增的认证绕过。模型提到的 `MaxValueValidator(300)`（introduction/models.py:37-40）在本轮源码摘录中没有展示，但该细节不影响主结论的静态支撑，因为弱 OTP 与无限速已由 views.py:496/492/512-518 直接支持。模型还声称“猜中 id=2 的 OTP 即可登录为 admin”（views.py:499/514），这一点有源码依据，并不构成夸大前提。"
+      },
+      {
+        "finding_id": "finding-041",
+        "gt_id": "pygoat-034",
+        "relation": "same",
+        "support": "supported",
+        "reason": "源码 lines 535-540 中 secret() 直接读取客户端可控的 X-Host 并以此等于 'admin.localhost:8000' 作为唯一访问控制，命中后渲染 secret='S3CR37K3Y'，且该视图无认证检查；else 分支将 XHost 拼入模板上下文回显。候选描述与 finding 的根因、代码路径和影响一致。"
+      },
+      {
+        "finding_id": "finding-043",
+        "gt_id": "pygoat-068",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告与标签均指向 a10_lab2 中同一根因：POST 的 user（views.py:657）和 X-Forwarded-For 派生的 ip（views.py:659-664）未经换行剥离等处理，直接进入 logging.warning/info/error（views.py:668、669、672），可造成日志伪造/审计污染；源码证据充分。"
+      },
+      {
+        "finding_id": "finding-044",
+        "gt_id": "pygoat-fp-004",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选针对 views.py:626-628 的 a10_lab 登录查询；源码显示 request.POST 输入进入 login.objects.filter(...)，并非 raw SQL，支持其“NOT vulnerable/ORM 参数化”判断。但模型 finding 描述的是 views.py:636-639 的 debug() 未认证日志返回，未提及 a10_lab、登录查询或 SQL/ORM，故不是同一根因或代码路径。"
+      },
+      {
+        "finding_id": "finding-044",
+        "gt_id": "pygoat-071",
+        "relation": "same",
+        "support": "insufficient",
+        "reason": "模型 finding 与候选均指向 views.py:636-639：debug() 未加认证装饰器，render('Lab/A10/debug.log') 后设置 text/plain 返回，根因和路径一致。源码行 636-639 可支持“无认证返回日志文件”的核心，但给定摘录未展示 debug.log 内容，也未展示 introduction/urls.py:53 路由，因此日志内绝对路径、异常堆栈、明文口令/管理员痕迹及匿名可达性无法独立核验；候选具体称 'GET /a10_lab?username=...' 也与源码 621-627 的 a10_lab GET/POST 处理不完全吻合。"
+      },
+      {
+        "finding_id": "finding-048",
+        "gt_id": "pygoat-041",
+        "relation": "same",
+        "support": "supported",
+        "reason": "标签与报告均指向 app.py:45：session_token = base64.b64encode(f\"{username}:{datetime.now()}\")，即仅用可逆的 Base64 编码用户名与时间戳、无签名/无完整性保护，且 49/51 行直接作为 cookie 下发，与报告中'可伪造会话凭据'的根因和代码路径一致。源码行 45 已足以支持'可解码、无密码学完整性'这一核心结论；报告中'构造 base64(admin:...) 即可获 admin 角色'的越权链条依赖未在摘录中展示的 dashboard 校验逻辑（报告称 app.py:111），但这属于同一根因的后果延伸，不影响本标签语义命中。"
+      },
+      {
+        "finding_id": "finding-049",
+        "gt_id": "pygoat-044",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确指出 flash(f'Password reset link: /reset/{token}')（第91行）将完整重置链接直接返回给请求者，并且 /reset/<token>（第97-101行）仅检查 token 是否存在于字典中，不校验请求者身份。这与候选 pygoat-044 的“令牌通过 flash 响应泄露，知道邮箱即可重置该账户”为同一根因和代码路径，源码完全支持。"
+      },
+      {
+        "finding_id": "finding-049",
+        "gt_id": "pygoat-056",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告指出第86行使用 hashlib.md5(f\"{email}:{datetime.now()}\") 生成重置令牌，熵仅来自可猜测的时间戳；候选 pygoat-056 同样描述用邮箱与时间戳拼接后经 MD5 生成可预测令牌。二者对应同一生成逻辑与根因，源码第86-87行支持该问题。"
+      },
+      {
+        "finding_id": "finding-050",
+        "gt_id": "pygoat-039",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选描述的是 app.py:8 的硬编码 Flask secret_key，而模型报告聚焦 app.py:13-22 的明文/弱口令及 app.py:41 的明文比较，未提及 secret_key 或会话签名密钥，因此不是同一根因或代码路径。不过源码第 8 行确实支持该候选问题本身。"
+      },
+      {
+        "finding_id": "finding-050",
+        "gt_id": "pygoat-040",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告明确指出 admin/admin123、user/password123 以明文常量写在源码中，并提到登录时明文比较；对应 app.py:13、18 的明文口令与 app.py:41 的明文比较，根因和代码范围与候选 pygoat-040 一致。"
+      },
+      {
+        "finding_id": "finding-051",
+        "gt_id": "pygoat-039",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选指向 app.py:8 的硬编码 Flask secret_key。模型报告明确写出同一行 app.secret_key = 'your-secret-key-here' 硬编码，并说明固定密钥可导致伪造签名 session/flash Cookie；根因和代码位置一致，源码第 8 行直接支持该问题。报告还额外提到 debug=True，但不影响本条 secret_key 命中。"
+      },
+      {
+        "finding_id": "finding-051",
+        "gt_id": "pygoat-040",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选指向 app.py:11-22 的 users 字典中 admin/admin123 与 user/password123 明文口令。源码第 11-22 行确实支持该独立问题，但模型报告只讨论第 8 行硬编码 secret_key 及 debug 模式，未提及 users 中的硬编码/明文凭据，也未描述相同根因或代码路径，故与候选问题不同。"
+      },
+      {
+        "finding_id": "finding-052",
+        "gt_id": "pygoat-038",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述与报告均指向同一根因和代码路径：/deserialize 端点从请求表单读取 serialized_data（main.py:33），base64 解码（main.py:34），并直接调用 pickle.loads(decoded_data)（main.py:36），未做签名校验或类型白名单，因此用户可控数据可触发不安全反序列化及任意代码执行。源码证据直接支持该问题。"
+      },
+      {
+        "finding_id": "finding-053",
+        "gt_id": "pygoat-045",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告聚焦 all_users_data_view（views.py:112-132）：无 @login_required 装饰器（对比 api_data_view 的 views.py:86），却遍历 UserData.objects.all() 返回完整 credit_card、ssn、api_key（views.py:120-126），且 preconditions 指出路由 urls.py:13 为 /api/all-users/。候选 pygoat-045 描述完全一致：缺少认证/授权导致未认证用户可访问该端点并导出所有用户敏感数据。源码视图代码直接支持无认证及全量数据暴露，路由信息虽未在摘录中展示但为合理调用点引用，不改变同根因判断。"
+      },
+      {
+        "finding_id": "finding-053",
+        "gt_id": "pygoat-046",
+        "relation": "different",
+        "support": "supported",
+        "reason": "候选 pygoat-046 描述的是 api_data_view（views.py:87-109）的敏感数据暴露：该视图虽有 @login_required（views.py:86），但返回当前用户完整信用卡号、SSN、API key 明文（views.py:101-109），无掩码。模型报告主要针对 all_users_data_view 缺少认证+全量用户数据暴露，仅在对比时提及 api_data_view 有 @login_required，并未将其未掩码敏感数据暴露作为独立问题报告。因此两者指向不同代码路径和不同根因（认证缺失+水平越权 vs 已认证下的敏感数据未脱敏），不应视为同一问题。源码摘录确实支持 api_data_view 存在明文敏感数据返回，但模型报告未覆盖该问题。"
+      },
+      {
+        "finding_id": "finding-054",
+        "gt_id": "pygoat-052",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选标签指出 models.py:6-8 以普通 CharField 明文存储信用卡号、SSN、API 密钥且不加密。报告 message 同样以 models.py:6-8 为核心根因，指出 'credit_card、ssn、api_key' 为普通 CharField 明文存储、无加密，并引用源码注释（第6行 'should encrypt this'、第7行 'security risk'、第13行 TODO 脱敏）作为佐证，根因与代码路径一致。报告额外提到的 views 明文输出属于同类数据的延伸暴露，不影响与标签的对应。源码片段直接支持该存储问题，判为 supported。"
+      },
+      {
+        "finding_id": "finding-056",
+        "gt_id": "pygoat-047",
+        "relation": "same",
+        "support": "supported",
+        "reason": "模型报告在 message 中明确写出「SECRET_KEY 明文硬编码」，路径与行号指向 settings.py:8；源码摘录第 8 行确为 SECRET_KEY = 'django-insecure-key-for-demonstration-only'，与标签描述的硬编码弱 SECRET_KEY 根因和代码位置一致。部署暴露条件不影响该配置缺陷的静态成立性。"
+      },
+      {
+        "finding_id": "finding-056",
+        "gt_id": "pygoat-048",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确写出「DEBUG = True」并说明其在异常页输出 settings 与堆栈的泄露后果，路径指向 settings.py:11；源码第 11 行确为 DEBUG = True。根因（调试模式开启）与代码位置均与标签一致。"
+      },
+      {
+        "finding_id": "finding-056",
+        "gt_id": "pygoat-049",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确写出「ALLOWED_HOSTS = ['*']」并指出其「完全关闭 Host 头校验」，路径指向 settings.py:13；源码第 13 行确为 ALLOWED_HOSTS = ['*']，与标签的过于宽松 ALLOWED_HOSTS / Host 头攻击描述对应一致。"
+      },
+      {
+        "finding_id": "finding-057",
+        "gt_id": "pygoat-059",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确写到“POST 分支还会把 username、password 原文写入 L.info(...) 日志”，并与源码 api.py:16 的 L.info(f\"POST request with username {username} and password {password}\") 对应；同一函数 log_function_target 的 POST 路径，根因为凭据明文入日志。路径、行号与数据流均由源码 excerpt 支持。"
+      },
+      {
+        "finding_id": "finding-057",
+        "gt_id": "pygoat-060",
+        "relation": "same",
+        "support": "supported",
+        "reason": "报告明确写到“以硬编码的 admin/admin 作口令校验”，对应 api.py:17 的 if username == \"admin\" and password == \"admin\"，并指出 @csrf_exempt（api.py:7）与无认证入口；同一函数、同一 POST 认证路径的弱/硬编码凭据根因，源码可直接支持。"
+      },
+      {
+        "finding_id": "finding-058",
+        "gt_id": "pygoat-058",
+        "relation": "same",
+        "support": "supported",
+        "reason": "候选描述与模型报告指向同一代码路径和同一根因：profile.html 第217-220行将 user_data.api_key 写入客户端 JS 对象，第222行再用 localStorage.setItem('user_api_key', \"{{ user_data.api_key }}\") 持久化凭据；两者均明确指出该密钥可被同源 XSS、浏览器扩展、开发者工具及本地访问者获取，并跨会话保留。源码摘录直接支持该问题。"
+      }
+    ],
+    "duplicate_label_reports": {
+      "pygoat-010": [
+        "finding-039",
+        "finding-040"
+      ]
+    },
+    "checks": {
+      "check_1_file_exists_and_matches": 55,
+      "check_2_reported_start_within_10_lines": 50,
+      "check_3_at_least_one_source_line_in_quote": 59,
+      "all_three": 50
+    },
+    "jobs": 50,
+    "completed": 50
+  }
+}

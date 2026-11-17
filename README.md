@@ -7,6 +7,10 @@
 > [`docs/PR_REVIEW_PHASE1_PRD.md`](docs/PR_REVIEW_PHASE1_PRD.md)。
 > 当前交付状态、已验证项与未完成项见 [`DELIVERY.md`](DELIVERY.md)。
 
+## Python / Django 重构前实验
+
+已完成三个模型在有规则、无规则条件下的六次 PyGoat 审查，以及官方 DeepSeek Flash 语义评分。代码、原始结果、token与费用估算见 [实验01](experiments/01-pygoat-models-pi-agent/README.md)。后续研究模型如何使用规则，计划见 [下一步](experiments/01-pygoat-models-pi-agent/NEXT_STEPS.md)。现有审查器架构说明如下。
+
 ## 它做什么
 
 ```text

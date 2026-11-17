@@ -1,0 +1,89 @@
+{
+  "experiment_id": "01-pygoat-models-pi-agent",
+  "group": "B-with-extra-rules",
+  "model_label": "qwen-3.8-flash-next",
+  "run_id": "r01",
+  "harness": "pi-agent",
+  "input_directory": "D:/ai_share/langgraph/benchmark-data/pygoat-baseline/inputs/experiment-01/pygoat",
+  "rules_directory": "D:/ai_share/langgraph/benchmark-data/pygoat-baseline/inputs/experiment-01/rules-v1",
+  "source_commit": "2fb0c600245f50670e8b9233c784afe61e8b340b",
+  "started_at": "2026-11-17T13:56:39+08:00",
+  "finished_at": "2026-11-17T14:04:56+08:00",
+  "status": "completed",
+  "stop_reason": "分析在 30 分钟预算内正常收敛（实测起止 13:56:39 → 14:04:56，工具时间约 8 分钟，起止时间均由 bash `date -Iseconds` 实测）。已完整阅读全部 Python 视图/接口/配置/URL 路由/子应用入口、相关 HTML 模板与静态 JS，并对每个候选逐一核对代码证据、数据流与触发条件；剩余未逐行阅读的纯讲解型 HTML/CSS、Django migrations 等已在 coverage.json 中显式标记为 not_reviewed，未继续展开。写出结果在预留的 5 分钟内完成。",
+  "time_tracking": {
+    "started_at_tool_measured": "2026-11-17T13:56:39+08:00",
+    "finished_at_tool_measured": "2026-11-17T14:04:56+08:00",
+    "analysis_budget_minutes": 30,
+    "write_reserve_minutes": 5,
+    "session_file_name_hint": "2026-11-17T05-56-16-590Z_01a1e813-d64d-76f7-9a5b-06da0a3929b3.jsonl",
+    "note": "时间全部来自 date -Iseconds 实测，未做估算；session 文件名中的 UTC 时间戳与 started_at 一致（05:56:16Z ≈ 13:56:16+08:00）。"
+  },
+  "artifacts": [
+    "findings.json",
+    "report.md",
+    "coverage.json",
+    "run.json",
+    "uncertain-findings.json"
+  ],
+  "helper_scripts": [
+    "gen.py",
+    "gen2.py"
+  ],
+  "helper_scripts_note": "两个辅助脚本仅保存在本次输出目录内，用途是把已核对过的发现结构化为 JSON 并逐条回读输入目录源码校验行号/逐字证据一致性；未安装任何依赖，未执行被审查代码，未向输入目录写入任何内容。",
+  "counts": {
+    "confirmed_findings": 59,
+    "uncertain_candidates": 10,
+    "severity_breakdown": {
+      "critical": 13,
+      "high": 27,
+      "medium": 18,
+      "low": 1
+    },
+    "input_text_files": 253,
+    "input_binary_files": 5,
+    "coverage_reviewed": 53,
+    "coverage_partial": 24,
+    "coverage_not_reviewed": 176
+  },
+  "confirmed_model_id": null,
+  "pi_version": "1.5.0",
+  "reasoning_effort": null,
+  "input_tokens": null,
+  "output_tokens": null,
+  "cost": null,
+  "environment_observations": {
+    "PI_MODEL": "Qwen3.8-Flash-Next",
+    "PI_PROVIDER": "lenovo-token-hub",
+    "PI_REASONING_LEVEL": "off",
+    "PI_CODING_AGENT": "true",
+    "PI_SESSION_ID": "01a1e813-d64d-76f7-9a5b-06da0a3929b3",
+    "PI_MANAGED_INSTALL_ROOT": "C:/Users/zhuym5/.pi/agent/install",
+    "note": "以上为 `env` 中实际可读取到的变量原文，仅作参考记录。PI_MODEL / PI_REASONING_LEVEL 是 harness 注入的标签，我无法自行验证真实模型身份或推理档位，因此 confirmed_model_id、reasoning_effort 均填 null（不按自我介绍或标签推断）。pi_version 取自 PI_MANAGED_INSTALL_ROOT 下发布目录内 @earendil-works/pi-coding-agent 的 package.json version 字段。token 用量与费用在本环境中没有任何可查询的接口或文件，因此填 null，留给操作者用 pi 真实运行日志补充。"
+  },
+  "method": "仅静态分析：文件读取、全仓 find/grep 检索、逐处输入→危险操作的数据流与调用链核对、模板 sink 与配置项排查。未安装依赖、未运行目标应用、未执行任何测试或利用代码、未调用漏洞扫描器、未委派其他 Agent、未联网搜索、未访问 Git 历史、未读取标准答案或判分程序。",
+  "input_directory_modified": false,
+  "rules_consulted": [
+    "core/django-4.2-deployment-checklist.rst",
+    "core/django-4.2-security.rst",
+    "core/owasp-django-security.md",
+    "core/tencent-python-security.md",
+    "supplemental/owasp-authorization.md",
+    "supplemental/owasp-deserialization.md",
+    "supplemental/owasp-sql-injection-prevention.md",
+    "supplemental/owasp-ssrf-prevention.md",
+    "supplemental/owasp-xss-prevention.md"
+  ],
+  "limitations": [
+    "未运行应用，无法确认任何一条发现在真实请求下的可达性与利用效果；所有结论均为静态分析结论，findings.json 中 validation 字段统一为 static_analysis_only。",
+    "coverage.json 中 176 个文本文件标记为 not_reviewed，主要包括 introduction/templates/mitre/mitre_top1.html ~ mitre_top25.html 等纯讲解模板、introduction/static/css/*.css 与 introduction/static/Lab/*.css、introduction/migrations/0001~0021 与 challenge/migrations/*、各 __init__.py、apps.py、tests.py、pygoat/asgi.py、pygoat/wsgi.py、manage.py、dockerized_labs/*/docker-compose.yml、gh-md-toc、uninstaller.sh、.all-contributorsrc、.gitignore、.dockerignore 以及多数 playground 讲解页。这些文件仍可能包含未被报告的问题。",
+    "24 个文件为 partial（例如 uninstaller.py 只读 1-70 行、introduction/templates/introduction/base.html 只读前 30 行/共 743 行、多个含 |safe 或 CDN script 标签的模板只看了 grep 命中行），具体阅读行段见 coverage.json 的 note 字段。仅列目录、搜到文件名或查看少量命中行都没有被记为 reviewed。",
+    "5 个二进制资源（PNG/JPG 图片）未做内容分析，未验证图片中是否隐藏额外数据。",
+    "10 条候选因缺少关键上下文而未计入 findings.json，已写入 uncertain-findings.json：xss_lab_3.html 的实际输出上下文、challenge 视图 docker 命令参数的可控性、challenge.json 明文 flag 是否会回显、django-heroku 对 ALLOWED_HOSTS/DEBUG 的覆盖行为与 '0.0.0.0.' 尾点条目的匹配语义、docker-compose 可写卷与容器权限对代码注入影响面的放大、uninstaller.py 的运维风险、robots()/error() 两个端点、base.html 的第三方脚本 SRI 完整性、mitre.py 顶层 FLAG 常量、otp 模型 MaxValueValidator(300) 与 randint(100,999) 的范围矛盾。",
+    "依赖与镜像类发现（finding-046、finding-047、finding-059）只给出静态事实（锁定版本本身、基础镜像标签、缺少 integrity/CSP），未标注具体 CVE 编号——本环境禁止联网核实漏洞库，因此其 confidence 标为 medium 或按可静态确认的部分描述。finding-010（PIL.ImageMath.eval 的表达式求值能力）同样依赖第三方库运行期行为，confidence 为 medium。",
+    "部署环境相关前提无法验证：是否真的以 pygoat/settings.py 的 DEBUG=True 对外服务、容器是否以 root 运行、内网/云元数据地址是否可达、是否存在允许普通用户写入 Challenge.docker_image 等字段的管理入口。各发现的 preconditions 字段已区分「源码已确认」与「尚需部署环境确认」。",
+    "规范（rules-v1）只作为额外审查口径使用；每条发现仍要求本仓库内的具体代码证据。未找到对应条文的问题（如 finding-045 组件版本暴露、finding-046/047 依赖与镜像、finding-016 DOM sink）依据既有知识报告。",
+    "同一位置同一根因只报一次，但不同位置的同类问题分开报告（例如 SQL 注入 finding-001/002、越权 finding-036/037/038、口令哈希 finding-024/030/031/033），因此条数偏多属于逐位置计数的结果，而非重复填报。",
+    "本运行不声称覆盖该仓库的全部漏洞；status=completed 仅表示本次任务按时间预算正常结束，不表示找全了漏洞。未计算也不推测本次运行的精确率、召回率或 F1。"
+  ]
+}

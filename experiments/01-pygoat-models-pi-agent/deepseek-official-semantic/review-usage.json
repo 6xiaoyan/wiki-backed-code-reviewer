@@ -1,0 +1,130 @@
+{
+  "minimax-m3.1-flash/A": {
+    "usage": {
+      "input": 74124,
+      "output": 45992,
+      "cacheRead": 4036608,
+      "cacheWrite": 0,
+      "totalTokens": 4156724,
+      "cacheWrite1h": 0,
+      "reasoning": 18370
+    },
+    "pi_estimate_usd": 0.09870440399999995,
+    "actual_provider": [
+      {
+        "provider": "minimax-cn",
+        "model_id": "MiniMax-M3.1-Flash",
+        "api": "anthropic-messages",
+        "records": 69
+      }
+    ],
+    "first_user": "2026-11-17T03:11:49.681Z",
+    "last_message": "2026-11-17T03:37:28.019Z"
+  },
+  "minimax-m3.1-flash/B": {
+    "usage": {
+      "input": 128272,
+      "output": 55098,
+      "cacheRead": 3984764,
+      "cacheWrite": 0,
+      "totalTokens": 4168134,
+      "cacheWrite1h": 0,
+      "reasoning": 17993
+    },
+    "pi_estimate_usd": 0.11146338519999997,
+    "actual_provider": [
+      {
+        "provider": "minimax-cn",
+        "model_id": "MiniMax-M3.1-Flash",
+        "api": "anthropic-messages",
+        "records": 54
+      }
+    ],
+    "first_user": "2026-11-17T05:17:10.343Z",
+    "last_message": "2026-11-17T05:32:37.911Z"
+  },
+  "glm-5.3-flash/A": {
+    "usage": {
+      "input": 2775938,
+      "output": 51303,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 25647,
+      "totalTokens": 2827241
+    },
+    "pi_estimate_usd": null,
+    "actual_provider": [
+      {
+        "provider": "lenovo-token-hub",
+        "model_id": "GLM-5.3-Flash",
+        "api": "openai-completions",
+        "records": 48
+      }
+    ],
+    "first_user": "2026-11-17T05:38:33.564Z",
+    "last_message": "2026-11-17T05:47:49.548Z"
+  },
+  "glm-5.3-flash/B": {
+    "usage": {
+      "input": 1927959,
+      "output": 38890,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 12905,
+      "totalTokens": 1966849
+    },
+    "pi_estimate_usd": null,
+    "actual_provider": [
+      {
+        "provider": "lenovo-token-hub",
+        "model_id": "GLM-5.3-Flash",
+        "api": "openai-completions",
+        "records": 33
+      }
+    ],
+    "first_user": "2026-11-17T05:56:04.745Z",
+    "last_message": "2026-11-17T06:01:32.361Z"
+  },
+  "qwen-3.8-flash-next/A": {
+    "usage": {
+      "input": 3098014,
+      "output": 70605,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 20749,
+      "totalTokens": 3168619
+    },
+    "pi_estimate_usd": null,
+    "actual_provider": [
+      {
+        "provider": "lenovo-token-hub",
+        "model_id": "Qwen3.8-Flash-Next",
+        "api": "openai-completions",
+        "records": 43
+      }
+    ],
+    "first_user": "2026-11-17T05:39:38.717Z",
+    "last_message": "2026-11-17T05:46:01.814Z"
+  },
+  "qwen-3.8-flash-next/B": {
+    "usage": {
+      "input": 7447815,
+      "output": 81168,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 28779,
+      "totalTokens": 7528983
+    },
+    "pi_estimate_usd": null,
+    "actual_provider": [
+      {
+        "provider": "lenovo-token-hub",
+        "model_id": "Qwen3.8-Flash-Next",
+        "api": "openai-completions",
+        "records": 69
+      }
+    ],
+    "first_user": "2026-11-17T05:56:35.694Z",
+    "last_message": "2026-11-17T06:05:21.516Z"
+  }
+}

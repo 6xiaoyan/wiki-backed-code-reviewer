@@ -1,0 +1,139 @@
+{
+  "candidates": [
+    {
+      "path": "introduction/views.py",
+      "start": {
+        "line": 644,
+        "col": 1
+      },
+      "end": {
+        "line": 673,
+        "col": 1
+      },
+      "suspicion": "a10_lab2 把未校验的 HTTP_X_FORWARDED_FOR 与 POST 用户名直接写进 logging.warning/info，可注入换行伪造日志条目（CWE-117）；views.py:641 的 logging.basicConfig(level=DEBUG, filename='app.log') 会把 DEBUG 级日志写入应用根目录 app.log。",
+      "evidence": "        if x_forwarded_for:\n            ip = x_forwarded_for.split(',')[0]\n...\n            logging.error(f\"{now}:{ip}:{user}\")",
+      "missing": "需要确认下游确实以不安全方式消费该日志（可在 Web 端读取的是模板目录下的 debug.log，而非 app.log；未见 app.log 的读取端点），实际影响链条未从静态材料中确认，故不计入发现。",
+      "cwe_candidate": "CWE-117"
+    },
+    {
+      "path": "introduction/playground/A9/api.py",
+      "start": {
+        "line": 14,
+        "col": 1
+      },
+      "end": {
+        "line": 16,
+        "col": 1
+      },
+      "suspicion": "log_function_target 将 POST 的明文口令写入日志文本（L.info(f\"POST request with username {username} and password {password}\")），属 CWE-532。",
+      "evidence": "        username = request.POST['username']\n        password = request.POST['password']\n        L.info(f\"POST request with username {username} and password {password}\")",
+      "missing": "仓库当前版本的 introduction/playground/A9/main.py 中 Log.info/warning/error 方法体均为 pass（占位实现），只有练习者（或通过 finding-034 写入者）替换 main.py 后才会真正落盘，因此“口令是否会被写入日志”依赖运行时文件内容，未确认。",
+      "cwe_candidate": "CWE-532"
+    },
+    {
+      "path": "challenge/views.py",
+      "start": {
+        "line": 49,
+        "col": 1
+      },
+      "end": {
+        "line": 52,
+        "col": 1
+      },
+      "suspicion": "DoItFast.post 用 Challenge.docker_image/docker_port 拼接 docker run 命令并为每个用户启动容器；若 Challenge 数据可被非管理员途径改写，等价于在宿主上运行攻击者指定镜像（CWE-78/CWE-94）。",
+      "evidence": "        command = f\"docker run -d -p {port}:{chal.docker_port} {chal.docker_image}\"\n        process = subprocess.Popen(command.split(\" \"), stdout=subprocess.PIPE)",
+      "missing": "唯一用户可控输入是 URL 中的 challenge 名称，且经 ORM 参数化查询取记录，docker_image 只来自管理员维护的 challenge/challenge.json；缺少“攻击者可控制 docker_image”的证据。另：command.split(\" \") 不经 shell，单纯镜像名含空格也无法注入额外参数（需部署环境确认）。",
+      "cwe_candidate": "CWE-78"
+    },
+    {
+      "path": "dockerized_labs/insec_des_lab/Dockerfile",
+      "start": {
+        "line": 16,
+        "col": 1
+      },
+      "end": {
+        "line": 16,
+        "col": 1
+      },
+      "suspicion": "CMD [\"flask\", \"run\", \"--debug\", \"--port=8080\"] 暴露 Werkzeug 交互式调试控制台，配合 PIN 计算材料可得 RCE（CWE-489 调试代码残留）。",
+      "evidence": "CMD [\"flask\", \"run\", \"--debug\", \"--port=8080\"]",
+      "missing": "该结论基于部署文件的命令行而非 Python 源码逻辑；容器端口是否对不可信网络暴露需 docker-compose 之外的部署拓扑确认，暂列候选（同文件的 pickle 问题已列为 finding-040）。",
+      "cwe_candidate": "CWE-489"
+    },
+    {
+      "path": "introduction/views.py",
+      "start": {
+        "line": 1163,
+        "col": 1
+      },
+      "end": {
+        "line": 1201,
+        "col": 1
+      },
+      "suspicion": "USER_A7_LAB3 把四个用户的无盐 SHA-256 口令摘要硬编码在源码中，auth_failure_lab3 用 hashlib.sha256(password).hexdigest() 直接 == 比较（CWE-916 派生强度不足、CWE-208 非常量时间比较）。",
+      "evidence": "        if USER_A7_LAB3[username]['password'] == password:",
+      "missing": "未能确定这些摘要对应的明文是否为可爆破弱口令（无源码内证据，且不允许联网/离线字典验证）；非常量时间比较在此场景的可利用性也未从代码确认，故不计入计分发现。",
+      "cwe_candidate": "CWE-916"
+    },
+    {
+      "path": "introduction/views.py",
+      "start": {
+        "line": 1072,
+        "col": 1
+      },
+      "end": {
+        "line": 1074,
+        "col": 1
+      },
+      "suspicion": "crypto_failure_lab3 以硬编码常量比较口令：if username == \"User\" and password == \"P@$$w0rd\"，属硬编码凭据（CWE-798）。",
+      "evidence": "                if username == \"User\" and password == \"P@$$w0rd\":",
+      "missing": "该账号仅用于教学 lab3 的第一阶段（其后依赖可伪造 Cookie，已列为 finding-022），是否算独立漏洞取决于判分口径，因此谨慎记为候选。",
+      "cwe_candidate": "CWE-798"
+    },
+    {
+      "path": "challenge/challenge.json",
+      "start": {
+        "line": 1,
+        "col": 1
+      },
+      "end": {
+        "line": 14,
+        "col": 1
+      },
+      "suspicion": "challenge.json 内含明文 flag（flag{do_it_fast}），而 challenge/models.py:26-28 仅用无盐 SHA-256 保存 flag（\"hashed_\" + sha256），可离线爆破（CWE-916/CWE-312）。",
+      "evidence": "        if self.flag:\n            if not self.flag.startswith(\"hashed_\"):\n                self.flag = \"hashed_\" + hashlib.sha256(self.flag.encode('utf-8')).hexdigest()",
+      "missing": "flag 值本身是随仓库分发的题目答案，属于 CTF 设计意图，未见“服务端另存机密 flag 被泄露”的证据，无法确定应否计为漏洞。",
+      "cwe_candidate": "CWE-916"
+    },
+    {
+      "path": "uninstaller.py",
+      "start": {
+        "line": 73,
+        "col": 1
+      },
+      "end": {
+        "line": 90,
+        "col": 1
+      },
+      "suspicion": "remove_pygoat 递归删除 os.getcwd() 下所有条目（若用户在其他目录执行即造成误删），且 uninstall_pip_packages 中 `if (platform.system != 'Windows')` 比较的是函数对象（恒真）。",
+      "evidence": "def remove_pygoat():\n    \"\"\"Remove pygoat files\"\"\"\n    cwd = os.getcwd()\n...\n    for item in os.listdir(cwd):",
+      "missing": "这是本地运维脚本，需要管理员交互执行且不含远端不可信输入；是否算安全漏洞（数据完整性破坏）无法在本组无规范条件下确证。",
+      "cwe_candidate": "CWE-469"
+    },
+    {
+      "path": "Dockerfile",
+      "start": {
+        "line": 1,
+        "col": 1
+      },
+      "end": {
+        "line": 33,
+        "col": 1
+      },
+      "suspicion": "基础镜像 python:3.11.0b1-buster 为 beta 且基于已 EOL 的 Debian 10，构建全程未创建非 root 用户，容器内以 root 运行 gunicorn 且源码目录可写（配合 finding-034/035 的代码写入可放大影响）。",
+      "evidence": "FROM python:3.11.0b1-buster\n...\nCOPY . /app/\n...\nCMD [\"gunicorn\", \"--bind\", \"0.0.0.0:8000\", \"--workers\",\"6\", \"pygoat.wsgi\"]",
+      "missing": "具体镜像摘要与宿主隔离配置无法静态确认（docker-compose 未声明 user:/read_only:，但部署环境可能另行覆盖），作为部署加固候选记录。",
+      "cwe_candidate": "CWE-1188"
+    }
+  ]
+}

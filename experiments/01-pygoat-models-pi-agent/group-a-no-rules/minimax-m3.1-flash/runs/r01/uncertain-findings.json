@@ -1,0 +1,109 @@
+{
+  "candidates": [
+    {
+      "path": "introduction/views.py",
+      "start": {
+        "line": 122,
+        "col": 1
+      },
+      "end": {
+        "line": 134,
+        "col": 1
+      },
+      "suspected_issue": "疑似反射型 XSS：xss_lab3 只用正则删除 [a-zA-Z0-9]，其余标点保留，随后把结果同时渲染到 <p>{{code}}</p> 和 <script>{{code}}</script> 中（introduction/templates/Lab/XSS/xss_lab_3.html:19,22）。",
+      "existing_evidence": "视图代码 introduction/views.py:122-134 与模板 introduction/templates/Lab/XSS/xss_lab_3.html 均可读到；过滤仅删除字母与数字，保留 []()!+` 等符号。",
+      "missing_conditions": "Django 自动转义会把 '<' 转成 '&lt;'，因此无法直接闭合 script 标签；利用需要构造仅由保留符号组成的可执行 JavaScript（JSFuck 类），是否可行取决于具体引擎解析与转义细节。本次为静态分析，无法确认是否存在可用的纯符号有效载荷，因此未列入确认发现。",
+      "cwe_guess": "CWE-79"
+    },
+    {
+      "path": "challenge/views.py",
+      "start": {
+        "line": 60,
+        "col": 1
+      },
+      "end": {
+        "line": 79,
+        "col": 1
+      },
+      "suspected_issue": "疑似命令注入：容器启动/停止命令由数据库字段拼接而成（f\"docker run -d -p {port}:{chal.docker_port} {chal.docker_image}\" 与 f\"docker stop {user_chal.container_id}\"），并用 command.split(\" \") 传给 subprocess.Popen。",
+      "existing_evidence": "challenge/views.py:60 与 :79 可见拼接逻辑；docker_image / container_id 来自数据库模型 Challenge / UserChallenge。",
+      "missing_conditions": "docker_image 与 container_id 并非请求参数直接控制，只能通过 Django admin 或数据导入写入；且使用 split(\" \") 且 shell=False，未构成直接的 shell 注入。是否可被低权限用户影响取决于 admin 权限与数据写入路径，静态分析无法确认，故未列为确认发现。",
+      "cwe_guess": "CWE-78"
+    },
+    {
+      "path": "introduction/views.py",
+      "start": {
+        "line": 1108,
+        "col": 1
+      },
+      "end": {
+        "line": 1112,
+        "col": 1
+      },
+      "suspected_issue": "疑似 JWT 校验不完整：sec_misconfig_lab3 的异常分支会直接为访问者签发一个 JWT 并写入 auth_cookie（payload user='not_admin'）。",
+      "existing_evidence": "introduction/views.py:1105-1111 可见 jwt.encode(payload, SECRET_COOKIE_KEY, algorithm='HS256') 与 set_cookie。",
+      "missing_conditions": "该签发只产生非管理员身份（'not_admin'），且真正的提权路径来自硬编码密钥（已作为 finding-025 确认），此处本身未构成独立漏洞，因此未单列。",
+      "cwe_guess": "CWE-287"
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/templates/profile.html",
+      "start": {
+        "line": 128,
+        "col": 1
+      },
+      "end": {
+        "line": 130,
+        "col": 1
+      },
+      "suspected_issue": "疑似敏感数据暴露：已登录用户的资料页直接以明文输出完整信用卡号、SSN 与 API Key，并写入页面内联脚本与 localStorage。",
+      "existing_evidence": "模板第 128-130 行与 218-222 行可见 {{ user_data.credit_card }}、{{ user_data.ssn }}、{{ user_data.api_key }}。",
+      "missing_conditions": "该视图有 @login_required 保护且数据属于请求者本人，属于该实验的刻意设计；是否构成独立于 finding-040（API 未脱敏）的额外风险取决于实验目标，未单列为独立发现。",
+      "cwe_guess": "CWE-200"
+    },
+    {
+      "path": "dockerized_labs/broken_auth_lab/app.py",
+      "start": {
+        "line": 60,
+        "col": 1
+      },
+      "end": {
+        "line": 76,
+        "col": 1
+      },
+      "suspected_issue": "疑似弱口令/账号注册缺陷：注册接口接受任意用户名与任意口令，不做复杂度与强度校验，且账号仅存在于内存字典中。",
+      "existing_evidence": "app.py:60-76 可见注册处理与明文保存。",
+      "missing_conditions": "缺少口令强度策略属于弱默认配置（CWE-521），安全影响依赖使用场景；为避免与明文存储（finding-031/032 同类）重复计数，未列为确认发现。",
+      "cwe_guess": "CWE-521"
+    },
+    {
+      "path": "introduction/views.py",
+      "start": {
+        "line": 640,
+        "col": 1
+      },
+      "end": {
+        "line": 660,
+        "col": 1
+      },
+      "suspected_issue": "疑似日志注入/凭据记录：a10_lab2 使用 X-Forwarded-For 的第一个值作为客户端 IP 写入应用日志，且失败登录的用户名也被记录。",
+      "existing_evidence": "introduction/views.py:643-660 可见 ip = x_forwarded_for.split(',')[0] 与 logging.info/warning/error 调用。",
+      "missing_conditions": "日志内容仅包含用户名（不含口令），且写入的是应用自身的日志文件；是否构成可利用的日志注入取决于日志消费方，未确认。",
+      "cwe_guess": "CWE-117"
+    },
+    {
+      "path": "introduction/views.py",
+      "start": {
+        "line": 1064,
+        "col": 1
+      },
+      "end": {
+        "line": 1071,
+        "col": 1
+      },
+      "suspected_issue": "疑似会话 Cookie 缺少 HttpOnly/Secure 属性：crypto_failure_lab3、sec_misconfig_lab3、auth_failure_lab3 等处 set_cookie 未设置 httponly/secure（除 finding-047 指出的 userid 外还有多处）。",
+      "existing_evidence": "introduction/views.py:1076、1109、1204 等 set_cookie 调用均无 httponly/secure 参数。",
+      "missing_conditions": "同一根因已在 finding-047 中报告（认证 Cookie 缺 Secure），此处仅为补充位置，避免重复计数。",
+      "cwe_guess": "CWE-1004"
+    }
+  ]
+}

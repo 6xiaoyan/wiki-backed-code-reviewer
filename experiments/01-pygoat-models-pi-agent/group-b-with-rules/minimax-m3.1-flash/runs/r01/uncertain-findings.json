@@ -1,0 +1,46 @@
+{
+  "candidates": [
+    {
+      "path": "requirements.txt",
+      "location": "line 33 (PyYAML==5.1), line 26 (Pillow==9.4.0), line 11 (cryptography==39.0.1)",
+      "suspected_issue": "The project pins several third-party versions that are commonly associated with published CVEs (for example PyYAML 5.1 with the pre-5.4 yaml.load behaviour that finding-009 exploits, and older Pillow/cryptography releases). Use of known-vulnerable components (CWE-1104) and outdated dependency versions (rule 2.2.2).",
+      "existing_evidence": "requirements.txt pins exact versions: PyYAML==5.1, Pillow==9.4.0, cryptography==39.0.1, Django==4.2, requests==2.28.2. The a9_lab view (introduction/views.py:560) does use yaml.load(file, yaml.Loader) on that version.",
+      "missing_conditions": "No network access was used in this run, so the exact CVE identifiers, affected ranges and the actually installed runtime versions in the deployment cannot be confirmed from the repository alone. A component inventory/advisory lookup against the deployed environment is required."
+    },
+    {
+      "path": "introduction/static/js/a9.js",
+      "location": "line 40 (li.innerHTML = data.logs[i])",
+      "suspected_issue": "DOM-based XSS: log lines returned by the /2021/discussion/A9/api endpoint are inserted with innerHTML instead of textContent. The log content is produced by the Log class, whose implementation is supplied by the user through the log_function_checker API (introduction/apis.py:70), so attacker-influenced text could be rendered as HTML in the browser.",
+      "existing_evidence": "introduction/static/js/a9.js contains `li.innerHTML = data.logs[i];` and the endpoint returns the content of the 'test.log' file, which is written by the Log implementation that the same API can overwrite.",
+      "missing_conditions": "It was not confirmed in this run whether the log content can actually contain attacker-controlled HTML characters (the default Log implementation writes fixed messages and the username/password of the log_function_target endpoint), nor whether the endpoint is reachable without authentication in a deployed instance."
+    },
+    {
+      "path": "introduction/views.py",
+      "location": "a10_lab2, lines 648 and 659 (request.META.get('HTTP_X_FORWARDED_FOR'))",
+      "suspected_issue": "Log injection / false attribution: the client-supplied X-Forwarded-For value is used verbatim in log records (logging.info/warning/error) without validation, so a client can spoof the recorded IP address and inject control characters into the log file (CWE-117 / CWE-778).",
+      "existing_evidence": "The first element of X-Forwarded-For is logged directly: logging.info(f\"{now}:{ip}\"), and logging.basicConfig(level=logging.DEBUG, filename='app.log') writes to a plain log file.",
+      "missing_conditions": "The impact depends on the deployment's log aggregation and on whether the log file is reachable by other users; the rule 1.2.2 requirement is a hardening recommendation rather than a directly exploitable vulnerability. No log analysis was performed."
+    },
+    {
+      "path": "dockerized_labs/sensitive_data_exposure/entrypoint.sh",
+      "location": "line 11",
+      "suspected_issue": "Hardcoded demo credentials: the startup script creates the user 'demo' with the password 'demopass' and a fixed API key 'demokey123456789' (CWE-798).",
+      "existing_evidence": "entrypoint.sh executes `User.objects.create_user('demo', 'demo@example.com', 'demopass')` and creates UserData with api_key='demokey123456789'.",
+      "missing_conditions": "Whether this lab is deployed outside a local training environment is unknown; if the account is reachable in a deployed instance it would be a real credential exposure, but the environment configuration is not part of the repository."
+    },
+    {
+      "path": "challenge/views.py",
+      "location": "line 49 (command = f\"docker run -d -p {port}:{chal.docker_port} {chal.docker_image}\")",
+      "suspected_issue": "The docker command line is composed from database fields (docker_image, docker_port) that are writable through the Django admin; an administrator able to edit a Challenge row could inject additional docker arguments or run an arbitrary image (argument injection, CWE-88).",
+      "existing_evidence": "The image name and port come from the Challenge model and are executed via subprocess.Popen(command.split(\" \")) without shell=True.",
+      "missing_conditions": "Requires an attacker who already has Django admin privileges, so it is a privileged operation; the value of the risk depends on the admin interface's exposure, which was not evaluated. The port number itself is taken from a safe integer range."
+    },
+    {
+      "path": "introduction/views.py",
+      "location": "a10_lab2, lines 663-670 (login.objects.filter(user=user,password=password)) and ba_lab, line 356",
+      "suspected_issue": "Plaintext password comparison for the 'login' model (CWE-256) - the same model family as finding-024 but a different table and code path; listed separately here because the storage location (introduction_login rows created by the management command / seed data) could not be confirmed in this run.",
+      "existing_evidence": "introduction/models.py: class login(models.Model) with password=models.CharField(max_length=300); views.py compares the submitted password directly against that column.",
+      "missing_conditions": "How the introduction_login rows are seeded (and with which plaintext values) could not be established from the reviewed code; the risk is therefore reported as an uncertain variant of finding-024."
+    }
+  ]
+}

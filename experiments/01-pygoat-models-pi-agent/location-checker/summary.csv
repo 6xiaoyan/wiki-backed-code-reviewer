@@ -1,0 +1,7 @@
+﻿run,reports,file_exists,file_in_ground_truth,check_1_file_exists_and_matches,check_2_reported_start_within_10_lines,check_3_at_least_one_source_line_in_quote,all_three
+minimax-m3.1-flash/A,47,47,46,46,43,47,43
+minimax-m3.1-flash/B,53,53,53,53,51,52,50
+glm-5.3-flash/A,48,48,47,47,46,43,41
+glm-5.3-flash/B,41,41,41,41,40,37,36
+qwen-3.8-flash-next/A,47,47,47,47,42,47,42
+qwen-3.8-flash-next/B,59,59,55,55,50,59,50
